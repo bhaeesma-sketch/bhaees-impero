@@ -22,7 +22,7 @@ import logoImg from '@assets/impero_logo_transparent.png';
 import heroImg1 from '@assets/generated_images/model_wearing_luxury_diamond_necklace.png';
 import heroImg2 from '@assets/generated_images/elegant_woman_with_gold_bridal_jewelry.png';
 import heroImg3 from '@assets/generated_images/luxury_diamond_necklace_on_model.png';
-import heroImg4 from '@assets/generated_images/fashion_model_with_gold_bangles.png';
+
 
 // Bespoke Backgrounds
 import bespokeBg1 from '@assets/generated_images/close_up_of_master_jeweler_setting_a_diamond.png';
@@ -32,7 +32,7 @@ import bespokeBg4 from '@assets/generated_images/gold_bullion_bars_in_vault.png'
 import bespokeBg5 from '@assets/generated_images/intricate_gold_filigree_pattern.png';
 import bespokeBg6 from '@assets/generated_images/luxury_jewelry_design_sketch.png';
 
-const heroImages = [heroImg1, heroImg2, heroImg3, heroImg4];
+const heroImages = [heroImg1, heroImg2, heroImg3];
 const bespokeImages = [bespokeBg1, bespokeBg2, bespokeBg3, bespokeBg4, bespokeBg5, bespokeBg6];
 
 export default function Home() {
