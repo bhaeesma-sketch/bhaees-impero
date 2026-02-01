@@ -1,0 +1,243 @@
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, Menu, X, Phone, User, LogOut, Settings } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link, useLocation } from 'wouter';
+import { useAuth } from '@/hooks/use-auth';
+import { AuthModal } from '@/components/auth/AuthModal';
+// ... other imports ...
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+// Assets
+import logoImg from '@assets/impero_logo_transparent.png';
+
+export function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const { user, logout } = useAuth();
+  const [, setLocation] = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <>
+      <header
+        className={`w-full transition-all duration-300 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100 ${isScrolled ? 'py-4 shadow-md' : 'py-8'
+          }`}
+      >
+        <div className="container mx-auto px-4 relative">
+          <div className="flex items-center justify-between h-20 md:h-28">
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden p-2 hover:bg-gray-50 rounded-full transition-colors z-50"
+              onClick={() => setIsMobileMenuOpen(true)}
+            >
+              <Menu className="w-6 h-6 text-gray-700" />
+            </button>
+
+            {/* Desktop Navigation - LEFT SIDE */}
+            <nav className="hidden md:flex items-center gap-6 text-sm font-medium tracking-wide flex-1 justify-start">
+              {[
+                { name: 'Catalog', href: '/catalog' },
+                { name: 'Bespoke', href: '/bespoke' },
+                { name: 'Bullion', href: '/catalog?category=bullion' },
+                { name: 'Compare', href: '/compare' },
+              ].map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="relative py-2 text-gray-600 hover:text-primary transition-colors group"
+                >
+                  {item.name}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+                </Link>
+              ))}
+            </nav>
+
+            {/* Logo - ABSOLUTE CENTER & MASSIVE & BLING */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none">
+              <Link href="/" className="block group pointer-events-auto">
+                <div className="h-32 md:h-[200px] w-auto relative flex items-center justify-center transition-all duration-500 hover:scale-105">
+                  <img
+                    src={logoImg}
+                    alt="Impero Di Gold Logo"
+                    className="h-full w-auto object-contain drop-shadow-2xl animate-bling"
+                  />
+                </div>
+              </Link>
+            </div>
+
+            {/* Actions - RIGHT SIDE */}
+            <div className="flex items-center gap-4 flex-1 justify-end">
+              <nav className="hidden md:flex items-center gap-6 text-sm font-medium tracking-wide mr-6">
+                {[
+                  { name: 'Live Rates', href: '/#rates' },
+                  { name: 'About Us', href: '/#about' },
+                ].map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="relative py-2 text-gray-600 hover:text-primary transition-colors group"
+                  >
+                    {item.name}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+                  </Link>
+                ))}
+              </nav>
+
+              <button className="p-2 hover:bg-gray-50 rounded-full transition-colors text-gray-600 hover:text-primary">
+                <Search className="w-5 h-5" />
+              </button>
+
+              {user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="p-2 hover:bg-gray-50 rounded-full transition-colors text-gray-600 hover:text-primary relative group">
+                      <User className="w-5 h-5" />
+                      {/* <span className="absolute top-1 right-1 w-2 h-2 bg-green-500 rounded-full ring-2 ring-white"></span> */}
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56 bg-white z-[60]">
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <User className="mr-2 h-4 w-4" />
+                      <span>{user.username || 'User'}</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => logout()} className="text-red-600 focus:text-red-600">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Log out</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <div className="hidden md:flex items-center gap-4">
+                  <Button
+                    variant="ghost"
+                    className="font-serif hover:text-primary"
+                    onClick={() => setIsAuthModalOpen(true)}
+                  >
+                    Log in
+                  </Button>
+                  <Button
+                    className="bg-black text-white hover:bg-gray-800 font-serif"
+                    onClick={() => setIsAuthModalOpen(true)}
+                  >
+                    Sign Up
+                  </Button>
+                </div>
+              )}
+
+              <Button className="hidden md:flex bg-primary hover:bg-primary/90 text-white font-serif tracking-wide gap-2">
+                <Phone className="w-4 h-4" />
+                Concierge
+              </Button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+      />
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {
+          isMobileMenuOpen && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 md:hidden"
+              />
+              <motion.div
+                initial={{ x: '-100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '-100%' }}
+                transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                className="fixed top-0 left-0 bottom-0 w-[80%] max-w-sm bg-white z-50 md:hidden shadow-2xl flex flex-col"
+              >
+                <div className="p-6 flex items-center justify-between border-b border-gray-100">
+                  <span className="font-serif text-xl font-bold">Menu</span>
+                  <button onClick={() => setIsMobileMenuOpen(false)}>
+                    <X className="w-6 h-6 text-gray-500" />
+                  </button>
+                </div>
+                <div className="flex-1 overflow-y-auto py-4">
+                  <nav className="flex flex-col">
+                    {user && (
+                      <div className="px-6 py-4 bg-gray-50 mb-4 mx-4 rounded-lg">
+                        <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Welcome back</p>
+                        <p className="font-bold text-gray-900">{user.username}</p>
+                      </div>
+                    )}
+
+                    {[
+                      { name: 'Catalog', href: '/catalog' },
+                      { name: 'Bespoke', href: '/bespoke' },
+                      { name: 'Gold Bullion', href: '/catalog?category=bullion' },
+                      { name: 'Diamond Jewelry', href: '/catalog?category=jewelry' },
+                      { name: 'Compare Prices', href: '/compare' },
+                      { name: 'Live Rates', href: '/#rates' },
+                      { name: 'About Us', href: '/#about' },
+                    ].map((item) => (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        className="px-6 py-4 text-lg font-medium text-gray-800 border-b border-gray-50 hover:bg-gray-50 hover:text-primary transition-colors"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+
+                    {!user ? (
+                      <a
+                        href="#"
+                        onClick={(e) => { e.preventDefault(); setLocation('/auth'); setIsMobileMenuOpen(false); }}
+                        className="px-6 py-4 text-lg font-medium text-primary border-b border-gray-50 hover:bg-gray-50 transition-colors"
+                      >
+                        Login / Register
+                      </a>
+                    ) : (
+                      <button
+                        onClick={() => { logout(); setIsMobileMenuOpen(false); }}
+                        className="px-6 py-4 text-lg font-medium text-red-600 text-left hover:bg-gray-50 transition-colors"
+                      >
+                        Sign Out
+                      </button>
+                    )}
+                  </nav>
+                </div>
+                <div className="p-6 bg-gray-50">
+                  <Button className="w-full bg-primary hover:bg-primary/90 text-white font-serif gap-2">
+                    <Phone className="w-4 h-4" />
+                    Request Callback
+                  </Button>
+                </div>
+              </motion.div>
+            </>
+          )
+        }
+      </AnimatePresence >
+    </>
+  );
+}
