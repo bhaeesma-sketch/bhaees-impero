@@ -83,10 +83,10 @@ export default function Home() {
         <div className="container relative z-10 px-4 grid lg:grid-cols-12 gap-12 items-center h-full">
           <motion.div
             style={{ opacity: opacityHero, scale: scaleHero }}
-            className="lg:col-span-8 space-y-8" // Increased col-span for wider text
+            className="lg:col-span-12 space-y-8 max-w-4xl mx-auto text-center"
           >
             <Reveal direction="down" delay={0.1}>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center justify-center gap-4">
                 <span className="h-[1px] w-12 bg-[#BF953F]"></span>
                 <span className="text-xs font-bold tracking-[0.3em] text-[#BF953F] uppercase">Est. 2022</span>
               </div>
@@ -116,13 +116,13 @@ export default function Home() {
             </h1>
 
             <Reveal delay={0.6} direction="up" blur={true}>
-              <p className="text-xl text-gray-500 font-light leading-relaxed max-w-lg border-l-2 border-primary/20 pl-6">
+              <p className="text-xl text-gray-500 font-light leading-relaxed max-w-2xl mx-auto">
                 The intersection of investment-grade purity and artisanal mastery. Secure your legacy with Impero.
               </p>
             </Reveal>
 
             <Reveal delay={0.8} direction="up">
-              <div className="flex flex-wrap gap-6 pt-6">
+              <div className="flex flex-wrap justify-center gap-6 pt-6">
                 <Link href="/catalog">
                   <Button className="h-14 px-10 bg-gray-900 hover:bg-black text-white rounded-sm font-medium tracking-wide shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
                     View Catalog
@@ -137,35 +137,7 @@ export default function Home() {
             </Reveal>
           </motion.div>
 
-          <motion.div
-            className="lg:col-span-6 relative flex justify-center items-center h-[70vh] lg:h-[85vh] lg:pl-12"
-            style={{ y: y1 }}
-          >
-            <Reveal delay={0.4} direction="left" width="100%">
-              <div className="relative w-full max-w-lg mx-auto aspect-[4/5] group perspective-1000">
-                <div
-                  className="relative z-10 w-full h-full overflow-hidden bg-transparent"
-                  style={{
-                    maskImage: 'radial-gradient(ellipse at center, black 70%, transparent 100%)',
-                    WebkitMaskImage: 'radial-gradient(ellipse at center, black 70%, transparent 100%)'
-                  }}
-                >
-                  <AnimatePresence mode="wait">
-                    <motion.img
-                      key={currentImageIndex}
-                      src={heroImages[currentImageIndex]}
-                      alt="Luxury Jewelry Collection"
-                      initial={{ opacity: 0, scale: 1.1 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                      className="w-full h-full object-contain object-bottom transform-gpu mix-blend-multiply"
-                    />
-                  </AnimatePresence>
-                </div>
-              </div>
-            </Reveal>
-          </motion.div>
+
         </div>
 
         {/* Scroll Indicator */}
