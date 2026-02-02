@@ -32,7 +32,7 @@ import bespokeBg4 from '@assets/generated_images/gold_bullion_bars_in_vault.png'
 import bespokeBg5 from '@assets/generated_images/intricate_gold_filigree_pattern.png';
 import bespokeBg6 from '@assets/generated_images/luxury_jewelry_design_sketch.png';
 
-const heroImages = [heroImg1, heroImg2, heroImg3];
+const heroImages = [heroImg1, heroImg3];
 const bespokeImages = [bespokeBg1, bespokeBg2, bespokeBg3, bespokeBg4, bespokeBg5, bespokeBg6];
 
 export default function Home() {
