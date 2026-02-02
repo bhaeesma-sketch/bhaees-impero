@@ -71,7 +71,9 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
         playSound(400, 0.05);
     };
 
-    return (
+    if (typeof document === 'undefined') return null;
+
+    return createPortal(
         <AnimatePresence>
             {isOpen && (
                 <>
@@ -80,65 +82,68 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={!success ? onClose : undefined}
-                        className="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[9999]"
+                        className="fixed inset-0 bg-black/95 backdrop-blur-3xl z-[99999] flex items-center justify-center"
+                        style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, height: '100dvh', width: '100vw' }}
                     >
-                        {[...Array(20)].map((_, i) => (
+                        {[...Array(30)].map((_, i) => (
                             <motion.div
                                 key={i}
-                                className="absolute w-1 h-1 bg-primary/30 rounded-full"
+                                className="absolute w-1 h-1 bg-gradient-to-tr from-primary via-yellow-200 to-primary rounded-full shadow-[0_0_10px_rgba(197,160,89,0.8)]"
                                 initial={{
-                                    x: typeof window !== 'undefined' ? Math.random() * window.innerWidth : 0,
-                                    y: typeof window !== 'undefined' ? Math.random() * window.innerHeight : 0,
-                                    scale: 0
+                                    x: Math.random() * window.innerWidth,
+                                    y: Math.random() * window.innerHeight,
+                                    scale: 0,
+                                    opacity: 0
                                 }}
                                 animate={{
-                                    y: typeof window !== 'undefined' ? [null, Math.random() * window.innerHeight] : 0,
-                                    scale: [0, 1, 0],
+                                    y: [null, Math.random() * -100],
+                                    scale: [0, 1.5, 0],
                                     opacity: [0, 1, 0]
                                 }}
                                 transition={{
-                                    duration: 3 + Math.random() * 2,
+                                    duration: 2 + Math.random() * 3,
                                     repeat: Infinity,
-                                    delay: Math.random() * 2
+                                    delay: Math.random() * 2,
+                                    ease: "easeInOut"
                                 }}
                             />
                         ))}
+
+                        {/* Background light glow center */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/20 blur-[120px] rounded-full pointer-events-none" />
                     </motion.div>
 
                     <AnimatePresence>
                         {showWelcome && (
                             <motion.div
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0 }}
-                                className="fixed inset-0 z-[10001] flex items-center justify-center"
+                                initial={{ opacity: 0, scale: 0.9, filter: 'blur(10px)' }}
+                                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                                exit={{ opacity: 0, scale: 1.1, filter: 'blur(10px)' }}
+                                className="fixed inset-0 z-[100001] flex items-center justify-center pointer-events-none"
                             >
-                                <div className="text-center">
+                                <div className="text-center relative">
+                                    <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full" />
                                     <motion.div
-                                        initial={{ scale: 0 }}
-                                        animate={{ scale: [0, 1.2, 1] }}
-                                        transition={{ duration: 0.6 }}
-                                        className="mb-8"
+                                        initial={{ scale: 0, rotate: -180 }}
+                                        animate={{ scale: [0, 1.5, 1], rotate: 0 }}
+                                        transition={{ duration: 1, type: "spring", bounce: 0.5 }}
+                                        className="mb-8 relative z-10"
                                     >
-                                        <CheckCircle className="w-32 h-32 text-primary mx-auto" strokeWidth={1.5} />
+                                        <CheckCircle className="w-40 h-40 text-green-400 mx-auto drop-shadow-[0_0_50px_rgba(74,222,128,0.6)]" strokeWidth={1} />
                                     </motion.div>
                                     <motion.h1
-                                        initial={{ opacity: 0, y: 20 }}
+                                        initial={{ opacity: 0, y: 50 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.3 }}
-                                        className="font-serif text-7xl bg-clip-text text-transparent bg-gradient-to-r from-primary via-yellow-200 to-primary mb-4"
-                                        style={{
-                                            textShadow: '0 0 40px rgba(197, 160, 89, 0.5)',
-                                            letterSpacing: '0.05em'
-                                        }}
+                                        className="font-serif text-8xl md:text-9xl bg-clip-text text-transparent bg-gradient-to-b from-yellow-100 via-primary to-yellow-600 mb-6 drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)]"
                                     >
                                         Welcome
                                     </motion.h1>
                                     <motion.p
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        transition={{ delay: 0.6 }}
-                                        className="text-4xl text-primary font-bold tracking-widest"
+                                        initial={{ opacity: 0, letterSpacing: '1em' }}
+                                        animate={{ opacity: 1, letterSpacing: '0.5em' }}
+                                        transition={{ delay: 0.6, duration: 0.8 }}
+                                        className="text-5xl md:text-6xl text-white font-bold uppercase drop-shadow-[0_0_20px_rgba(197,160,89,0.8)]"
                                     >
                                         FAIZAL
                                     </motion.p>
@@ -149,48 +154,46 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
 
                     {!showWelcome && (
                         <motion.div
-                            initial={{ y: -100, opacity: 0, scale: 0.9 }}
+                            initial={{ y: 50, opacity: 0, scale: 0.95 }}
                             animate={{ y: 0, opacity: 1, scale: 1 }}
-                            exit={{ y: -100, opacity: 0, scale: 0.9 }}
-                            transition={{ type: 'spring', damping: 20 }}
-                            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[10000] w-full max-w-md"
+                            exit={{ y: 50, opacity: 0, scale: 0.95 }}
+                            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100000] w-full max-w-md p-4"
                         >
-                            <div className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 border-2 border-primary/30 rounded-3xl p-10 shadow-2xl overflow-hidden">
-                                <div className="absolute inset-0 rounded-3xl">
-                                    <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary via-yellow-200 to-primary opacity-20 blur-xl animate-pulse" />
-                                </div>
-
-                                <motion.div
-                                    className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/10 to-transparent"
-                                    animate={{ y: ['-100%', '200%'] }}
-                                    transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-                                />
+                            <div className="relative bg-black/80 border border-white/10 rounded-[2rem] p-10 shadow-[0_0_100px_rgba(0,0,0,0.8)] backdrop-blur-xl overflow-hidden group">
+                                {/* Border Glow Animation */}
+                                <div className="absolute inset-0 rounded-[2rem] p-[1px] bg-gradient-to-b from-white/20 via-transparent to-white/10 opacity-50" />
+                                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-[1.5s] ease-in-out pointer-events-none" />
 
                                 <div className="relative z-10">
-                                    <div className="text-center mb-10">
+                                    <div className="text-center mb-12">
                                         <motion.div
                                             animate={success ? {
                                                 scale: [1, 1.2, 1],
                                                 rotate: [0, 360]
                                             } : error ? {
-                                                x: [-10, 10, -10, 10, 0]
+                                                x: [-5, 5, -5, 5, 0]
                                             } : {}}
                                             transition={{ duration: 0.5 }}
-                                            className="inline-block mb-6"
+                                            className="inline-block mb-6 relative"
                                         >
+                                            <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full" />
                                             {success ? (
-                                                <CheckCircle className="w-20 h-20 text-green-500 mx-auto" />
+                                                <CheckCircle className="w-24 h-24 text-green-400 mx-auto relative z-10 drop-shadow-[0_0_20px_rgba(74,222,128,0.5)]" strokeWidth={1} />
                                             ) : (
-                                                <Shield className="w-20 h-20 text-primary mx-auto drop-shadow-[0_0_20px_rgba(197,160,89,0.5)]" />
+                                                <div className="relative">
+                                                    <Shield className="w-24 h-24 text-primary mx-auto drop-shadow-[0_0_30px_rgba(197,160,89,0.4)]" strokeWidth={1} />
+                                                    <Lock className="w-8 h-8 text-black absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" strokeWidth={2.5} />
+                                                </div>
                                             )}
                                         </motion.div>
-                                        <h2 className="font-serif text-4xl bg-clip-text text-transparent bg-gradient-to-r from-white via-primary to-white mb-3">
-                                            Vault Access
+                                        <h2 className="font-serif text-4xl text-white mb-2 tracking-wide">
+                                            IMPERO <span className="text-primary">VAULT</span>
                                         </h2>
-                                        <p className="text-gray-400 text-sm tracking-wider">BIOMETRIC AUTHENTICATION</p>
+                                        <p className="text-gray-400 text-xs tracking-[0.3em] uppercase">Biometric Security Clearance</p>
                                     </div>
 
-                                    <div className="flex justify-center gap-5 mb-10">
+                                    <div className="flex justify-center gap-6 mb-12">
                                         {[0, 1, 2, 3].map((i) => (
                                             <motion.div
                                                 key={i}
@@ -201,102 +204,66 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
                                                     borderColor: ['#22c55e', '#22c55e'],
                                                     scale: [1, 1.1, 1]
                                                 } : {}}
-                                                transition={{ duration: 0.4, delay: i * 0.05 }}
-                                                className={`relative w-16 h-16 rounded-2xl border-2 flex items-center justify-center transition-all ${error ? 'border-red-500 bg-red-500/20' :
-                                                    success ? 'border-green-500 bg-green-500/20' :
-                                                        pin[i] ? 'border-primary bg-primary/20 shadow-[0_0_20px_rgba(197,160,89,0.3)]' :
-                                                            'border-gray-700 bg-gray-800/50'
+                                                transition={{ duration: 0.4 }}
+                                                className={`relative w-14 h-16 rounded-xl border flex items-center justify-center transition-all duration-300 ${error ? 'border-red-500/50 bg-red-900/10' :
+                                                        success ? 'border-green-500/50 bg-green-900/10' :
+                                                            pin[i] ? 'border-primary shadow-[0_0_15px_rgba(197,160,89,0.3)] bg-primary/5' :
+                                                                'border-white/10 bg-white/5'
                                                     }`}
                                             >
-                                                {pin[i] && (
-                                                    <motion.div
-                                                        initial={{ scale: 0 }}
-                                                        animate={{ scale: 1 }}
-                                                        className="relative"
-                                                    >
-                                                        <Lock className={`w-7 h-7 ${success ? 'text-green-500' : 'text-primary'}`} />
+                                                <AnimatePresence>
+                                                    {pin[i] && (
                                                         <motion.div
-                                                            className="absolute inset-0 bg-primary rounded-full blur-md"
-                                                            animate={{ opacity: [0.5, 1, 0.5] }}
-                                                            transition={{ duration: 1, repeat: Infinity }}
-                                                        />
-                                                    </motion.div>
-                                                )}
+                                                            initial={{ scale: 0, opacity: 0 }}
+                                                            animate={{ scale: 1, opacity: 1 }}
+                                                            exit={{ scale: 0, opacity: 0 }}
+                                                        >
+                                                            <div className="w-3 h-3 bg-primary rounded-full shadow-[0_0_10px_rgba(197,160,89,0.8)]" />
+                                                        </motion.div>
+                                                    )}
+                                                </AnimatePresence>
                                             </motion.div>
                                         ))}
                                     </div>
 
-                                    <div className="h-6 mb-6 text-center">
-                                        {error && (
-                                            <motion.p
-                                                initial={{ opacity: 0 }}
-                                                animate={{ opacity: 1 }}
-                                                className="text-red-500 text-sm font-semibold flex items-center justify-center gap-2"
-                                            >
-                                                <AlertCircle className="w-4 h-4" />
-                                                ACCESS DENIED
-                                            </motion.p>
-                                        )}
-                                        {success && (
-                                            <motion.p
-                                                initial={{ opacity: 0 }}
-                                                animate={{ opacity: 1 }}
-                                                className="text-green-500 text-sm font-semibold flex items-center justify-center gap-2"
-                                            >
-                                                <CheckCircle className="w-4 h-4" />
-                                                ACCESS GRANTED
-                                            </motion.p>
-                                        )}
-                                    </div>
-
-                                    <div className="grid grid-cols-3 gap-4 mb-6">
+                                    <div className="grid grid-cols-3 gap-4 mb-8">
                                         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
                                             <motion.button
                                                 key={num}
                                                 onClick={() => handlePinInput(num.toString())}
-                                                whileHover={{ scale: 1.05 }}
+                                                whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.1)" }}
                                                 whileTap={{ scale: 0.95 }}
-                                                className="relative h-16 bg-gradient-to-br from-gray-800 to-gray-900 hover:from-primary/20 hover:to-primary/10 border border-gray-700 hover:border-primary/50 rounded-xl text-white text-xl font-bold transition-all overflow-hidden group"
+                                                className="h-16 rounded-xl bg-white/5 border border-white/5 text-2xl font-light text-white transition-colors hover:border-primary/30"
                                             >
-                                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500" />
-                                                <span className="relative z-10">{num}</span>
+                                                {num}
                                             </motion.button>
                                         ))}
-                                    </div>
-
-                                    <div className="grid grid-cols-3 gap-4">
-                                        <motion.button
-                                            onClick={handleDelete}
-                                            whileHover={{ scale: 1.05 }}
-                                            whileTap={{ scale: 0.95 }}
-                                            className="h-16 bg-gradient-to-br from-red-900/30 to-red-950/30 hover:from-red-800/40 hover:to-red-900/40 border border-red-900/50 hover:border-red-700 rounded-xl text-white text-sm font-semibold transition-all"
-                                        >
-                                            DELETE
-                                        </motion.button>
+                                        <div />
                                         <motion.button
                                             onClick={() => handlePinInput('0')}
-                                            whileHover={{ scale: 1.05 }}
+                                            whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.1)" }}
                                             whileTap={{ scale: 0.95 }}
-                                            className="relative h-16 bg-gradient-to-br from-gray-800 to-gray-900 hover:from-primary/20 hover:to-primary/10 border border-gray-700 hover:border-primary/50 rounded-xl text-white text-xl font-bold transition-all overflow-hidden group"
+                                            className="h-16 rounded-xl bg-white/5 border border-white/5 text-2xl font-light text-white transition-colors hover:border-primary/30"
                                         >
-                                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500" />
-                                            <span className="relative z-10">0</span>
+                                            0
                                         </motion.button>
                                         <motion.button
-                                            onClick={onClose}
-                                            whileHover={{ scale: 1.05 }}
+                                            onClick={handleDelete}
+                                            whileHover={{ scale: 1.05, color: "#ef4444", backgroundColor: "rgba(239,68,68,0.1)" }}
                                             whileTap={{ scale: 0.95 }}
-                                            className="h-16 bg-gradient-to-br from-gray-800 to-gray-900 hover:from-gray-700 hover:to-gray-800 border border-gray-700 hover:border-gray-600 rounded-xl text-white text-sm font-semibold transition-all"
+                                            className="h-16 rounded-xl flex items-center justify-center text-gray-400 transition-colors"
                                         >
-                                            CANCEL
+                                            <span className="text-sm font-medium tracking-wide">DEL</span>
                                         </motion.button>
                                     </div>
 
-                                    <div className="mt-6 text-center">
-                                        <p className="text-xs text-gray-500 flex items-center justify-center gap-2">
-                                            <Lock className="w-3 h-3" />
-                                            256-BIT ENCRYPTED • IMPERO SECURITY
-                                        </p>
+                                    <div className="text-center">
+                                        <button
+                                            onClick={onClose}
+                                            className="text-gray-500 text-xs hover:text-white transition-colors tracking-widest uppercase hover:underline underline-offset-4"
+                                        >
+                                            Cancel Access
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -304,6 +271,8 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
                     )}
                 </>
             )}
-        </AnimatePresence>
+        </AnimatePresence>,
+        document.body
+    );
     );
 }
