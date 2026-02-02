@@ -303,10 +303,10 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <Reveal className="mb-12 text-center">
             <span className="text-xs font-bold tracking-[0.3em] text-primary uppercase block mb-3">The Campaign</span>
-            <h2 className="font-serif text-4xl text-gray-900">Muse & Masterpiece</h2>
+            <h2 className="font-serif text-4xl text-gray-900 dark:text-gray-100">Muse & Masterpiece</h2>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {[heroImg2, heroImg3].map((img, i) => (
               <Reveal key={i} delay={i * 0.2}>
                 <div className="relative group overflow-hidden aspect-[3/4] cursor-pointer shadow-lg">
