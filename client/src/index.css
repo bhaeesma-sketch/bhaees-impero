@@ -72,6 +72,42 @@
   --radius: 0.25rem; /* Sharp, premium corners */
 }
 
+/* DARK PREMIUM THEME - LUXURIOUS */
+.dark {
+  /* Base: Rich Dark Background */
+  --background: 220 15% 8%;
+  
+  /* Text: Soft Cream */
+  --foreground: 40 20% 95%;
+  
+  --card: 220 15% 12%;
+  --card-foreground: 40 20% 95%;
+  
+  --popover: 220 15% 10%;
+  --popover-foreground: 40 20% 95%;
+  
+  /* Primary: Brighter Gold for dark mode */
+  --primary: 40 60% 65%;
+  --primary-foreground: 220 15% 10%;
+  
+  /* Secondary: Dark Charcoal with gold tint */
+  --secondary: 220 15% 15%;
+  --secondary-foreground: 40 50% 70%;
+  
+  --muted: 220 15% 18%;
+  --muted-foreground: 40 10% 60%;
+  
+  --accent: 220 15% 20%;
+  --accent-foreground: 40 60% 70%;
+  
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  
+  --border: 220 15% 20%;
+  --input: 220 15% 20%;
+  --ring: 40 60% 65%;
+}
+
 @layer base {
   * {
     @apply border-border;

@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Menu, X, Phone, User, LogOut, Settings } from 'lucide-react';
+import { Search, Menu, X, Phone, User, LogOut, Settings, Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link, useLocation } from 'wouter';
 import { useAuth } from '@/hooks/use-auth';
+import { useTheme } from '@/hooks/use-theme';
 import { AuthModal } from '@/components/auth/AuthModal';
 // ... other imports ...
 import {
@@ -23,6 +24,7 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const { user, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [, setLocation] = useLocation();
 
   useEffect(() => {
@@ -99,7 +101,19 @@ export function Header() {
                 ))}
               </nav>
 
-              <button className="p-2 hover:bg-gray-50 rounded-full transition-colors text-gray-600 hover:text-primary">
+              <button
+                onClick={toggleTheme}
+                className="p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-all text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary"
+                aria-label="Toggle dark mode"
+              >
+                {theme === 'dark' ? (
+                  <Sun className="w-5 h-5 transition-transform hover:rotate-12" />
+                ) : (
+                  <Moon className="w-5 h-5 transition-transform hover:-rotate-12" />
+                )}
+              </button>
+
+              <button className="p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary">
                 <Search className="w-5 h-5" />
               </button>
 
