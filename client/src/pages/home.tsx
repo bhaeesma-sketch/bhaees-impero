@@ -231,7 +231,7 @@ export default function Home() {
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[heroImg2, heroImg3, heroImg4].map((img, i) => (
+            {[heroImg2, heroImg3].map((img, i) => (
               <Reveal key={i} delay={i * 0.2}>
                 <div className="relative group overflow-hidden aspect-[3/4] cursor-pointer shadow-lg">
                   <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500 z-10" />
@@ -242,7 +242,7 @@ export default function Home() {
                   />
                   <div className="absolute bottom-0 left-0 w-full p-8 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-t from-black/60 to-transparent">
                     <p className="text-white font-serif text-2xl italic">
-                      {["The Bridal Edit", "Diamond Purity", "Gold Heritage"][i]}
+                      {["The Bridal Edit", "Diamond Purity"][i]}
                     </p>
                   </div>
                 </div>
