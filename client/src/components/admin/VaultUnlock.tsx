@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, Shield, CheckCircle, AlertCircle } from 'lucide-react';
 
@@ -206,9 +207,9 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
                                                 } : {}}
                                                 transition={{ duration: 0.4 }}
                                                 className={`relative w-14 h-16 rounded-xl border flex items-center justify-center transition-all duration-300 ${error ? 'border-red-500/50 bg-red-900/10' :
-                                                        success ? 'border-green-500/50 bg-green-900/10' :
-                                                            pin[i] ? 'border-primary shadow-[0_0_15px_rgba(197,160,89,0.3)] bg-primary/5' :
-                                                                'border-white/10 bg-white/5'
+                                                    success ? 'border-green-500/50 bg-green-900/10' :
+                                                        pin[i] ? 'border-primary shadow-[0_0_15px_rgba(197,160,89,0.3)] bg-primary/5' :
+                                                            'border-white/10 bg-white/5'
                                                     }`}
                                             >
                                                 <AnimatePresence>
@@ -273,6 +274,5 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
             )}
         </AnimatePresence>,
         document.body
-    );
     );
 }
