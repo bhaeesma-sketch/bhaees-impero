@@ -194,8 +194,112 @@ export default function Home() {
           </StaggerContainer>
         </div>
       </section>
+
+      {/* Premium Features Section */}
+      <section className="py-24 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
+        <div className="container mx-auto px-4">
+          <Reveal className="mb-16 text-center">
+            <span className="text-xs font-bold tracking-[0.3em] text-primary uppercase block mb-3">Experience Luxury</span>
+            <h2 className="font-serif text-5xl text-gray-900 dark:text-gray-100 mb-4">Exclusive Features</h2>
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Discover our cutting-edge services designed to elevate your jewelry shopping experience
+            </p>
+          </Reveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                icon: "👁️",
+                title: "Virtual Try-On",
+                description: "Experience AR technology to see how jewelry looks on you in real-time",
+                link: "/try-on",
+                gradient: "from-purple-500 to-pink-500"
+              },
+              {
+                icon: "✨",
+                title: "Personal Stylist",
+                description: "Expert consultation to find pieces that match your style and occasion",
+                link: "/bespoke",
+                gradient: "from-blue-500 to-cyan-500"
+              },
+              {
+                icon: "💎",
+                title: "Custom Design",
+                description: "Create bespoke jewelry pieces tailored to your vision and preferences",
+                link: "/bespoke",
+                gradient: "from-amber-500 to-orange-500"
+              },
+              {
+                icon: "📊",
+                title: "Live Market Rates",
+                description: "Real-time gold and diamond pricing with transparent buyback guarantee",
+                link: "/compare",
+                gradient: "from-green-500 to-emerald-500"
+              },
+            ].map((feature, i) => (
+              <Reveal key={i} delay={i * 0.1}>
+                <Link href={feature.link}>
+                  <div className="group relative bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-100 dark:border-gray-700 hover:border-transparent overflow-hidden">
+                    {/* Gradient overlay on hover */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+
+                    <div className="relative z-10">
+                      <div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-500">
+                        {feature.icon}
+                      </div>
+                      <h3 className="font-serif text-2xl text-gray-900 dark:text-gray-100 mb-3 group-hover:text-primary transition-colors">
+                        {feature.title}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                        {feature.description}
+                      </p>
+                      <div className="flex items-center text-primary font-medium text-sm group-hover:translate-x-2 transition-transform duration-300">
+                        Explore <span className="ml-2">→</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+
+          {/* Additional Services */}
+          <Reveal delay={0.5} className="mt-16">
+            <div className="bg-gradient-to-r from-primary/10 to-primary/5 dark:from-primary/20 dark:to-primary/10 rounded-2xl p-12 text-center border border-primary/20">
+              <h3 className="font-serif text-3xl text-gray-900 dark:text-gray-100 mb-4">More Premium Services</h3>
+              <div className="flex flex-wrap justify-center gap-6 text-gray-700 dark:text-gray-300">
+                <div className="flex items-center gap-2">
+                  <span className="text-primary">✓</span>
+                  <span>Lifetime Warranty</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-primary">✓</span>
+                  <span>Free Resizing</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-primary">✓</span>
+                  <span>Complimentary Cleaning</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-primary">✓</span>
+                  <span>Secure Vault Storage</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-primary">✓</span>
+                  <span>Certification & Appraisal</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-primary">✓</span>
+                  <span>VIP Showroom Access</span>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* Campaign Gallery - High Fashion */}
-      <section className="py-20 bg-white border-b border-gray-100">
+      <section className="py-20 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
         <div className="container mx-auto px-4">
           <Reveal className="mb-12 text-center">
             <span className="text-xs font-bold tracking-[0.3em] text-primary uppercase block mb-3">The Campaign</span>
