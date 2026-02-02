@@ -6,6 +6,7 @@ import { Link, useLocation } from 'wouter';
 import { useAuth } from '@/hooks/use-auth';
 import { useTheme } from '@/hooks/use-theme';
 import { AuthModal } from '@/components/auth/AuthModal';
+import { VaultUnlock } from '@/components/admin/VaultUnlock';
 // ... other imports ...
 import {
   DropdownMenu,
@@ -23,9 +24,21 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isVaultOpen, setIsVaultOpen] = useState(false);
+  const [tapCount, setTapCount] = useState(0);
   const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [, setLocation] = useLocation();
+
+  // Triple tap detection
+  useEffect(() => {
+    if (tapCount === 3) {
+      setIsVaultOpen(true);
+      setTapCount(0);
+    }
+    const timer = setTimeout(() => setTapCount(0), 1000);
+    return () => clearTimeout(timer);
+  }, [tapCount]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,7 +85,10 @@ export function Header() {
 
             {/* Logo - ABSOLUTE CENTER & MASSIVE & BLING */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none">
-              <Link href="/" className="block group pointer-events-auto">
+              <div
+                onClick={() => setTapCount(prev => prev + 1)}
+                className="block group pointer-events-auto cursor-pointer"
+              >
                 <div className="h-32 md:h-[200px] w-auto relative flex items-center justify-center transition-all duration-500 hover:scale-105">
                   <img
                     src={logoImg}
@@ -80,8 +96,18 @@ export function Header() {
                     className="h-full w-auto object-contain drop-shadow-2xl animate-bling"
                   />
                 </div>
-              </Link>
+              </div>
             </div>
+
+            {/* Vault Unlock Modal */}
+            <VaultUnlock
+              isOpen={isVaultOpen}
+              onClose={() => setIsVaultOpen(false)}
+              onUnlock={() => {
+                setIsVaultOpen(false);
+                setLocation('/admin');
+              }}
+            />
 
             {/* Actions - RIGHT SIDE */}
             <div className="flex items-center gap-4 flex-1 justify-end">
