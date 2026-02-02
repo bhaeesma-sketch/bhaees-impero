@@ -220,6 +220,9 @@ app.get('/api/gold-rates', async (req, res) => {
 // Products API
 app.get('/api/products', async (req, res) => {
     try {
+        if (!db) {
+            return res.json([]); // Return empty array if database is not configured
+        }
         const allProducts = await db.select().from(products);
         res.json(allProducts);
     } catch (error) {
@@ -230,6 +233,9 @@ app.get('/api/products', async (req, res) => {
 
 app.get('/api/products/:id', async (req, res) => {
     try {
+        if (!db) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
         // Fix: products.id is varchar (string), not integer
         const product = await db.select().from(products).where(eq(products.id, req.params.id));
         if (product.length === 0) {
