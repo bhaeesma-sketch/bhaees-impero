@@ -24,15 +24,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Check if user is already logged in
+    // Set loading to false immediately so app can render
+    setIsLoading(false);
+    // Check auth in background
     checkAuth();
   }, []);
 
   const checkAuth = async () => {
     try {
+      // Add timeout to prevent hanging
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
+
       const response = await fetch('/api/auth/me', {
         credentials: 'include',
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
 
       if (response.ok) {
         const data = await response.json();
@@ -43,8 +52,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       console.error('Auth check failed:', error);
       setUser(null);
-    } finally {
-      setIsLoading(false);
     }
   };
 
