@@ -80,7 +80,7 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={!success ? onClose : undefined}
-                        className="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[100]"
+                        className="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[200]"
                     >
                         {[...Array(20)].map((_, i) => (
                             <motion.div
@@ -111,7 +111,7 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0 }}
-                                className="fixed inset-0 z-[102] flex items-center justify-center"
+                                className="fixed inset-0 z-[202] flex items-center justify-center"
                             >
                                 <div className="text-center">
                                     <motion.div
@@ -153,7 +153,7 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
                             animate={{ y: 0, opacity: 1, scale: 1 }}
                             exit={{ y: -100, opacity: 0, scale: 0.9 }}
                             transition={{ type: 'spring', damping: 20 }}
-                            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[101] w-full max-w-md"
+                            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[201] w-full max-w-md"
                         >
                             <div className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 border-2 border-primary/30 rounded-3xl p-10 shadow-2xl overflow-hidden">
                                 <div className="absolute inset-0 rounded-3xl">
@@ -203,9 +203,9 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
                                                 } : {}}
                                                 transition={{ duration: 0.4, delay: i * 0.05 }}
                                                 className={`relative w-16 h-16 rounded-2xl border-2 flex items-center justify-center transition-all ${error ? 'border-red-500 bg-red-500/20' :
-                                                        success ? 'border-green-500 bg-green-500/20' :
-                                                            pin[i] ? 'border-primary bg-primary/20 shadow-[0_0_20px_rgba(197,160,89,0.3)]' :
-                                                                'border-gray-700 bg-gray-800/50'
+                                                    success ? 'border-green-500 bg-green-500/20' :
+                                                        pin[i] ? 'border-primary bg-primary/20 shadow-[0_0_20px_rgba(197,160,89,0.3)]' :
+                                                            'border-gray-700 bg-gray-800/50'
                                                     }`}
                                             >
                                                 {pin[i] && (
