@@ -80,7 +80,7 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={!success ? onClose : undefined}
-                        className="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[200]"
+                        className="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[9999]"
                     >
                         {[...Array(20)].map((_, i) => (
                             <motion.div
@@ -111,7 +111,7 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0 }}
-                                className="fixed inset-0 z-[202] flex items-center justify-center"
+                                className="fixed inset-0 z-[10001] flex items-center justify-center"
                             >
                                 <div className="text-center">
                                     <motion.div
@@ -153,7 +153,7 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
                             animate={{ y: 0, opacity: 1, scale: 1 }}
                             exit={{ y: -100, opacity: 0, scale: 0.9 }}
                             transition={{ type: 'spring', damping: 20 }}
-                            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[201] w-full max-w-md"
+                            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[10000] w-full max-w-md"
                         >
                             <div className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 border-2 border-primary/30 rounded-3xl p-10 shadow-2xl overflow-hidden">
                                 <div className="absolute inset-0 rounded-3xl">
