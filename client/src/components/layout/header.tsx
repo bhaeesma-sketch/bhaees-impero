@@ -26,6 +26,8 @@ export function Header() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isVaultOpen, setIsVaultOpen] = useState(false);
   const [tapCount, setTapCount] = useState(0);
+  const [showSwipeHint, setShowSwipeHint] = useState(false);
+  const [swipeStartY, setSwipeStartY] = useState(0);
   const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [, setLocation] = useLocation();
@@ -33,12 +35,48 @@ export function Header() {
   // Triple tap detection
   useEffect(() => {
     if (tapCount === 3) {
-      setIsVaultOpen(true);
+      setShowSwipeHint(true);
       setTapCount(0);
     }
     const timer = setTimeout(() => setTapCount(0), 1000);
     return () => clearTimeout(timer);
   }, [tapCount]);
+
+  // Swipe down detection
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (showSwipeHint) {
+      setSwipeStartY(e.touches[0].clientY);
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (showSwipeHint) {
+      const swipeEndY = e.changedTouches[0].clientY;
+      const swipeDistance = swipeEndY - swipeStartY;
+
+      if (swipeDistance > 100) { // Swipe down threshold
+        setShowSwipeHint(false);
+        setIsVaultOpen(true);
+      }
+    }
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (showSwipeHint) {
+      setSwipeStartY(e.clientY);
+    }
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (showSwipeHint) {
+      const swipeDistance = e.clientY - swipeStartY;
+
+      if (swipeDistance > 100) {
+        setShowSwipeHint(false);
+        setIsVaultOpen(true);
+      }
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,6 +88,36 @@ export function Header() {
 
   return (
     <>
+      {/* Swipe Hint Overlay */}
+      <AnimatePresence>
+        {showSwipeHint && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            className="fixed inset-0 z-[99] bg-black/80 backdrop-blur-sm flex items-center justify-center cursor-pointer"
+          >
+            <div className="text-center">
+              <motion.div
+                animate={{ y: [0, 20, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+                className="mb-6"
+              >
+                <svg className="w-16 h-16 mx-auto text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+              </motion.div>
+              <p className="text-2xl text-primary font-serif mb-2">Swipe Down</p>
+              <p className="text-gray-400 text-sm">to unlock the vault</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <header
         className={`w-full transition-all duration-300 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100 ${isScrolled ? 'py-4 shadow-md' : 'py-8'
           }`}
