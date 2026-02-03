@@ -6,16 +6,20 @@ export function useCamera() {
     const [isLoading, setIsLoading] = useState(false);
     const videoRef = useRef<HTMLVideoElement | null>(null);
 
-    const startCamera = async () => {
+    const startCamera = async (facingMode: 'user' | 'environment' = 'user') => {
         setIsLoading(true);
         setError(null);
 
         try {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+
             const mediaStream = await navigator.mediaDevices.getUserMedia({
                 video: {
                     width: { ideal: 1280 },
                     height: { ideal: 720 },
-                    facingMode: 'user',
+                    facingMode: facingMode,
                 },
                 audio: false,
             });

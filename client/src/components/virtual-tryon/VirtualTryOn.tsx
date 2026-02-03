@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { HandTracking } from './HandTracking';
 import { Results as HandResults } from '@mediapipe/hands';
 import { Results } from '@mediapipe/face_mesh';
@@ -8,7 +8,7 @@ import { JewelryOverlay } from './JewelryOverlay';
 import { PhotoCapture } from './ui/PhotoCapture';
 import { SkinToneAnalyzer, AnalysisResult } from './ai/SkinToneAnalyzer';
 import { Button } from '@/components/ui/button';
-import { Camera, Download, X, ChevronLeft, ChevronRight, Sparkles, Wand2 } from 'lucide-react';
+import { Camera, Download, X, ChevronLeft, ChevronRight, Sparkles, Wand2, RefreshCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Product } from '@/lib/products';
 
@@ -29,6 +29,9 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [showInstructions, setShowInstructions] = useState(true);
     const [earringStyle, setEarringStyle] = useState<'stud' | 'hoop' | 'drop'>('stud');
+    const [cameraMode, setCameraMode] = useState<'user' | 'environment'>('user');
+    const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 });
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const currentProduct = products[currentProductIndex];
     const productType = currentProduct?.type === 'jewelry' ?
@@ -42,6 +45,48 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
     // Extract purity from product, default to 22K
     const purity = (currentProduct?.purity || '22K') as '18K' | '21K' | '22K' | '24K';
 
+    // Handle Resize for Overlay Alignment
+    useEffect(() => {
+        const updateDimensions = () => {
+            if (videoRef.current) {
+                const videoRatio = videoRef.current.videoWidth / videoRef.current.videoHeight;
+                // Calculate size that fits in window while maintaining aspect ratio
+                // This mimics object-contain but gives us the exact dimensions of the video content
+                const windowRatio = window.innerWidth / window.innerHeight;
+
+                let renderWidth, renderHeight;
+
+                if (windowRatio > videoRatio) {
+                    // Window is wider than video -> limited by height
+                    renderHeight = window.innerHeight;
+                    renderWidth = renderHeight * videoRatio;
+                } else {
+                    // Window is taller than video -> limited by width
+                    renderWidth = window.innerWidth;
+                    renderHeight = renderWidth / videoRatio;
+                }
+
+                setContainerDimensions({
+                    width: renderWidth || window.innerWidth,
+                    height: renderHeight || window.innerHeight
+                });
+            }
+        };
+
+        window.addEventListener('resize', updateDimensions);
+        // Also update on video metadata load
+        if (videoRef.current) {
+            videoRef.current.addEventListener('loadedmetadata', updateDimensions);
+        }
+        return () => {
+            window.removeEventListener('resize', updateDimensions);
+            if (videoRef.current) {
+                videoRef.current.removeEventListener('loadedmetadata', updateDimensions);
+            }
+        };
+    }, [stream]);
+
+
     const handleResults = useCallback((results: Results) => {
         setFaceResults(results);
     }, []);
@@ -51,8 +96,14 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
     }, []);
 
     const handleStartCamera = async () => {
-        await startCamera();
+        await startCamera(cameraMode);
         setShowInstructions(false);
+    };
+
+    const handleToggleCamera = async () => {
+        const newMode = cameraMode === 'user' ? 'environment' : 'user';
+        setCameraMode(newMode);
+        await startCamera(newMode);
     };
 
     const handleCapture = () => {
@@ -67,30 +118,8 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
 
         if (ctx) {
             // Draw video frame
+            // Note: If text/overlay mirroring is needed, transform here.
             ctx.drawImage(videoRef.current, 0, 0);
-
-            // TODO: In a real implementation, we would also draw the 3D overlay here 
-            // by rendering the Three.js scene to a texture or offscreen canvas.
-            // For now, we capture the video feed. The proper way is to use 
-            // gl.domElement.toDataURL() from the R3F Canvas, but that requires 
-            // access to the gl context.
-
-            // Simpler approach for MVP: Take screenshot of the video feed (as done here)
-            // and rely on the fact that the overlay is on top. 
-            // Wait, standard canvas drawImage won't draw the separate WebGL canvas on top.
-            // We need html2canvas or similar to capture the whole DOM stack, 
-            // OR simply rely on the fact that for "sharing" intent, the raw camera feed 
-            // plus an overlaid "sticker" in post (if we could) or just the feed is better than nothing.
-            // BUT: Users want to see the jewelry.
-
-            // Correct approach: We use html2canvas to capture the container div.
-            // However, html2canvas is heavy.
-            // Alternative: Capture the WebGL canvas result too.
-            // Since we can't easily grab the WebGL context from here without a ref...
-
-            // Let's assume for this step we process just the video capture to verify flow,
-            // and then I'll add html2canvas for full composite capture if needed.
-            // Or better: pass a callback to JewelryOverlay to capture its canvas?
 
             canvas.toBlob((blob) => {
                 if (blob) {
@@ -129,10 +158,10 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
     };
 
     return (
-        <div className="fixed inset-0 bg-black z-50 flex flex-col">
+        <div className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center">
             {/* Header */}
-            <div className="absolute top-0 left-0 right-0 z-10 bg-gradient-to-b from-black/80 to-transparent p-4 pt-12">
-                <div className="flex items-center justify-between">
+            <div className="absolute top-0 left-0 right-0 z-50 bg-gradient-to-b from-black/80 to-transparent p-4 pt-12 pointer-events-none">
+                <div className="flex items-center justify-between pointer-events-auto">
                     <div className="flex gap-2">
                         <Button
                             variant="outline"
@@ -154,6 +183,13 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
                             <Wand2 className={`mr-2 w-4 h-4 ${isAnalyzing ? 'animate-spin' : ''}`} />
                             {isAnalyzing ? 'Analyzing...' : 'AI Stylist'}
                         </Button>
+                        <Button
+                            variant="outline"
+                            className="bg-black/30 backdrop-blur-md border-white/20 text-white hover:bg-black/50"
+                            onClick={handleToggleCamera}
+                        >
+                            <RefreshCcw className="w-4 h-4" />
+                        </Button>
                     </div>
                 </div>
             </div>
@@ -165,7 +201,7 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 50 }}
-                        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-xl p-8 rounded-2xl shadow-2xl max-w-sm w-full z-50 pointer-events-auto text-center border border-white/50"
+                        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-xl p-8 rounded-2xl shadow-2xl max-w-sm w-full z-[60] pointer-events-auto text-center border border-white/50"
                     >
                         <div className="mb-4 flex justify-center">
                             <span className="p-3 bg-purple-100 rounded-full">
@@ -194,8 +230,14 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
             </AnimatePresence>
 
 
-            {/* Camera View */}
-            <div className="flex-1 relative flex items-center justify-center overflow-hidden">
+            {/* Camera View Wrapper - Handles proper aspect ratio */}
+            <div
+                className="relative flex items-center justify-center overflow-hidden shadow-2xl"
+                style={{
+                    width: containerDimensions.width || '100%',
+                    height: containerDimensions.height || '100%'
+                }}
+            >
                 {!stream && !error && (
                     <AnimatePresence>
                         {showInstructions && (
@@ -203,7 +245,7 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                className="absolute inset-0 flex flex-col items-center justify-center bg-black/90 z-20 p-8"
+                                className="absolute inset-0 flex flex-col items-center justify-center bg-black/90 z-20 p-8 text-center"
                             >
                                 <Camera className="w-20 h-20 text-primary mb-6" />
                                 <h3 className="text-white font-serif text-3xl mb-4">Ready to Try On?</h3>
@@ -224,24 +266,33 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
                 )}
 
                 {error && (
-                    <div className="text-center text-white p-8">
-                        <p className="text-red-400 mb-4">Camera Error: {error}</p>
-                        <Button onClick={handleStartCamera} variant="outline">
-                            Try Again
-                        </Button>
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-900 z-30">
+                        <div className="text-center text-white p-8">
+                            <p className="text-red-400 mb-4">Camera Error: {error}</p>
+                            <Button onClick={handleStartCamera} variant="outline">
+                                Try Again
+                            </Button>
+                        </div>
                     </div>
                 )}
 
+                {/* The Video Element */}
                 <video
                     ref={videoRef}
                     autoPlay
                     playsInline
                     muted
-                    className="max-w-full max-h-full object-contain transform -scale-x-100"
+                    className={`absolute inset-0 w-full h-full object-contain ${cameraMode === 'user' ? 'transform -scale-x-100' : ''}`}
                 />
 
+                {/* The Overlay */}
                 {stream && videoRef.current && (
-                    <>
+                    <div className={`absolute inset-0 w-full h-full pointer-events-none ${cameraMode === 'user' ? 'transform -scale-x-100' : ''}`} >
+                        {/* Note: Overlay itself shouldn't be flipped via CSS if MediaPipe results assume flipped or not. 
+                             Usually MediaPipe coordinates match the video source. 
+                             If we flip the video visually, we flip the coordinate system too.
+                             So we wrap all overlays in a div that matches the video's flip state. 
+                          */}
                         <FaceDetection
                             videoRef={videoRef as React.RefObject<HTMLVideoElement>}
                             onResults={handleResults}
@@ -255,12 +306,12 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
                             faceResults={faceResults}
                             handResults={handResults}
                             productType={productType}
-                            canvasWidth={videoRef.current?.clientWidth || 0}
-                            canvasHeight={videoRef.current?.clientHeight || 0}
+                            canvasWidth={containerDimensions.width}
+                            canvasHeight={containerDimensions.height}
                             purity={purity}
                             earringStyle={earringStyle}
                         />
-                    </>
+                    </div>
                 )}
             </div>
 
@@ -276,7 +327,7 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
             {/* Product Selector */}
             {
                 stream && (
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6">
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 z-40">
                         <div className="flex items-center justify-between max-w-4xl mx-auto">
                             <Button
                                 variant="ghost"
@@ -301,11 +352,9 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
                                 <ChevronRight className="w-6 h-6" />
                             </Button>
                         </div>
-
-
                     </div>
                 )
             }
-        </div >
+        </div>
     );
 }
