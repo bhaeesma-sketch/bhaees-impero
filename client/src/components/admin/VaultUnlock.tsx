@@ -15,61 +15,74 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
     const [pin, setPin] = useState('');
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [isVerifying, setIsVerifying] = useState(false);
     const [showWelcome, setShowWelcome] = useState(false);
 
-    const playSound = (frequency: number, duration: number) => {
+    // Advanced Sound Synthesis
+    const playTone = (freq: number, type: 'sine' | 'square' | 'sawtooth' | 'triangle' = 'sine', duration: number = 0.1) => {
         try {
-            const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
+            const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+            const ctx = new AudioContext();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
 
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, ctx.currentTime);
 
-            oscillator.frequency.value = frequency;
-            oscillator.type = 'sine';
+            gain.gain.setValueAtTime(0.1, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
 
-            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
 
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + duration);
+            osc.start();
+            osc.stop(ctx.currentTime + duration);
         } catch (e) {
-            console.log('Audio not supported');
+            console.error(e);
         }
     };
 
     const handlePinInput = (digit: string) => {
-        if (pin.length < 4) {
+        if (pin.length < 4 && !isVerifying && !success) {
             const newPin = pin + digit;
             setPin(newPin);
-            playSound(800 + (newPin.length * 100), 0.1);
+            playTone(1200 + (newPin.length * 200), 'sine', 0.15); // Ascending futuristic tones
 
             if (newPin.length === 4) {
-                if (newPin === CORRECT_PIN) {
-                    setSuccess(true);
-                    playSound(1200, 0.3);
-                    setTimeout(() => {
-                        setShowWelcome(true);
+                // Verify Phase
+                setIsVerifying(true);
+                playTone(800, 'square', 0.1); // Initiate scan sound
+
+                setTimeout(() => {
+                    if (newPin === CORRECT_PIN) {
+                        setIsVerifying(false);
+                        setSuccess(true);
+                        playTone(2000, 'sine', 0.6); // Success chime
+                        playTone(400, 'sine', 0.6); // Harmony
+
                         setTimeout(() => {
-                            onUnlock();
-                        }, 2500);
-                    }, 500);
-                } else {
-                    setError(true);
-                    playSound(200, 0.3);
-                    setTimeout(() => {
-                        setPin('');
-                        setError(false);
-                    }, 1000);
-                }
+                            setShowWelcome(true);
+                            setTimeout(onUnlock, 3000);
+                        }, 800);
+                    } else {
+                        setIsVerifying(false);
+                        setError(true);
+                        playTone(150, 'sawtooth', 0.4); // Error buzz
+                        setTimeout(() => {
+                            setPin('');
+                            setError(false);
+                        }, 1000);
+                    }
+                }, 1500); // 1.5s Fake Verification Delay for "Realism"
             }
         }
     };
 
     const handleDelete = () => {
-        setPin(pin.slice(0, -1));
-        playSound(400, 0.05);
+        if (pin.length > 0 && !isVerifying) {
+            setPin(pin.slice(0, -1));
+            playTone(600, 'sine', 0.1);
+        }
     };
 
     if (typeof document === 'undefined') return null;
@@ -78,198 +91,199 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
         <AnimatePresence>
             {isOpen && (
                 <>
+                    {/* Immersive Backdrop with "Digital Dust" */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        onClick={!success ? onClose : undefined}
-                        className="fixed inset-0 bg-black/95 backdrop-blur-3xl z-[99999] flex items-center justify-center"
-                        style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, height: '100dvh', width: '100vw' }}
+                        className="fixed inset-0 bg-black z-[99999] flex items-center justify-center overflow-hidden"
                     >
-                        {[...Array(30)].map((_, i) => (
+                        {/* Background Gradient Mesh */}
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-900 via-black to-black" />
+
+                        {/* Animated Grid */}
+                        <div className="absolute inset-0 opacity-20"
+                            style={{
+                                backgroundImage: 'linear-gradient(rgba(197, 160, 89, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(197, 160, 89, 0.1) 1px, transparent 1px)',
+                                backgroundSize: '50px 50px'
+                            }}
+                        />
+
+                        {/* Floating Particles */}
+                        {[...Array(40)].map((_, i) => (
                             <motion.div
                                 key={i}
-                                className="absolute w-1 h-1 bg-gradient-to-tr from-primary via-yellow-200 to-primary rounded-full shadow-[0_0_10px_rgba(197,160,89,0.8)]"
-                                initial={{
-                                    x: Math.random() * window.innerWidth,
-                                    y: Math.random() * window.innerHeight,
-                                    scale: 0,
-                                    opacity: 0
+                                className="absolute rounded-full bg-primary/40 blur-[1px]"
+                                style={{
+                                    width: Math.random() * 4 + 1 + 'px',
+                                    height: Math.random() * 4 + 1 + 'px',
+                                    left: Math.random() * 100 + '%',
+                                    top: Math.random() * 100 + '%'
                                 }}
                                 animate={{
-                                    y: [null, Math.random() * -100],
-                                    scale: [0, 1.5, 0],
-                                    opacity: [0, 1, 0]
+                                    y: [0, -100],
+                                    opacity: [0, 1, 0],
+                                    scale: [0, 1.5, 0]
                                 }}
                                 transition={{
-                                    duration: 2 + Math.random() * 3,
+                                    duration: 3 + Math.random() * 5,
                                     repeat: Infinity,
-                                    delay: Math.random() * 2,
-                                    ease: "easeInOut"
+                                    delay: Math.random() * 5,
+                                    ease: "linear"
                                 }}
                             />
                         ))}
-
-                        {/* Background light glow center */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/20 blur-[120px] rounded-full pointer-events-none" />
                     </motion.div>
 
+                    {/* MAIN INTERFACE */}
                     <AnimatePresence>
-                        {showWelcome && (
+                        {showWelcome ? (
                             <motion.div
-                                initial={{ opacity: 0, scale: 0.9, filter: 'blur(10px)' }}
+                                initial={{ opacity: 0, scale: 0.95, filter: 'blur(20px)' }}
                                 animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
                                 exit={{ opacity: 0, scale: 1.1, filter: 'blur(10px)' }}
                                 className="fixed inset-0 z-[100001] flex items-center justify-center pointer-events-none"
                             >
-                                <div className="text-center relative">
-                                    <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full" />
+                                <div className="text-center relative z-10 w-full max-w-4xl mx-auto">
+                                    <div className="absolute inset-0 bg-primary/10 blur-[150px] rounded-full" />
+
                                     <motion.div
-                                        initial={{ scale: 0, rotate: -180 }}
-                                        animate={{ scale: [0, 1.5, 1], rotate: 0 }}
-                                        transition={{ duration: 1, type: "spring", bounce: 0.5 }}
-                                        className="mb-8 relative z-10"
+                                        initial={{ scale: 0, rotateX: 90 }}
+                                        animate={{ scale: 1, rotateX: 0 }}
+                                        transition={{ duration: 1.2, type: "spring" }}
+                                        className="mb-12 relative inline-block"
                                     >
-                                        <CheckCircle className="w-40 h-40 text-green-400 mx-auto drop-shadow-[0_0_50px_rgba(74,222,128,0.6)]" strokeWidth={1} />
+                                        <div className="absolute inset-0 bg-green-500/30 blur-3xl rounded-full animate-pulse" />
+                                        <CheckCircle className="w-32 h-32 md:w-48 md:h-48 text-green-400 mx-auto drop-shadow-[0_0_60px_rgba(74,222,128,0.8)]" strokeWidth={0.5} />
                                     </motion.div>
-                                    <motion.h1
-                                        initial={{ opacity: 0, y: 50 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.3 }}
-                                        className="font-serif text-8xl md:text-9xl bg-clip-text text-transparent bg-gradient-to-b from-yellow-100 via-primary to-yellow-600 mb-6 drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)]"
+
+                                    <motion.div
+                                        initial={{ y: 50, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        transition={{ delay: 0.5 }}
                                     >
-                                        Welcome
-                                    </motion.h1>
-                                    <motion.p
-                                        initial={{ opacity: 0, letterSpacing: '1em' }}
-                                        animate={{ opacity: 1, letterSpacing: '0.5em' }}
-                                        transition={{ delay: 0.6, duration: 0.8 }}
-                                        className="text-5xl md:text-6xl text-white font-bold uppercase drop-shadow-[0_0_20px_rgba(197,160,89,0.8)]"
-                                    >
-                                        FAIZAL
-                                    </motion.p>
+                                        <h1 className="font-serif text-6xl md:text-8xl bg-clip-text text-transparent bg-gradient-to-b from-yellow-200 via-primary to-yellow-700 mb-8 drop-shadow-2xl">
+                                            ACCESS GRANTED
+                                        </h1>
+                                        <motion.div
+                                            initial={{ width: 0 }}
+                                            animate={{ width: "100%" }}
+                                            transition={{ delay: 0.8, duration: 1 }}
+                                            className="h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mb-8 max-w-lg"
+                                        />
+                                        <p className="text-2xl md:text-3xl text-white font-light tracking-[0.5em] uppercase drop-shadow-lg">
+                                            Welcome, Faizal
+                                        </p>
+                                    </motion.div>
                                 </div>
                             </motion.div>
-                        )}
-                    </AnimatePresence>
+                        ) : (
+                            <motion.div
+                                initial={{ y: 50, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                exit={{ y: 50, opacity: 0 }}
+                                className="fixed inset-0 z-[100000] flex items-center justify-center p-4"
+                            >
+                                {/* Glass Panel Container */}
+                                <div className="relative w-full max-w-md bg-black/60 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-8 md:p-12 shadow-[0_0_150px_rgba(0,0,0,0.9)] overflow-hidden">
 
-                    {!showWelcome && (
-                        <motion.div
-                            initial={{ y: 50, opacity: 0, scale: 0.95 }}
-                            animate={{ y: 0, opacity: 1, scale: 1 }}
-                            exit={{ y: 50, opacity: 0, scale: 0.95 }}
-                            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100000] w-full max-w-md p-4"
-                        >
-                            <div className="relative bg-black/80 border border-white/10 rounded-[2rem] p-10 shadow-[0_0_100px_rgba(0,0,0,0.8)] backdrop-blur-xl overflow-hidden group">
-                                {/* Border Glow Animation */}
-                                <div className="absolute inset-0 rounded-[2rem] p-[1px] bg-gradient-to-b from-white/20 via-transparent to-white/10 opacity-50" />
-                                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-[1.5s] ease-in-out pointer-events-none" />
-
-                                <div className="relative z-10">
-                                    <div className="text-center mb-12">
+                                    {/* Scanning Line Animation */}
+                                    {isVerifying && (
                                         <motion.div
-                                            animate={success ? {
-                                                scale: [1, 1.2, 1],
-                                                rotate: [0, 360]
-                                            } : error ? {
-                                                x: [-5, 5, -5, 5, 0]
-                                            } : {}}
-                                            transition={{ duration: 0.5 }}
-                                            className="inline-block mb-6 relative"
+                                            className="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-primary/10 to-transparent h-[20%]"
+                                            animate={{ top: ['-20%', '120%'] }}
+                                            transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                                        />
+                                    )}
+
+                                    {/* Header Section */}
+                                    <div className="relative z-10 text-center mb-10">
+                                        <motion.div
+                                            animate={isVerifying ? { scale: [1, 1.1, 1], opacity: [0.8, 1, 0.8] } : {}}
+                                            transition={{ repeat: Infinity, duration: 1 }}
+                                            className="inline-flex items-center justify-center mb-6 w-24 h-24 rounded-full bg-gradient-to-b from-gray-800 to-black border border-white/10 shadow-xl relative"
                                         >
-                                            <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full" />
-                                            {success ? (
-                                                <CheckCircle className="w-24 h-24 text-green-400 mx-auto relative z-10 drop-shadow-[0_0_20px_rgba(74,222,128,0.5)]" strokeWidth={1} />
+                                            {isVerifying ? (
+                                                <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+                                            ) : error ? (
+                                                <Shield className="w-10 h-10 text-red-500 drop-shadow-[0_0_15px_rgba(239,68,68,0.6)]" strokeWidth={1.5} />
                                             ) : (
-                                                <div className="relative">
-                                                    <Shield className="w-24 h-24 text-primary mx-auto drop-shadow-[0_0_30px_rgba(197,160,89,0.4)]" strokeWidth={1} />
-                                                    <Lock className="w-8 h-8 text-black absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" strokeWidth={2.5} />
-                                                </div>
+                                                <Lock className="w-10 h-10 text-primary drop-shadow-[0_0_15px_rgba(197,160,89,0.6)]" strokeWidth={1.5} />
                                             )}
                                         </motion.div>
-                                        <h2 className="font-serif text-4xl text-white mb-2 tracking-wide">
-                                            IMPERO <span className="text-primary">VAULT</span>
+
+                                        <h2 className="font-serif text-3xl text-white tracking-widest mb-2">
+                                            IMPERO <span className="text-primary font-bold">VAULT</span>
                                         </h2>
-                                        <p className="text-gray-400 text-xs tracking-[0.3em] uppercase">Biometric Security Clearance</p>
+                                        <p className="text-xs text-gray-500 uppercase tracking-[0.4em] font-medium">
+                                            {isVerifying ? "Verifying Credentials..." : error ? "Authentication Failed" : "Secure Touch Entry"}
+                                        </p>
                                     </div>
 
-                                    <div className="flex justify-center gap-6 mb-12">
+                                    {/* PIN Display */}
+                                    <div className="relative z-10 flex justify-center gap-6 mb-12">
                                         {[0, 1, 2, 3].map((i) => (
                                             <motion.div
                                                 key={i}
-                                                animate={error ? {
-                                                    x: [-10, 10, -10, 10, 0],
-                                                    borderColor: ['#ef4444', '#ef4444', '#ef4444']
-                                                } : success ? {
-                                                    borderColor: ['#22c55e', '#22c55e'],
-                                                    scale: [1, 1.1, 1]
-                                                } : {}}
-                                                transition={{ duration: 0.4 }}
-                                                className={`relative w-14 h-16 rounded-xl border flex items-center justify-center transition-all duration-300 ${error ? 'border-red-500/50 bg-red-900/10' :
-                                                    success ? 'border-green-500/50 bg-green-900/10' :
-                                                        pin[i] ? 'border-primary shadow-[0_0_15px_rgba(197,160,89,0.3)] bg-primary/5' :
-                                                            'border-white/10 bg-white/5'
+                                                className={`w-4 h-4 rounded-full transition-all duration-300 border ${pin[i]
+                                                        ? 'bg-primary border-primary shadow-[0_0_20px_rgba(197,160,89,0.8)] scale-125'
+                                                        : 'bg-transparent border-gray-600'
+                                                    } ${error ? '!bg-red-500 !border-red-500 !shadow-[0_0_20px_rgba(239,68,68,0.8)]' : ''
+                                                    } ${success ? '!bg-green-500 !border-green-500 !shadow-[0_0_20px_rgba(34,197,94,0.8)]' : ''
                                                     }`}
-                                            >
-                                                <AnimatePresence>
-                                                    {pin[i] && (
-                                                        <motion.div
-                                                            initial={{ scale: 0, opacity: 0 }}
-                                                            animate={{ scale: 1, opacity: 1 }}
-                                                            exit={{ scale: 0, opacity: 0 }}
-                                                        >
-                                                            <div className="w-3 h-3 bg-primary rounded-full shadow-[0_0_10px_rgba(197,160,89,0.8)]" />
-                                                        </motion.div>
-                                                    )}
-                                                </AnimatePresence>
-                                            </motion.div>
+                                            />
                                         ))}
                                     </div>
 
-                                    <div className="grid grid-cols-3 gap-4 mb-8">
+                                    {/* Keypad */}
+                                    <div className="relative z-10 grid grid-cols-3 gap-5 mb-8">
                                         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
                                             <motion.button
                                                 key={num}
                                                 onClick={() => handlePinInput(num.toString())}
-                                                whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.1)" }}
-                                                whileTap={{ scale: 0.95 }}
-                                                className="h-16 rounded-xl bg-white/5 border border-white/5 text-2xl font-light text-white transition-colors hover:border-primary/30"
+                                                whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.08)" }}
+                                                whileTap={{ scale: 0.9 }}
+                                                className="h-20 rounded-3xl bg-white/5 border border-white/5 backdrop-blur-sm text-3xl font-light text-white transition-all shadow-inner hover:border-primary/40 hover:shadow-[0_0_15px_rgba(197,160,89,0.2)]"
                                             >
                                                 {num}
                                             </motion.button>
                                         ))}
+
+                                        {/* Blank / Placeholder */}
                                         <div />
+
                                         <motion.button
                                             onClick={() => handlePinInput('0')}
-                                            whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.1)" }}
-                                            whileTap={{ scale: 0.95 }}
-                                            className="h-16 rounded-xl bg-white/5 border border-white/5 text-2xl font-light text-white transition-colors hover:border-primary/30"
+                                            whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.08)" }}
+                                            whileTap={{ scale: 0.9 }}
+                                            className="h-20 rounded-3xl bg-white/5 border border-white/5 backdrop-blur-sm text-3xl font-light text-white transition-all shadow-inner hover:border-primary/40 hover:shadow-[0_0_15px_rgba(197,160,89,0.2)]"
                                         >
                                             0
                                         </motion.button>
+
                                         <motion.button
                                             onClick={handleDelete}
-                                            whileHover={{ scale: 1.05, color: "#ef4444", backgroundColor: "rgba(239,68,68,0.1)" }}
-                                            whileTap={{ scale: 0.95 }}
-                                            className="h-16 rounded-xl flex items-center justify-center text-gray-400 transition-colors"
+                                            whileHover={{ scale: 1.05, backgroundColor: "rgba(239,68,68,0.1)" }}
+                                            whileTap={{ scale: 0.9 }}
+                                            className="h-20 rounded-3xl flex items-center justify-center text-gray-400 transition-colors hover:text-red-400"
                                         >
-                                            <span className="text-sm font-medium tracking-wide">DEL</span>
+                                            <span className="text-sm font-bold tracking-wider">DEL</span>
                                         </motion.button>
                                     </div>
 
-                                    <div className="text-center">
+                                    {/* Footer */}
+                                    <div className="relative z-10 text-center">
                                         <button
                                             onClick={onClose}
-                                            className="text-gray-500 text-xs hover:text-white transition-colors tracking-widest uppercase hover:underline underline-offset-4"
+                                            className="text-gray-600 text-xs hover:text-white transition-colors tracking-[0.2em] uppercase hover:tracking-[0.3em] duration-300"
                                         >
-                                            Cancel Access
+                                            Emergency Exit
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                        </motion.div>
-                    )}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </>
             )}
         </AnimatePresence>,

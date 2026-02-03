@@ -27,7 +27,7 @@ export function Header() {
   const [isVaultOpen, setIsVaultOpen] = useState(false);
   const [tapCount, setTapCount] = useState(0);
   const [showSwipeHint, setShowSwipeHint] = useState(false);
-  const [swipeStartY, setSwipeStartY] = useState(0);
+  const [swipeStartX, setSwipeStartX] = useState(0);
   const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [, setLocation] = useLocation();
@@ -42,19 +42,19 @@ export function Header() {
     return () => clearTimeout(timer);
   }, [tapCount]);
 
-  // Swipe down detection
+  // Swipe right detection
   const handleTouchStart = (e: React.TouchEvent) => {
     if (showSwipeHint) {
-      setSwipeStartY(e.touches[0].clientY);
+      setSwipeStartX(e.touches[0].clientX);
     }
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (showSwipeHint) {
-      const swipeEndY = e.changedTouches[0].clientY;
-      const swipeDistance = swipeEndY - swipeStartY;
+      const swipeEndX = e.changedTouches[0].clientX;
+      const swipeDistance = swipeEndX - swipeStartX;
 
-      if (swipeDistance > 100) { // Swipe down threshold
+      if (swipeDistance > 80) { // Swipe right threshold
         setShowSwipeHint(false);
         setIsVaultOpen(true);
       }
@@ -63,15 +63,15 @@ export function Header() {
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (showSwipeHint) {
-      setSwipeStartY(e.clientY);
+      setSwipeStartX(e.clientX);
     }
   };
 
   const handleMouseUp = (e: React.MouseEvent) => {
     if (showSwipeHint) {
-      const swipeDistance = e.clientY - swipeStartY;
+      const swipeDistance = e.clientX - swipeStartX;
 
-      if (swipeDistance > 100) {
+      if (swipeDistance > 80) {
         setShowSwipeHint(false);
         setIsVaultOpen(true);
       }
@@ -99,21 +99,33 @@ export function Header() {
             onTouchEnd={handleTouchEnd}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
-            className="fixed inset-0 z-[99] bg-black/80 backdrop-blur-sm flex items-center justify-center cursor-pointer"
+            className="fixed inset-0 z-[200] bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center cursor-e-resize"
           >
-            <div className="text-center">
-              <motion.div
-                animate={{ y: [0, 20, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="mb-6"
-              >
-                <svg className="w-16 h-16 mx-auto text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                </svg>
-              </motion.div>
-              <p className="text-2xl text-primary font-serif mb-2">Swipe Down</p>
-              <p className="text-gray-400 text-sm">to unlock the vault</p>
-            </div>
+            <motion.div
+              initial={{ x: -50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{
+                repeat: Infinity,
+                duration: 1.5,
+                repeatType: "loop"
+              }}
+              className="flex flex-col items-center gap-4"
+            >
+              <div className="flex gap-2">
+                <motion.div
+                  animate={{ x: [0, 20, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5 }}
+                  className="w-16 h-1 bg-white/50 rounded-full"
+                />
+                <motion.div
+                  animate={{ x: [0, 20, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5, delay: 0.1 }}
+                  className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[12px] border-l-white/50 border-b-[6px] border-b-transparent"
+                />
+              </div>
+              <p className="text-white text-2xl font-serif tracking-widest uppercase">Swipe Right</p>
+              <p className="text-white/50 text-xs tracking-[0.5em] uppercase">Security Access</p>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
