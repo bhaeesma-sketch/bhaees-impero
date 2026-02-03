@@ -3,7 +3,7 @@ import { Header } from '@/components/layout/header';
 import { ProductCard } from '@/components/product/product-card';
 import { GoldRatesTable } from '@/components/ui/gold-rates-table';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ShieldCheck, MapPin, RotateCcw, Star, Diamond, Gem } from 'lucide-react';
+import { ArrowRight, ShieldCheck, MapPin, RotateCcw, Star, Diamond, Gem, Smartphone, PenTool, UserCheck, TrendingUp, Sparkles, Crown, Award, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Reveal, StaggerContainer, StaggerItem } from '@/components/ui/reveal';
 import { useState, useEffect } from 'react';
@@ -197,100 +197,123 @@ export default function Home() {
 
       {/* Premium Features Section */}
       <section className="py-24 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
-        <div className="container mx-auto px-4">
-          <Reveal className="mb-16 text-center">
-            <span className="text-xs font-bold tracking-[0.3em] text-primary uppercase block mb-3">Experience Luxury</span>
-            <h2 className="font-serif text-5xl text-gray-900 dark:text-gray-100 mb-4">Exclusive Features</h2>
-            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Discover our cutting-edge services designed to elevate your jewelry shopping experience
+        <div className="container mx-auto px-4 relative">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(197,160,89,0.05),transparent_70%)] pointer-events-none" />
+
+          <Reveal className="mb-20 text-center relative z-10">
+            <div className="inline-flex items-center gap-2 mb-4">
+              <div className="h-[1px] w-12 bg-primary/50" />
+              <span className="text-xs font-bold tracking-[0.4em] text-primary uppercase">Unrivaled Excellence</span>
+              <div className="h-[1px] w-12 bg-primary/50" />
+            </div>
+            <h2 className="font-serif text-5xl md:text-6xl text-gray-900 dark:text-gray-100 mb-6 drop-shadow-sm">The Impero Experience</h2>
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto font-light leading-relaxed text-lg">
+              Where investment-grade purity meets artisanal mastery. Our ecosystem is designed for the discerning few.
             </p>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 relative z-10">
             {[
               {
-                icon: "👁️",
-                title: "Virtual Try-On",
-                description: "Experience AR technology to see how jewelry looks on you in real-time",
+                icon: <Smartphone className="w-10 h-10" strokeWidth={1} />,
+                title: "Virtual Atelier",
+                description: "Try on our rarest pieces instantly with our hyper-realistic AR technology.",
                 link: "/try-on",
-                gradient: "from-purple-500 to-pink-500"
+                bg: "from-purple-500/10 to-pink-500/10",
+                border: "group-hover:border-purple-500/30"
               },
               {
-                icon: "✨",
-                title: "Personal Stylist",
-                description: "Expert consultation to find pieces that match your style and occasion",
+                icon: <UserCheck className="w-10 h-10" strokeWidth={1} />,
+                title: "Private Stylist",
+                description: "Consult with our gemologists to curate a collection that defines your legacy.",
                 link: "/bespoke",
-                gradient: "from-blue-500 to-cyan-500"
+                bg: "from-blue-500/10 to-cyan-500/10",
+                border: "group-hover:border-blue-500/30"
               },
               {
-                icon: "💎",
-                title: "Custom Design",
-                description: "Create bespoke jewelry pieces tailored to your vision and preferences",
+                icon: <PenTool className="w-10 h-10" strokeWidth={1} />,
+                title: "Bespoke Creation",
+                description: "Collaborate with master artisans to transform your vision into an eternal heirloom.",
                 link: "/bespoke",
-                gradient: "from-amber-500 to-orange-500"
+                bg: "from-amber-500/10 to-orange-500/10",
+                border: "group-hover:border-amber-500/30"
               },
               {
-                icon: "📊",
-                title: "Live Market Rates",
-                description: "Real-time gold and diamond pricing with transparent buyback guarantee",
+                icon: <TrendingUp className="w-10 h-10" strokeWidth={1} />,
+                title: "Market Intelligence",
+                description: "Access real-time bullion analytics and transparent buyback valuations.",
                 link: "/compare",
-                gradient: "from-green-500 to-emerald-500"
+                bg: "from-emerald-500/10 to-green-500/10",
+                border: "group-hover:border-emerald-500/30"
               },
             ].map((feature, i) => (
-              <Reveal key={i} delay={i * 0.1}>
+              <Reveal key={i} delay={i * 0.15}>
                 <Link href={feature.link}>
-                  <div className="group relative bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-100 dark:border-gray-700 hover:border-transparent overflow-hidden">
-                    {/* Gradient overlay on hover */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                  <motion.div
+                    whileHover={{ y: -10 }}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className={`group relative h-full bg-white/5 dark:bg-black/40 backdrop-blur-md rounded-2xl p-8 border border-gray-200/50 dark:border-white/5 ${feature.border} transition-all duration-500 shadow-lg hover:shadow-2xl overflow-hidden`}
+                  >
+                    {/* Animated Background Gradient */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${feature.bg} opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
 
-                    <div className="relative z-10">
-                      <div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-500">
+                    {/* Floating Glow Orb */}
+                    <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/30 transition-all duration-700" />
+
+                    <div className="relative z-10 flex flex-col h-full">
+                      <div className="mb-8 p-4 w-fit rounded-xl bg-gradient-to-br from-white to-gray-100 dark:from-white/10 dark:to-transparent border border-gray-200 dark:border-white/10 shadow-sm group-hover:scale-110 transition-transform duration-500 text-gray-800 dark:text-gray-100">
                         {feature.icon}
                       </div>
-                      <h3 className="font-serif text-2xl text-gray-900 dark:text-gray-100 mb-3 group-hover:text-primary transition-colors">
+
+                      <h3 className="font-serif text-2xl text-gray-900 dark:text-gray-100 mb-4 group-hover:text-primary transition-colors duration-300">
                         {feature.title}
                       </h3>
-                      <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+
+                      <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-8 flex-grow font-light">
                         {feature.description}
                       </p>
-                      <div className="flex items-center text-primary font-medium text-sm group-hover:translate-x-2 transition-transform duration-300">
-                        Explore <span className="ml-2">→</span>
+
+                      <div className="flex items-center text-primary font-medium text-xs tracking-[0.2em] uppercase group-hover:gap-3 gap-2 transition-all duration-300">
+                        Explore Benefit <ArrowRight className="w-4 h-4" />
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </Link>
               </Reveal>
             ))}
           </div>
 
-          {/* Additional Services */}
-          <Reveal delay={0.5} className="mt-16">
-            <div className="bg-gradient-to-r from-primary/10 to-primary/5 dark:from-primary/20 dark:to-primary/10 rounded-2xl p-12 text-center border border-primary/20">
-              <h3 className="font-serif text-3xl text-gray-900 dark:text-gray-100 mb-4">More Premium Services</h3>
-              <div className="flex flex-wrap justify-center gap-6 text-gray-700 dark:text-gray-300">
-                <div className="flex items-center gap-2">
-                  <span className="text-primary">✓</span>
-                  <span>Lifetime Warranty</span>
+          {/* Premium Services Grid */}
+          <Reveal delay={0.6} className="mt-24">
+            <div className="relative overflow-hidden bg-gradient-to-r from-gray-50 via-gray-100 to-gray-50 dark:from-gray-900 dark:via-black dark:to-gray-900 rounded-[2rem] p-12 border border-gray-200 dark:border-white/5 shadow-2xl">
+              <div className="absolute inset-0 opacity-30" style={{ backgroundImage: "radial-gradient(#C5A059 1px, transparent 1px)", backgroundSize: "32px 32px" }}></div>
+
+              <div className="relative z-10">
+                <div className="text-center mb-10">
+                  <h3 className="font-serif text-3xl md:text-4xl text-gray-900 dark:text-gray-100 mb-2">The Impero Promise</h3>
+                  <p className="text-gray-500 dark:text-gray-500 text-sm tracking-widest uppercase">Standards of Perfection</p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-primary">✓</span>
-                  <span>Free Resizing</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-primary">✓</span>
-                  <span>Complimentary Cleaning</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-primary">✓</span>
-                  <span>Secure Vault Storage</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-primary">✓</span>
-                  <span>Certification & Appraisal</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-primary">✓</span>
-                  <span>VIP Showroom Access</span>
+
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 text-center bg-white/50 dark:bg-black/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 dark:border-white/5">
+                  {[
+                    { icon: <Crown className="w-6 h-6" />, label: "Royal Warranty" },
+                    { icon: <RotateCcw className="w-6 h-6" />, label: "Lifetime Resizing" },
+                    { icon: <Sparkles className="w-6 h-6" />, label: "Pristine Care" },
+                    { icon: <ShieldCheck className="w-6 h-6" />, label: "Secure Storage" },
+                    { icon: <Award className="w-6 h-6" />, label: "GIA Certified" },
+                    { icon: <Star className="w-6 h-6" />, label: "VIP Access" },
+                  ].map((item, idx) => (
+                    <div key={idx} className="flex flex-col items-center gap-3 group cursor-default">
+                      <div className="w-12 h-12 rounded-full bg-white dark:bg-white/5 flex items-center justify-center text-primary border border-gray-100 dark:border-white/10 shadow-sm group-hover:scale-110 group-hover:border-primary/50 transition-all duration-300">
+                        {item.icon}
+                      </div>
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-primary transition-colors">
+                        {item.label}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
