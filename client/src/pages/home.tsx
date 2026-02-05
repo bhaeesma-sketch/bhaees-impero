@@ -71,14 +71,13 @@ export default function Home() {
       <LiveTicker />
       <Header />
       {/* Hero Section - Redesigned for Impact */}
-      <section className="relative min-h-screen flex items-center overflow-hidden pt-20 perspective-1000 bg-white">
+      <section className="relative min-h-screen flex items-center overflow-hidden pt-20 bg-white">
         {/* Background Elements */}
         <div
           className="absolute inset-0 z-0 bg-cover bg-center opacity-100"
           style={{ backgroundImage: `url(${marbleBg})` }}
         />
-        {/* Optional overlay to ensure text readability if needed */}
-        <div className="absolute inset-0 z-0 bg-white/30 mix-blend-soft-light" />
+        {/* Removed overlay */}
 
         <div className="container relative z-10 px-4 grid lg:grid-cols-12 gap-12 items-center h-full">
           <motion.div
