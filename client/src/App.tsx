@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/hooks/use-theme";
 import Home from "@/pages/home";
 import AuthPage from "@/pages/auth";
 import AdminPage from "@/pages/admin";
+import PrivacyPolicy from "@/pages/privacy-policy";
 import NotFound from "@/pages/not-found";
 import ProductDetail from "@/pages/product-detail";
 import ComparePrices from "@/pages/compare-prices";
@@ -28,6 +29,7 @@ function Router() {
       <Route path="/try-on" component={TryOnPage} />
       <Route path="/auth" component={AuthPage} />
       <Route path="/admin" component={AdminPage} />
+      <Route path="/privacy-policy" component={PrivacyPolicy} />
       <Route component={NotFound} />
     </Switch>
   );

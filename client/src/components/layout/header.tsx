@@ -144,8 +144,8 @@ export function Header() {
               <Menu className="w-6 h-6 text-gray-700" />
             </button>
 
-            {/* Desktop Navigation - LEFT SIDE */}
-            <nav className="hidden md:flex items-center gap-6 text-sm font-medium tracking-wide flex-1 justify-start">
+            {/* Desktop Navigation - LEFT SIDE - ADDDED PADDING */}
+            <nav className="hidden lg:flex items-center gap-6 text-sm font-medium tracking-wide flex-1 justify-start pr-40">
               {[
                 { name: 'Catalog', href: '/catalog' },
                 { name: 'Bespoke', href: '/bespoke' },
@@ -169,7 +169,7 @@ export function Header() {
                 onClick={() => setTapCount(prev => prev + 1)}
                 className="block group pointer-events-auto cursor-pointer"
               >
-                <div className="h-32 md:h-[200px] w-auto relative flex items-center justify-center transition-all duration-500 hover:scale-105">
+                <div className="h-24 md:h-40 w-auto relative flex items-center justify-center transition-all duration-500 hover:scale-105">
                   <img
                     src={logoImg}
                     alt="Impero Di Gold Logo"
@@ -191,7 +191,7 @@ export function Header() {
 
             {/* Actions - RIGHT SIDE */}
             <div className="flex items-center gap-4 flex-1 justify-end">
-              <nav className="hidden md:flex items-center gap-6 text-sm font-medium tracking-wide mr-6">
+              <nav className="hidden lg:flex items-center gap-6 text-sm font-medium tracking-wide mr-6 pl-40">
                 {[
                   { name: 'Live Rates', href: '/#rates' },
                   { name: 'About Us', href: '/#about' },
