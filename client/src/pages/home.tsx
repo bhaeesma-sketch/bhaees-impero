@@ -14,7 +14,7 @@ import { Link } from 'wouter';
 
 // Assets
 import marbleBg from '@assets/generated_images/white_marble_luxury_texture_background.png';
-import heroLuxuryModel from '@assets/hero_luxury_model.png';
+import heroLuxuryModel from '@/assets/hero_luxury_model.png';
 import liquidGoldImg from '@assets/generated_images/abstract_flowing_gold_liquid_on_white_marble.png';
 import boutiqueImg from '@assets/generated_images/luxury_jewelry_boutique_interior.png';
 import jewelrySetImg from '@assets/generated_images/luxury_gold_jewelry_set.png';
