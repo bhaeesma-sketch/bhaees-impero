@@ -14,7 +14,7 @@ import { Link } from 'wouter';
 
 // Assets
 import marbleBg from '@assets/generated_images/white_marble_luxury_texture_background.png';
-import heroLuxuryModel from '@/assets/hero_ethereal_beauty.png';
+import heroModelImg from '@/assets/hero_imperodigold_model_luxury_v2.png';
 import liquidGoldImg from '@assets/generated_images/abstract_flowing_gold_liquid_on_white_marble.png';
 import boutiqueImg from '@assets/generated_images/luxury_jewelry_boutique_interior.png';
 import jewelrySetImg from '@assets/generated_images/luxury_gold_jewelry_set.png';
@@ -76,12 +76,12 @@ export default function Home() {
       <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
         <div className="absolute inset-0 z-0">
           <motion.img
-            src={heroLuxuryModel}
-            alt="Ethereal Beauty Jewelry Model"
-            className="w-full h-full object-cover object-top"
+            src={heroModelImg}
+            alt="Impero Di Gold Royal Muse"
             initial={{ scale: 1 }}
             animate={{ scale: 1.1 }}
             transition={{ duration: 20, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
+            className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
         </div>

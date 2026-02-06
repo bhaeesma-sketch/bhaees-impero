@@ -207,17 +207,7 @@ export function Header() {
                 ))}
               </nav>
 
-              <button
-                onClick={toggleTheme}
-                className="p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-all text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary"
-                aria-label="Toggle dark mode"
-              >
-                {theme === 'dark' ? (
-                  <Sun className="w-5 h-5 transition-transform hover:rotate-12" />
-                ) : (
-                  <Moon className="w-5 h-5 transition-transform hover:-rotate-12" />
-                )}
-              </button>
+              {/* Theme Toggle Button Removed (Moved to Floating Button) */}
 
               <button className="p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary">
                 <Search className="w-5 h-5" />
@@ -358,6 +348,25 @@ export function Header() {
           )
         }
       </AnimatePresence >
+      {/* Separate Fixed Theme Toggle */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <button
+          onClick={toggleTheme}
+          className="flex items-center gap-2 px-4 py-3 bg-white/90 dark:bg-black/90 backdrop-blur-md rounded-full border border-gray-200 dark:border-white/10 shadow-2xl hover:scale-105 transition-all duration-300 group"
+        >
+          {theme === 'dark' ? (
+            <>
+              <Sun className="w-5 h-5 text-primary transition-transform group-hover:rotate-45" />
+              <span className="text-sm font-medium text-gray-800 dark:text-white">Light Mode</span>
+            </>
+          ) : (
+            <>
+              <Moon className="w-5 h-5 text-gray-700 dark:text-gray-300 transition-transform group-hover:-rotate-12" />
+              <span className="text-sm font-medium text-gray-900 dark:text-white">Dark Mode</span>
+            </>
+          )}
+        </button>
+      </div>
     </>
   );
 }
