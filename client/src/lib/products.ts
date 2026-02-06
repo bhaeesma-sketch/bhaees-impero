@@ -14,6 +14,7 @@ import goldBar50gImg from '@assets/generated_images/gold_bar_50g.png';
 import goldBar100gImg from '@assets/generated_images/gold_bar_100g.png';
 import diamondNecklaceImg from '@assets/generated_images/diamond_necklace_luxury.png';
 import silverBar500gImg from '@assets/generated_images/silver_bar_500g.png';
+import platinumBarImg from '@/assets/platinum_bar_pamp.png';
 import { MetalType } from './gold-price';
 
 export interface Product {
@@ -27,7 +28,7 @@ export interface Product {
   customWeights?: number[];
   makingCharge: number;
   type: 'bullion' | 'jewelry';
-  category: 'coins' | 'bars' | 'silver' | 'jewelry';
+  category: 'coins' | 'bars' | 'silver' | 'jewelry' | 'platinum';
   description: string;
   manufacturer: string;
   availability: 'In Stock' | 'Out of Stock' | 'Made to Order';
@@ -478,5 +479,23 @@ export const PRODUCTS: Product[] = [
     manufacturer: "Impero Di Gold",
     availability: "In Stock",
     productCode: "IDi-JWL-BNG-001"
+  },
+  // New Products - Platinum
+  {
+    id: "28",
+    name: "PAMP Suisse 1oz Platinum Bar",
+    image: platinumBarImg,
+    images: [platinumBarImg],
+    purity: "Platinum",
+    baseWeight: 31.1,
+    displayWeight: "1 Troy Oz",
+    customWeights: [31.1],
+    makingCharge: 150,
+    type: "bullion",
+    category: "platinum",
+    description: "Exquisite 1oz Platinum Bar from PAMP Suisse. Featuring the goddess Fortuna design, this bar represents the pinnacle of platinum investment. 999.5 purity.",
+    manufacturer: "PAMP Suisse",
+    availability: "In Stock",
+    productCode: "PAMP-PB-1OZ"
   }
 ];
