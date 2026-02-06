@@ -79,36 +79,38 @@
   /* Base: True Pure Black */
   --background: 0 0% 0%;
 
-  /* Text: Cream */
-  --foreground: 40 30% 90%;
+  /* Text: Metallic Gold (Pale) for body */
+  --foreground: 46 60% 85%;
+  /* #FDF5E1 */
 
-  --card: 0 0% 0%;
-  --card-foreground: 40 30% 90%;
+  --card: 0 0% 3%;
+  --card-foreground: 46 60% 85%;
 
-  --popover: 0 0% 0%;
-  --popover-foreground: 40 30% 90%;
+  --popover: 0 0% 3%;
+  --popover-foreground: 46 60% 85%;
 
-  /* Primary: Vibrant Gold (24K aesthetic) */
-  --primary: 45 100% 50%;
-  /* #FFD700 */
+  /* Primary: Deep 24K Gold */
+  --primary: 43 96% 58%;
+  /* #F6C12C */
   --primary-foreground: 0 0% 0%;
 
-  --secondary: 0 0% 5%;
-  --secondary-foreground: 40 40% 70%;
+  --secondary: 43 10% 10%;
+  --secondary-foreground: 43 96% 58%;
+  /* Gold Text on Secondary */
 
   --muted: 0 0% 5%;
-  --muted-foreground: 40 10% 60%;
+  --muted-foreground: 43 30% 60%;
 
-  --accent: 0 0% 10%;
-  --accent-foreground: 40 50% 80%;
+  --accent: 43 20% 10%;
+  --accent-foreground: 43 96% 58%;
 
   --destructive: 0 60% 50%;
   --destructive-foreground: 0 0% 100%;
 
-  --border: 45 60% 30%;
-  /* Gold borders visible on black */
-  --input: 45 60% 30%;
-  --ring: 45 100% 50%;
+  /* Borders are Gold in Dark Mode */
+  --border: 43 50% 25%;
+  --input: 43 50% 25%;
+  --ring: 43 96% 58%;
 }
 
 @layer base {
