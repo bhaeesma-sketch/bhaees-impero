@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "Impero Di Gold",
+    "slug": "impero-di",
+    "version": "1.0.0",
+    "extra": {
+      "eas": {
+        "projectId": "61c47b19-635b-41d6-8c8c-74d81f4c5224"
+      }
+    }
+  }
+}

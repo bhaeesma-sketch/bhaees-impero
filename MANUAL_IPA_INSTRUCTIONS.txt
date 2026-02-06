@@ -1,0 +1,30 @@
+
+# How to Generate the IPA File
+
+Since the command-line tools are missing the iOS 17.2 Platform files, you must use the Xcode App manually.
+
+1. **Open the Project**
+   - Go to your folder: `Desktop/Luxury-Linkage/ios/App`
+   - Double-click `IMPERO DI.xcodeproj`.
+
+2. **Select Build Target**
+   - In the top-center toolbar of Xcode, click the device name (it might say "iPhone 15" or "Generic iOS Device").
+   - Select **"Any iOS Device (arm64)"**.
+
+3. **Archive**
+   - In the top menu bar, click **Product**.
+   - Click **Archive**.
+   - Wait for the build to finish.
+
+4. **Export IPA**
+   - The "Organizer" window will appear automatically.
+   - Click the blue **Distribute App** button (right side).
+   - Select **TestFlight & App Store** or **App Store Connect**. Click Next.
+   - Select **Export** (NOT Upload). Click Next.
+   - Keep clicking Next (Accept defaults for signing).
+   - Choose a location (e.g., Desktop) and click **Export**.
+
+5. **Upload**
+   - Open the folder you just saved.
+   - The file `Impero Vault.ipa` (or `App.ipa`) is inside.
+   - Upload this file to the Transporter app or App Store Connect.

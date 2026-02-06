@@ -6,6 +6,7 @@ import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'fra
 import { ArrowRight, ShieldCheck, MapPin, RotateCcw, Star, Diamond, Gem, Smartphone, PenTool, UserCheck, TrendingUp, Sparkles, Crown, Award, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Reveal, StaggerContainer, StaggerItem } from '@/components/ui/reveal';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { PRODUCTS as STATIC_PRODUCTS, Product } from '@/lib/products';
@@ -13,6 +14,7 @@ import { Link } from 'wouter';
 
 // Assets
 import marbleBg from '@assets/generated_images/white_marble_luxury_texture_background.png';
+import heroLuxuryModel from '@assets/hero_luxury_model.png';
 import liquidGoldImg from '@assets/generated_images/abstract_flowing_gold_liquid_on_white_marble.png';
 import boutiqueImg from '@assets/generated_images/luxury_jewelry_boutique_interior.png';
 import jewelrySetImg from '@assets/generated_images/luxury_gold_jewelry_set.png';
@@ -71,35 +73,33 @@ export default function Home() {
       <LiveTicker />
       <Header />
       {/* Hero Section - Redesigned for Impact */}
-      <section className="relative min-h-screen flex items-center overflow-hidden pt-20 bg-white">
-        {/* Background Elements */}
-        <div
-          className="absolute inset-0 z-0 bg-cover bg-center opacity-100"
-          style={{ backgroundImage: `url(${marbleBg})` }}
-        />
-        {/* Removed overlay */}
+      <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
+        <div className="absolute inset-0 z-0">
+          <img src={heroLuxuryModel} alt="Luxury Jewelry Model" className="w-full h-full object-cover object-top" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+        </div>
 
         <div className="container relative z-10 px-4 grid lg:grid-cols-12 gap-12 items-center h-full">
           <motion.div
             style={{ opacity: opacityHero, scale: scaleHero }}
-            className="lg:col-span-12 space-y-8 max-w-4xl mx-auto text-center"
+            className="lg:col-span-8 space-y-8 text-left pl-4 md:pl-0 pt-20"
           >
             <Reveal direction="down" delay={0.1}>
-              <div className="flex items-center justify-center gap-4">
+              <div className="flex items-center gap-4">
                 <span className="h-[1px] w-12 bg-[#BF953F]"></span>
                 <span className="text-xs font-bold tracking-[0.3em] text-[#BF953F] uppercase">Est. 2022</span>
               </div>
             </Reveal>
 
-            <h1 className="font-serif text-6xl md:text-8xl font-medium leading-[1.05] tracking-tight">
+            <h1 className="font-serif text-5xl md:text-7xl font-medium leading-[1.05] tracking-tight text-white drop-shadow-2xl">
               <span className="block overflow-hidden">
                 <motion.span
                   initial={{ y: "110%" }}
                   animate={{ y: 0 }}
                   transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                  className="block bg-clip-text text-transparent bg-gradient-to-r from-[#BF953F] via-[#FBF5B7] to-[#AA771C] drop-shadow-sm"
+                  className="block"
                 >
-                  IMPERO DI
+                  Unveiling
                 </motion.span>
               </span>
               <span className="block overflow-hidden">
@@ -107,29 +107,29 @@ export default function Home() {
                   initial={{ y: "110%" }}
                   animate={{ y: 0 }}
                   transition={{ duration: 1.2, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  className="block italic pb-2 bg-clip-text text-transparent bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] drop-shadow-sm"
+                  className="block italic pb-2 text-gradient-gold"
                 >
-                  Golds & Diamonds
+                  Brilliance
                 </motion.span>
               </span>
             </h1>
 
             <Reveal delay={0.6} direction="up" blur={true}>
-              <p className="text-xl text-gray-500 font-light leading-relaxed max-w-2xl mx-auto">
-                The intersection of investment-grade purity and artisanal mastery. Secure your legacy with Impero.
+              <p className="text-xl text-gray-100 font-light leading-relaxed max-w-xl drop-shadow-md">
+                Experience the pinnacle of luxury with Impero Di Gold & Diamonds. Investment-grade bullion and exquisite high jewelry.
               </p>
             </Reveal>
 
             <Reveal delay={0.8} direction="up">
-              <div className="flex flex-wrap justify-center gap-6 pt-6">
+              <div className="flex flex-wrap gap-6 pt-6">
                 <Link href="/catalog">
-                  <Button className="h-14 px-10 bg-gray-900 hover:bg-black text-white rounded-sm font-medium tracking-wide shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                    View Catalog
+                  <Button className="h-14 px-12 bg-[#BF953F] hover:bg-[#AA771C] text-white rounded-none font-medium tracking-wide shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-[#BF953F]">
+                    Explore Collection
                   </Button>
                 </Link>
                 <Link href="/bespoke">
-                  <Button variant="outline" className="h-14 px-10 border-gray-300 text-gray-900 hover:border-primary hover:text-primary rounded-sm font-medium tracking-wide transition-all duration-300">
-                    Bespoke Jewelry
+                  <Button variant="outline" className="h-14 px-12 border-white/50 text-white hover:bg-white hover:text-gray-900 rounded-none font-medium tracking-wide transition-all duration-300 backdrop-blur-sm">
+                    Private Viewing
                   </Button>
                 </Link>
               </div>
@@ -353,6 +353,56 @@ export default function Home() {
       {/* Gold Rates Table */}
       <GoldRatesTable />
 
+      {/* Shop By Category (IBV Style) */}
+      <section className="py-16 bg-white border-b border-gray-100">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-10">
+            <span className="text-xs font-bold tracking-[0.2em] text-gray-400 uppercase mb-2 block">Browse Collection</span>
+            <h2 className="font-serif text-3xl md:text-4xl text-gray-900">Shop By Category</h2>
+          </div>
+
+          <Tabs defaultValue="coins" className="w-full">
+            <div className="flex justify-center mb-8 overflow-x-auto pb-2 scrollbar-hide">
+              <TabsList className="bg-gray-100/80 p-1.5 rounded-full inline-flex h-auto">
+                <TabsTrigger value="coins" className="rounded-full px-6 py-2.5 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all">Gold Coins</TabsTrigger>
+                <TabsTrigger value="bars" className="rounded-full px-6 py-2.5 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all">Gold Bars</TabsTrigger>
+                <TabsTrigger value="silver" className="rounded-full px-6 py-2.5 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all">Silver</TabsTrigger>
+                <TabsTrigger value="jewelry" className="rounded-full px-6 py-2.5 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all">Jewelry</TabsTrigger>
+              </TabsList>
+            </div>
+
+            {['coins', 'bars', 'silver', 'jewelry'].map((cat) => (
+              <TabsContent key={cat} value={cat} className="mt-0 focus-visible:outline-none">
+                <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+                  {PRODUCTS.filter(p => p.category === cat).slice(0, 4).map((product) => (
+                    <StaggerItem key={product.id}>
+                      <ProductCard
+                        id={product.id}
+                        name={product.name}
+                        image={product.image}
+                        purity={product.purity}
+                        baseWeight={product.baseWeight}
+                        displayWeight={product.displayWeight}
+                        customWeights={product.customWeights}
+                        makingCharge={product.makingCharge}
+                        type={product.type}
+                      />
+                    </StaggerItem>
+                  ))}
+                </StaggerContainer>
+                <div className="text-center mt-10">
+                  <Link href={`/catalog?category=${cat}`}>
+                    <Button variant="outline" className="min-w-[150px] border-gray-300 text-gray-900 hover:bg-gray-50 font-serif">
+                      View All {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                    </Button>
+                  </Link>
+                </div>
+              </TabsContent>
+            ))}
+          </Tabs>
+        </div>
+      </section>
+
       {/* Gold Coins Section */}
       <section id="coins" className="py-32 bg-gray-50 relative">
         <div className="container mx-auto px-4 relative z-10">
@@ -373,7 +423,7 @@ export default function Home() {
             </Reveal>
           </div>
 
-          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             {PRODUCTS.filter(p => p.category === 'coins').slice(0, 4).map((product) => (
               <StaggerItem key={product.id}>
                 <ProductCard
@@ -413,7 +463,7 @@ export default function Home() {
             </Reveal>
           </div>
 
-          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             {PRODUCTS.filter(p => p.category === 'bars').slice(0, 4).map((product) => (
               <StaggerItem key={product.id}>
                 <ProductCard
@@ -453,7 +503,7 @@ export default function Home() {
             </Reveal>
           </div>
 
-          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             {PRODUCTS.filter(p => p.category === 'silver').slice(0, 4).map((product) => (
               <StaggerItem key={product.id}>
                 <ProductCard
@@ -557,7 +607,7 @@ export default function Home() {
       {/* Jewelry Grid */}
       <section id="jewelry" className="py-24 bg-white">
         <div className="container mx-auto px-4">
-          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             {PRODUCTS.filter(p => p.category === 'jewelry').map((product) => (
               <StaggerItem key={product.id}>
                 <ProductCard

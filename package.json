@@ -1,5 +1,5 @@
 {
-  "name": "rest-express",
+  "name": "impero-di",
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",
@@ -106,6 +106,7 @@
     "@vitejs/plugin-react": "^5.0.4",
     "autoprefixer": "^10.4.21",
     "drizzle-kit": "^0.31.4",
+    "eas-cli": "^16.32.0",
     "esbuild": "^0.25.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.14",
