@@ -296,7 +296,7 @@ export default function Home() {
       </section>
 
       {/* Campaign Gallery - High Fashion */}
-      <section className="py-20 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 transition-colors duration-500">
+      <section className="py-20 bg-white dark:bg-black border-b border-gray-100 dark:border-gray-800 transition-colors duration-500">
         <div className="container mx-auto px-4">
           <Reveal className="mb-12 text-center">
             <span className="text-xs font-bold tracking-[0.3em] text-primary uppercase block mb-3">The Campaign</span>
@@ -306,15 +306,15 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {[heroImg2, heroImg3].map((img, i) => (
               <Reveal key={i} delay={i * 0.2}>
-                <div className="relative group overflow-hidden aspect-[3/4] cursor-pointer shadow-lg">
+                <div className="relative group overflow-hidden h-[600px] w-full cursor-pointer shadow-2xl rounded-sm">
                   <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500 z-10" />
                   <img
                     src={img}
                     alt="Campaign Shot"
-                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute bottom-0 left-0 w-full p-8 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-t from-black/60 to-transparent">
-                    <p className="text-white font-serif text-2xl italic">
+                  <div className="absolute bottom-0 left-0 w-full p-8 z-20 translate-y-0 opacity-100 transition-all duration-500 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                    <p className="text-white font-serif text-3xl italic drop-shadow-md">
                       {["The Bridal Edit", "Diamond Purity"][i]}
                     </p>
                   </div>
