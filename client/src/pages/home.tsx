@@ -157,6 +157,103 @@ export default function Home() {
         </motion.div>
       </section>
       {/* Marquee Section */}
+
+  < GoldRatesTable />
+
+  {/* Shop By Category (IBV Style) */ }
+  < section className = "py-16 bg-white border-b border-gray-100" >
+    <div className="container mx-auto px-4">
+      <div className="text-center mb-10">
+        <span className="text-xs font-bold tracking-[0.2em] text-gray-400 uppercase mb-2 block">Browse Collection</span>
+        <h2 className="font-serif text-3xl md:text-4xl text-gray-900">Shop By Category</h2>
+      </div>
+
+      <Tabs defaultValue="coins" className="w-full">
+        <div className="flex justify-center mb-8 overflow-x-auto pb-2 scrollbar-hide">
+          <TabsList className="bg-gray-100/80 p-1.5 rounded-full inline-flex h-auto">
+            <TabsTrigger value="coins" className="rounded-full px-6 py-2.5 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all">Gold Coins</TabsTrigger>
+            <TabsTrigger value="bars" className="rounded-full px-6 py-2.5 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all">Gold Bars</TabsTrigger>
+            <TabsTrigger value="silver" className="rounded-full px-6 py-2.5 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all">Silver</TabsTrigger>
+            <TabsTrigger value="jewelry" className="rounded-full px-6 py-2.5 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all">Jewelry</TabsTrigger>
+          </TabsList>
+        </div>
+
+        {['coins', 'bars', 'silver', 'jewelry'].map((cat) => (
+          <TabsContent key={cat} value={cat} className="mt-0 focus-visible:outline-none">
+            <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+              {PRODUCTS.filter(p => p.category === cat).slice(0, 4).map((product) => (
+                <StaggerItem key={product.id}>
+                  <ProductCard
+                    id={product.id}
+                    name={product.name}
+                    image={product.image}
+                    purity={product.purity}
+                    baseWeight={product.baseWeight}
+                    displayWeight={product.displayWeight}
+                    customWeights={product.customWeights}
+                    makingCharge={product.makingCharge}
+                    type={product.type}
+                  />
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+            <div className="text-center mt-10">
+              <Link href={`/catalog?category=${cat}`}>
+                <Button variant="outline" className="min-w-[150px] border-gray-300 text-gray-900 hover:bg-gray-50 font-serif">
+                  View All {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                </Button>
+              </Link>
+            </div>
+          </TabsContent>
+        ))}
+      </Tabs>
+    </div>
+      </section >
+
+  {/* Bespoke Service CTA */ }
+  < section id = "bespoke" className = "py-32 bg-gray-900 text-white relative overflow-hidden isolate" >
+        <motion.div style={{ y: y2 }} className="absolute inset-0 z-0">
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={bespokeImageIndex}
+              src={bespokeImages[bespokeImageIndex]}
+              alt="Luxury Background"
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 0.3, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 2.5 }}
+              className="w-full h-[150%] object-cover mix-blend-overlay"
+            />
+          </AnimatePresence>
+        </motion.div>
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent z-0" />
+
+        <div className="container relative z-10 px-4 text-center max-w-4xl mx-auto space-y-8">
+          <Reveal direction="down">
+            <span className="text-xs font-bold tracking-[0.3em] text-primary uppercase">Bespoke Service</span>
+          </Reveal>
+
+          <Reveal>
+            <h2 className="font-serif text-5xl md:text-7xl font-medium">Create Your Masterpiece</h2>
+          </Reveal>
+
+          <Reveal delay={0.2}>
+            <p className="text-gray-300 font-light text-xl leading-relaxed max-w-2xl mx-auto">
+              Work directly with our senior designers to craft a one-of-a-kind piece that reflects your unique style and story.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.4}>
+            <div className="flex justify-center gap-6 pt-8">
+              <a href="https://wa.me/971506485898?text=I%20am%20interested%20in%20a%20private%20bespoke%20jewelry%20consultation." target="_blank" rel="noopener noreferrer">
+                <Button className="h-14 px-10 bg-gradient-gold text-gray-900 font-bold tracking-wide rounded-none hover:scale-105 transition-transform duration-300 shadow-[0_0_30px_rgba(197,160,89,0.3)]">
+                  Book Private Consultation
+                </Button>
+              </a>
+            </div>
+          </Reveal>
+        </div>
+      </section >
       <section className="py-8 bg-secondary/30 border-y border-secondary overflow-hidden">
         <div className="flex whitespace-nowrap gap-16 animate-marquee items-center opacity-60 hover:opacity-100 transition-opacity duration-500">
           {[...Array(10)].map((_, i) => (
@@ -349,397 +446,78 @@ export default function Home() {
           </div>
         </div>
       </section>
+  {/* Footer */ }
+  < footer className = "bg-white border-t border-gray-100 pt-24 pb-12 relative overflow-hidden" >
+    {/* Subtle background texture */ }
+    < div className = "absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-radial from-primary/5 to-transparent opacity-50 pointer-events-none" />
 
-      {/* Gold Rates Table */}
-      <GoldRatesTable />
-
-      {/* Shop By Category (IBV Style) */}
-      <section className="py-16 bg-white border-b border-gray-100">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-10">
-            <span className="text-xs font-bold tracking-[0.2em] text-gray-400 uppercase mb-2 block">Browse Collection</span>
-            <h2 className="font-serif text-3xl md:text-4xl text-gray-900">Shop By Category</h2>
-          </div>
-
-          <Tabs defaultValue="coins" className="w-full">
-            <div className="flex justify-center mb-8 overflow-x-auto pb-2 scrollbar-hide">
-              <TabsList className="bg-gray-100/80 p-1.5 rounded-full inline-flex h-auto">
-                <TabsTrigger value="coins" className="rounded-full px-6 py-2.5 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all">Gold Coins</TabsTrigger>
-                <TabsTrigger value="bars" className="rounded-full px-6 py-2.5 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all">Gold Bars</TabsTrigger>
-                <TabsTrigger value="silver" className="rounded-full px-6 py-2.5 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all">Silver</TabsTrigger>
-                <TabsTrigger value="jewelry" className="rounded-full px-6 py-2.5 text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all">Jewelry</TabsTrigger>
-              </TabsList>
-            </div>
-
-            {['coins', 'bars', 'silver', 'jewelry'].map((cat) => (
-              <TabsContent key={cat} value={cat} className="mt-0 focus-visible:outline-none">
-                <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-                  {PRODUCTS.filter(p => p.category === cat).slice(0, 4).map((product) => (
-                    <StaggerItem key={product.id}>
-                      <ProductCard
-                        id={product.id}
-                        name={product.name}
-                        image={product.image}
-                        purity={product.purity}
-                        baseWeight={product.baseWeight}
-                        displayWeight={product.displayWeight}
-                        customWeights={product.customWeights}
-                        makingCharge={product.makingCharge}
-                        type={product.type}
-                      />
-                    </StaggerItem>
-                  ))}
-                </StaggerContainer>
-                <div className="text-center mt-10">
-                  <Link href={`/catalog?category=${cat}`}>
-                    <Button variant="outline" className="min-w-[150px] border-gray-300 text-gray-900 hover:bg-gray-50 font-serif">
-                      View All {cat.charAt(0).toUpperCase() + cat.slice(1)}
-                    </Button>
-                  </Link>
-                </div>
-              </TabsContent>
-            ))}
-          </Tabs>
-        </div>
-      </section>
-
-      {/* Gold Coins Section */}
-      <section id="coins" className="py-32 bg-gray-50 relative">
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-            <Reveal className="max-w-xl">
-              <span className="text-xs font-bold tracking-[0.2em] text-primary uppercase mb-4 block">Investment Grade</span>
-              <h2 className="font-serif text-5xl font-medium text-gray-900 mb-6">Gold Coins</h2>
-              <p className="text-gray-500 font-light leading-relaxed text-lg">
-                Precision-minted gold coins featuring the prestigious IDi hallmark. Perfect for gifting or building your investment portfolio.
-              </p>
-            </Reveal>
-            <Reveal direction="left" delay={0.2}>
-              <Link href="/catalog?category=coins">
-                <Button variant="link" className="group text-gray-900 hover:text-primary p-0 text-lg font-serif italic">
-                  View All Coins <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </Link>
-            </Reveal>
-          </div>
-
-          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-            {PRODUCTS.filter(p => p.category === 'coins').slice(0, 4).map((product) => (
-              <StaggerItem key={product.id}>
-                <ProductCard
-                  id={product.id}
-                  name={product.name}
-                  image={product.image}
-                  purity={product.purity}
-                  baseWeight={product.baseWeight}
-                  displayWeight={product.displayWeight}
-                  customWeights={product.customWeights}
-                  makingCharge={product.makingCharge}
-                  type={product.type}
-                />
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-        </div>
-      </section>
-
-      {/* Gold Bars Section */}
-      <section id="bars" className="py-32 bg-white relative">
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-            <Reveal className="max-w-xl">
-              <span className="text-xs font-bold tracking-[0.2em] text-primary uppercase mb-4 block">Premium Bullion</span>
-              <h2 className="font-serif text-5xl font-medium text-gray-900 mb-6">Gold Bars</h2>
-              <p className="text-gray-500 font-light leading-relaxed text-lg">
-                Acquire wealth in its purest form. Our Swiss-grade bars are recognized globally and come with tamper-proof certification.
-              </p>
-            </Reveal>
-            <Reveal direction="left" delay={0.2}>
-              <Link href="/catalog?category=bars">
-                <Button variant="link" className="group text-gray-900 hover:text-primary p-0 text-lg font-serif italic">
-                  View All Bars <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </Link>
-            </Reveal>
-          </div>
-
-          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-            {PRODUCTS.filter(p => p.category === 'bars').slice(0, 4).map((product) => (
-              <StaggerItem key={product.id}>
-                <ProductCard
-                  id={product.id}
-                  name={product.name}
-                  image={product.image}
-                  purity={product.purity}
-                  baseWeight={product.baseWeight}
-                  displayWeight={product.displayWeight}
-                  customWeights={product.customWeights}
-                  makingCharge={product.makingCharge}
-                  type={product.type}
-                />
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-        </div>
-      </section>
-
-      {/* Silver Bullion Section */}
-      <section id="silver" className="py-32 bg-gray-50 relative">
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-            <Reveal className="max-w-xl">
-              <span className="text-xs font-bold tracking-[0.2em] text-primary uppercase mb-4 block">New Arrival</span>
-              <h2 className="font-serif text-5xl font-medium text-gray-900 mb-6">Silver Bullion</h2>
-              <p className="text-gray-500 font-light leading-relaxed text-lg">
-                Diversify your portfolio with our premium 999.9 fine silver collection. From minted bars to coins, each piece represents accessible luxury and tangible value.
-              </p>
-            </Reveal>
-            <Reveal direction="left" delay={0.2}>
-              <Link href="/catalog?category=silver">
-                <Button variant="link" className="group text-gray-900 hover:text-primary p-0 text-lg font-serif italic">
-                  View All Silver <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </Link>
-            </Reveal>
-          </div>
-
-          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-            {PRODUCTS.filter(p => p.category === 'silver').slice(0, 4).map((product) => (
-              <StaggerItem key={product.id}>
-                <ProductCard
-                  id={product.id}
-                  name={product.name}
-                  image={product.image}
-                  purity={product.purity}
-                  baseWeight={product.baseWeight}
-                  displayWeight={product.displayWeight}
-                  customWeights={product.customWeights}
-                  makingCharge={product.makingCharge}
-                  type={product.type}
-                />
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-        </div>
-      </section>
-      {/* Featured Collection - Asymmetric Layout */}
-      <section className="py-32 bg-white relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-20 items-center">
-            <Reveal direction="right" duration={1}>
-              <div className="relative group">
-                <div className="absolute -top-10 -left-10 w-full h-full border border-gray-100 z-0 transition-transform duration-500 group-hover:translate-x-2 group-hover:translate-y-2" />
-                <div className="overflow-hidden">
-                  <img src={jewelrySetImg} alt="Luxury Set" className="relative z-10 shadow-2xl w-full transform transition-transform duration-700 group-hover:scale-105" />
-                </div>
-                <div className="absolute -bottom-10 -right-10 bg-primary/10 w-2/3 h-2/3 -z-10 blur-3xl" />
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="grid md:grid-cols-4 gap-16 mb-16">
+          <div className="space-y-6">
+            <div className="space-y-1">
+              <div className="mb-6">
+                <img src={logoImg} alt="Impero Di Gold Logo" className="h-40 w-auto object-contain" />
               </div>
-            </Reveal>
-
-            <div className="space-y-10">
-              <Reveal delay={0.2}>
-                <h2 className="font-serif text-6xl text-gray-900 leading-none">
-                  The Bridal <br />
-                  <span className="text-gradient-gold italic">Collection</span>
-                </h2>
-              </Reveal>
-
-              <Reveal delay={0.4}>
-                <p className="text-lg text-gray-500 font-light leading-relaxed">
-                  Every piece tells a story of elegance and eternity. Meticulously handcrafted by master artisans to ensure your special day shines as bright as your future.
-                </p>
-              </Reveal>
-
-              <StaggerContainer delay={0.5} className="grid grid-cols-2 gap-8 pt-4">
-                <StaggerItem className="space-y-2">
-                  <h4 className="font-serif text-2xl text-gray-900">18K & 21K</h4>
-                  <p className="text-sm text-gray-500">Premium Purity Standards</p>
-                </StaggerItem>
-                <StaggerItem className="space-y-2">
-                  <h4 className="font-serif text-2xl text-gray-900">VVS1</h4>
-                  <p className="text-sm text-gray-500">Diamond Clarity Guarantee</p>
-                </StaggerItem>
-              </StaggerContainer>
-
-              <Reveal delay={0.6}>
-                <Link href="/catalog?category=jewelry">
-                  <Button className="h-14 px-10 bg-primary hover:bg-primary/90 text-white rounded-none font-serif tracking-wide text-lg mt-8 transform transition-transform hover:-translate-y-1">
-                    Discover the Collection
-                  </Button>
-                </Link>
-              </Reveal>
             </div>
+            <p className="text-sm text-gray-500 leading-relaxed font-light max-w-xs">
+              The premier destination for certified bullion and high-jewelry in the Middle East. Setting the gold standard since 2022.
+            </p>
           </div>
-        </div>
-      </section>
-      {/* Boutique Experience Section - NEW */}
-      <section className="py-24 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1 space-y-8">
-              <Reveal>
-                <h2 className="font-serif text-4xl md:text-5xl font-medium text-gray-900">The Impero Experience</h2>
-              </Reveal>
-              <Reveal delay={0.2}>
-                <p className="text-lg text-gray-500 font-light leading-relaxed">
-                  Step into our flagship boutique in the heart of Dubai. Designed as a sanctuary of luxury, our showroom offers a private viewing experience where you can explore our collections in complete comfort and privacy.
-                </p>
-              </Reveal>
-              <Reveal delay={0.4}>
-                <ul className="space-y-4 pt-4">
-                  {["Private VIP Suites", "Certified Gemologists", "Valet Parking Service"].map((item, i) => (
-                    <li key={i} className="flex items-center gap-3 text-gray-700 font-medium">
-                      <span className="w-1.5 h-1.5 bg-primary rounded-full" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
-            </div>
-            <div className="order-1 lg:order-2">
-              <Reveal direction="left">
-                <img src={boutiqueImg} alt="Luxury Boutique Interior" className="w-full shadow-2xl rounded-sm" />
-              </Reveal>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* Jewelry Grid */}
-      <section id="jewelry" className="py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-            {PRODUCTS.filter(p => p.category === 'jewelry').map((product) => (
-              <StaggerItem key={product.id}>
-                <ProductCard
-                  id={product.id}
-                  name={product.name}
-                  image={product.image}
-                  purity={product.purity}
-                  baseWeight={product.baseWeight}
-                  makingCharge={product.makingCharge}
-                  type={product.type}
-                />
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-        </div>
-      </section>
-      {/* Bespoke Service CTA */}
-      <section id="bespoke" className="py-32 bg-gray-900 text-white relative overflow-hidden isolate">
-        <motion.div style={{ y: y2 }} className="absolute inset-0 z-0">
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={bespokeImageIndex}
-              src={bespokeImages[bespokeImageIndex]}
-              alt="Luxury Background"
-              initial={{ opacity: 0, scale: 1.1 }}
-              animate={{ opacity: 0.3, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 2.5 }}
-              className="w-full h-[150%] object-cover mix-blend-overlay"
-            />
-          </AnimatePresence>
-        </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent z-0" />
 
-        <div className="container relative z-10 px-4 text-center max-w-4xl mx-auto space-y-8">
-          <Reveal direction="down">
-            <span className="text-xs font-bold tracking-[0.3em] text-primary uppercase">Bespoke Service</span>
-          </Reveal>
-
-          <Reveal>
-            <h2 className="font-serif text-5xl md:text-7xl font-medium">Create Your Masterpiece</h2>
+          <Reveal delay={0.1}>
+            <div>
+              <h4 className="font-serif text-lg mb-6 text-gray-900">Collections</h4>
+              <ul className="space-y-4 text-sm text-gray-500 font-light">
+                <li><a href="#" className="hover:text-primary hover:pl-2 transition-all block">Gold Bullion</a></li>
+                <li><a href="#" className="hover:text-primary hover:pl-2 transition-all block">Diamond Rings</a></li>
+                <li><a href="#" className="hover:text-primary hover:pl-2 transition-all block">Bridal Sets</a></li>
+                <li><a href="#" className="hover:text-primary hover:pl-2 transition-all block">Investment Plans</a></li>
+              </ul>
+            </div>
           </Reveal>
 
           <Reveal delay={0.2}>
-            <p className="text-gray-300 font-light text-xl leading-relaxed max-w-2xl mx-auto">
-              Work directly with our senior designers to craft a one-of-a-kind piece that reflects your unique style and story.
-            </p>
+            <div>
+              <h4 className="font-serif text-lg mb-6 text-gray-900">Client Care</h4>
+              <ul className="space-y-4 text-sm text-gray-500 font-light">
+                <li><a href="#" className="hover:text-primary hover:pl-2 transition-all block">Live Gold Rates</a></li>
+                <li><a href="#" className="hover:text-primary hover:pl-2 transition-all block">Return Policy</a></li>
+                <li><a href="#" className="hover:text-primary hover:pl-2 transition-all block">Book Appointment</a></li>
+              </ul>
+            </div>
           </Reveal>
 
-          <Reveal delay={0.4}>
-            <div className="flex justify-center gap-6 pt-8">
-              <a href="https://wa.me/971506485898?text=I%20am%20interested%20in%20a%20private%20bespoke%20jewelry%20consultation." target="_blank" rel="noopener noreferrer">
-                <Button className="h-14 px-10 bg-gradient-gold text-gray-900 font-bold tracking-wide rounded-none hover:scale-105 transition-transform duration-300 shadow-[0_0_30px_rgba(197,160,89,0.3)]">
-                  Book Private Consultation
-                </Button>
-              </a>
+          <Reveal delay={0.3}>
+            <div>
+              <h4 className="font-serif text-lg mb-6 text-gray-900">Contact Us</h4>
+              <ul className="space-y-4 text-sm text-gray-500 font-light">
+                <li>
+                  <span className="block font-medium text-gray-900 mb-1">Headquarters</span>
+                  Gold Souq, Deira<br />Dubai, United Arab Emirates
+                </li>
+                <li>
+                  <span className="block font-medium text-gray-900 mb-1">Phone</span>
+                  <a href="tel:+971506485898" className="hover:text-primary">+971 50 648 5898</a>
+                </li>
+                <li>
+                  <span className="block font-medium text-gray-900 mb-1">Email</span>
+                  <a href="mailto:Admin@imperodigolduae.com" className="hover:text-primary">Admin@imperodigolduae.com</a>
+                </li>
+              </ul>
             </div>
           </Reveal>
         </div>
-      </section>
-      {/* Footer */}
-      <footer className="bg-white border-t border-gray-100 pt-24 pb-12 relative overflow-hidden">
-        {/* Subtle background texture */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-radial from-primary/5 to-transparent opacity-50 pointer-events-none" />
 
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid md:grid-cols-4 gap-16 mb-16">
-            <div className="space-y-6">
-              <div className="space-y-1">
-                <div className="mb-6">
-                  <img src={logoImg} alt="Impero Di Gold Logo" className="h-40 w-auto object-contain" />
-                </div>
-              </div>
-              <p className="text-sm text-gray-500 leading-relaxed font-light max-w-xs">
-                The premier destination for certified bullion and high-jewelry in the Middle East. Setting the gold standard since 2022.
-              </p>
-            </div>
-
-            <Reveal delay={0.1}>
-              <div>
-                <h4 className="font-serif text-lg mb-6 text-gray-900">Collections</h4>
-                <ul className="space-y-4 text-sm text-gray-500 font-light">
-                  <li><a href="#" className="hover:text-primary hover:pl-2 transition-all block">Gold Bullion</a></li>
-                  <li><a href="#" className="hover:text-primary hover:pl-2 transition-all block">Diamond Rings</a></li>
-                  <li><a href="#" className="hover:text-primary hover:pl-2 transition-all block">Bridal Sets</a></li>
-                  <li><a href="#" className="hover:text-primary hover:pl-2 transition-all block">Investment Plans</a></li>
-                </ul>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.2}>
-              <div>
-                <h4 className="font-serif text-lg mb-6 text-gray-900">Client Care</h4>
-                <ul className="space-y-4 text-sm text-gray-500 font-light">
-                  <li><a href="#" className="hover:text-primary hover:pl-2 transition-all block">Live Gold Rates</a></li>
-                  <li><a href="#" className="hover:text-primary hover:pl-2 transition-all block">Return Policy</a></li>
-                  <li><a href="#" className="hover:text-primary hover:pl-2 transition-all block">Book Appointment</a></li>
-                </ul>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.3}>
-              <div>
-                <h4 className="font-serif text-lg mb-6 text-gray-900">Contact Us</h4>
-                <ul className="space-y-4 text-sm text-gray-500 font-light">
-                  <li>
-                    <span className="block font-medium text-gray-900 mb-1">Headquarters</span>
-                    Gold Souq, Deira<br />Dubai, United Arab Emirates
-                  </li>
-                  <li>
-                    <span className="block font-medium text-gray-900 mb-1">Phone</span>
-                    <a href="tel:+971506485898" className="hover:text-primary">+971 50 648 5898</a>
-                  </li>
-                  <li>
-                    <span className="block font-medium text-gray-900 mb-1">Email</span>
-                    <a href="mailto:Admin@imperodigolduae.com" className="hover:text-primary">Admin@imperodigolduae.com</a>
-                  </li>
-                </ul>
-              </div>
-            </Reveal>
-          </div>
-
-          <div className="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400 font-light tracking-wide">
-            <p>© 2022 Impero Di Gold & Diamonds LLC. All rights reserved.</p>
-            <div className="flex gap-8 mt-4 md:mt-0 uppercase">
-              <a href="#" className="hover:text-gray-900 transition-colors">Privacy</a>
-              <a href="#" className="hover:text-gray-900 transition-colors">Terms</a>
-              <a href="#" className="hover:text-gray-900 transition-colors">Sitemap</a>
-            </div>
+        <div className="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400 font-light tracking-wide">
+          <p>© 2022 Impero Di Gold & Diamonds LLC. All rights reserved.</p>
+          <div className="flex gap-8 mt-4 md:mt-0 uppercase">
+            <a href="#" className="hover:text-gray-900 transition-colors">Privacy</a>
+            <a href="#" className="hover:text-gray-900 transition-colors">Terms</a>
+            <a href="#" className="hover:text-gray-900 transition-colors">Sitemap</a>
           </div>
         </div>
-      </footer>
-    </div>
+      </div>
+      </footer >
+    </div >
   );
 }
