@@ -25,10 +25,10 @@
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
-  
+
   --font-sans: 'Inter', sans-serif;
   --font-serif: 'Playfair Display', serif;
-  
+
   --radius-sm: 0.25rem;
   --radius-md: 0.375rem;
   --radius-lg: 0.5rem;
@@ -37,85 +37,94 @@
 /* LIGHT PREMIUM THEME - REFINED */
 :root {
   /* Base: Richer Off-white */
-  --background: 0 0% 99%; /* Almost pure white */
-  
+  --background: 0 0% 99%;
+  /* Almost pure white */
+
   /* Text: Deep Charcoal, not black */
   --foreground: 220 10% 10%;
-  
+
   --card: 0 0% 100%;
   --card-foreground: 220 10% 10%;
-  
+
   --popover: 0 0% 100%;
   --popover-foreground: 220 10% 10%;
-  
+
   /* Primary: Richer Metallic Gold (#C5A059) */
   --primary: 40 46% 56%;
   --primary-foreground: 0 0% 100%;
-  
+
   /* Secondary: Soft Champagne */
   --secondary: 40 30% 96%;
   --secondary-foreground: 40 46% 30%;
-  
+
   --muted: 220 10% 96%;
   --muted-foreground: 220 10% 50%;
-  
+
   --accent: 40 30% 97%;
   --accent-foreground: 40 46% 40%;
-  
+
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
-  
+
   --border: 40 20% 92%;
   --input: 40 20% 92%;
   --ring: 40 46% 56%;
-  
-  --radius: 0.25rem; /* Sharp, premium corners */
+
+  --radius: 0.25rem;
+  /* Sharp, premium corners */
 }
 
 /* DARK PREMIUM THEME - LUXURIOUS */
 .dark {
-  /* Base: Rich Dark Background */
-  --background: 220 15% 8%;
-  
-  /* Text: Soft Cream */
-  --foreground: 40 20% 95%;
-  
-  --card: 220 15% 12%;
-  --card-foreground: 40 20% 95%;
-  
-  --popover: 220 15% 10%;
-  --popover-foreground: 40 20% 95%;
-  
-  /* Primary: Brighter Gold for dark mode */
-  --primary: 40 60% 65%;
-  --primary-foreground: 220 15% 10%;
-  
-  /* Secondary: Dark Charcoal with gold tint */
-  --secondary: 220 15% 15%;
-  --secondary-foreground: 40 50% 70%;
-  
-  --muted: 220 15% 18%;
+  /* Base: Luxurious Deep Black */
+  --background: 0 0% 3%;
+
+  /* Text: Rich Gold/Cream */
+  --foreground: 40 30% 90%;
+
+  --card: 0 0% 8%;
+  --card-foreground: 40 30% 90%;
+
+  --popover: 0 0% 8%;
+  --popover-foreground: 40 30% 90%;
+
+  /* Primary: Vibrant Metallic Gold */
+  --primary: 42 78% 60%;
+  /* #DFB24A */
+  --primary-foreground: 0 0% 0%;
+
+  --secondary: 0 0% 12%;
+  --secondary-foreground: 40 40% 70%;
+
+  --muted: 0 0% 12%;
   --muted-foreground: 40 10% 60%;
-  
-  --accent: 220 15% 20%;
-  --accent-foreground: 40 60% 70%;
-  
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 98%;
-  
-  --border: 220 15% 20%;
-  --input: 220 15% 20%;
-  --ring: 40 60% 65%;
+
+  --accent: 0 0% 15%;
+  --accent-foreground: 40 50% 80%;
+
+  --destructive: 0 60% 50%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 40 30% 15%;
+  --input: 40 30% 15%;
+  --ring: 42 78% 60%;
 }
 
 @layer base {
   * {
     @apply border-border;
   }
+
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply font-sans antialiased bg-background text-foreground transition-colors duration-700 ease-in-out;
   }
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-serif tracking-tight;
   }
 }
@@ -124,7 +133,7 @@
   .text-gold {
     color: hsl(var(--primary));
   }
-  
+
   .text-gradient-gold {
     background: linear-gradient(135deg, #C5A059 0%, #E6C888 50%, #C5A059 100%);
     -webkit-background-clip: text;
@@ -141,12 +150,12 @@
   .shadow-premium {
     box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
   }
-  
+
   /* Smooth Reveal Animation classes */
   .reveal-text {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
   }
-  
+
   @keyframes shine {
     to {
       background-position: 200% center;
@@ -154,10 +163,13 @@
   }
 
   @keyframes bling {
-    0%, 100% {
+
+    0%,
+    100% {
       filter: brightness(100%) drop-shadow(0 0 0 transparent);
       transform: scale(1);
     }
+
     50% {
       filter: brightness(130%) drop-shadow(0 0 10px rgba(197, 160, 89, 0.6));
       transform: scale(1.02);
@@ -172,17 +184,20 @@
   ::-webkit-scrollbar {
     width: 6px;
   }
+
   ::-webkit-scrollbar-track {
     background: transparent;
   }
+
   ::-webkit-scrollbar-thumb {
     background: rgba(197, 160, 89, 0.3);
     border-radius: 10px;
   }
+
   ::-webkit-scrollbar-thumb:hover {
     background: rgba(197, 160, 89, 0.6);
   }
-  
+
   html {
     scroll-behavior: smooth;
   }
