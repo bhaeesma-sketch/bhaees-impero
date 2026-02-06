@@ -295,6 +295,36 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Campaign Gallery - High Fashion */}
+      <section className="py-20 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 transition-colors duration-500">
+        <div className="container mx-auto px-4">
+          <Reveal className="mb-12 text-center">
+            <span className="text-xs font-bold tracking-[0.3em] text-primary uppercase block mb-3">The Campaign</span>
+            <h2 className="font-serif text-4xl text-gray-900 dark:text-gray-100">Muse & Masterpiece</h2>
+          </Reveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {[heroImg2, heroImg3].map((img, i) => (
+              <Reveal key={i} delay={i * 0.2}>
+                <div className="relative group overflow-hidden aspect-[3/4] cursor-pointer shadow-lg">
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500 z-10" />
+                  <img
+                    src={img}
+                    alt="Campaign Shot"
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute bottom-0 left-0 w-full p-8 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-t from-black/60 to-transparent">
+                    <p className="text-white font-serif text-2xl italic">
+                      {["The Bridal Edit", "Diamond Purity"][i]}
+                    </p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Bespoke Service CTA */}
       < section id="bespoke" className="py-32 bg-gray-900 text-white relative overflow-hidden isolate" >
         <motion.div style={{ y: y2 }} className="absolute inset-0 z-0">
@@ -502,35 +532,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Campaign Gallery - High Fashion */}
-      <section className="py-20 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
-        <div className="container mx-auto px-4">
-          <Reveal className="mb-12 text-center">
-            <span className="text-xs font-bold tracking-[0.3em] text-primary uppercase block mb-3">The Campaign</span>
-            <h2 className="font-serif text-4xl text-gray-900 dark:text-gray-100">Muse & Masterpiece</h2>
-          </Reveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {[heroImg2, heroImg3].map((img, i) => (
-              <Reveal key={i} delay={i * 0.2}>
-                <div className="relative group overflow-hidden aspect-[3/4] cursor-pointer shadow-lg">
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500 z-10" />
-                  <img
-                    src={img}
-                    alt="Campaign Shot"
-                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute bottom-0 left-0 w-full p-8 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-t from-black/60 to-transparent">
-                    <p className="text-white font-serif text-2xl italic">
-                      {["The Bridal Edit", "Diamond Purity"][i]}
-                    </p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
       {/* Footer */}
       <footer className="bg-white dark:bg-black border-t border-gray-100 dark:border-gray-800 pt-24 pb-12 relative overflow-hidden transition-colors duration-500">
         {/* Subtle background texture */}
