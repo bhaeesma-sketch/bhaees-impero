@@ -54,13 +54,15 @@ export function ProductCard({ id, name, image, purity, baseWeight, displayWeight
   return (
     <Link href={`/product/${id}`}>
       <motion.div
-        className="group relative bg-transparent rounded-xl overflow-hidden cursor-pointer"
+        className="group relative bg-transparent rounded-xl overflow-hidden cursor-pointer perspective-1000"
         onHoverStart={() => setIsHovered(true)}
         onHoverEnd={() => setIsHovered(false)}
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 20, rotateX: 0, rotateY: 0 }}
         whileInView={{ opacity: 1, y: 0 }}
+        whileHover={{ y: -10, rotateX: 2, rotateY: -2, scale: 1.02 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.5, type: "spring", stiffness: 200, damping: 20 }}
+        style={{ transformStyle: "preserve-3d" }}
       >
         {/* Ghost Card Background (appears on hover) */}
         <div className="absolute inset-0 bg-white shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl -z-10" />

@@ -6,10 +6,12 @@ import { ArrowRight, ShieldCheck, MapPin, RotateCcw, Star, Diamond, Gem, Smartph
 import { Button } from '@/components/ui/button';
 import { Reveal, StaggerContainer, StaggerItem } from '@/components/ui/reveal';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense, lazy, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { PRODUCTS as STATIC_PRODUCTS, Product } from '@/lib/products';
 import { Link } from 'wouter';
+
+const Hero3D = lazy(() => import('@/components/ui/hero-3d'));
 
 // Assets
 import marbleBg from '@assets/generated_images/white_marble_luxury_texture_background.png';
@@ -35,6 +37,40 @@ import bespokeBg6 from '@assets/generated_images/luxury_jewelry_design_sketch.pn
 
 const heroImages = [heroImg1, heroImg3];
 const bespokeImages = [bespokeBg1, bespokeBg2, bespokeBg3, bespokeBg4, bespokeBg5, bespokeBg6];
+
+function ParallaxImage({ src, index }: { src: string, index: number }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const rotateX = useTransform(scrollYProgress, [0.2, 0.8], [5, -5]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.9, 1], [0, 1, 1, 0]);
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{ opacity, rotateX, perspective: 1000 }}
+      className="relative group overflow-hidden h-[600px] w-full cursor-pointer shadow-2xl rounded-sm"
+    >
+       <motion.div style={{ y }} className="absolute inset-0">
+          <img
+            src={src}
+            alt="Campaign Shot"
+            className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
+          />
+       </motion.div>
+       {/* Overlay content */}
+       <div className="absolute bottom-0 left-0 w-full p-8 z-20 translate-y-0 opacity-100 transition-all duration-500 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+          <p className="text-white font-serif text-3xl italic drop-shadow-md">
+             {["The Bridal Edit", "Diamond Purity"][index]}
+          </p>
+       </div>
+    </motion.div>
+  );
+}
 
 export default function Home() {
   const { scrollY } = useScroll();
@@ -73,21 +109,19 @@ export default function Home() {
       {/* Hero Section - Redesigned for Impact */}
       <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
         <div className="absolute inset-0 z-0">
-          <motion.img
-            src={heroModelImg}
-            alt="Impero Di Gold Royal Muse"
-            initial={{ scale: 1 }}
-            animate={{ scale: 1.1 }}
-            transition={{ duration: 20, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+          <Suspense fallback={
+            <div className="absolute inset-0 bg-black">
+               <img src={heroModelImg} className="w-full h-full object-cover opacity-50" />
+            </div>
+          }>
+            <Hero3D />
+          </Suspense>
         </div>
 
-        <div className="container relative z-10 px-4 grid lg:grid-cols-12 gap-12 items-center h-full">
+        <div className="container relative z-10 px-4 grid lg:grid-cols-12 gap-12 items-center h-full pointer-events-none">
           <motion.div
             style={{ opacity: opacityHero, scale: scaleHero }}
-            className="lg:col-span-8 space-y-8 text-left pl-4 md:pl-0 pt-20"
+            className="lg:col-span-8 space-y-8 text-left pl-4 md:pl-0 pt-20 pointer-events-auto"
           >
             <Reveal direction="down" delay={0.1}>
               <div className="flex items-center gap-4">
@@ -301,23 +335,9 @@ export default function Home() {
             <h2 className="font-serif text-4xl text-gray-900 dark:text-gray-100">Muse & Masterpiece</h2>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto perspective-1000">
             {[heroImg2, heroImg3].map((img, i) => (
-              <Reveal key={i} delay={i * 0.2}>
-                <div className="relative group overflow-hidden h-[600px] w-full cursor-pointer shadow-2xl rounded-sm">
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500 z-10" />
-                  <img
-                    src={img}
-                    alt="Campaign Shot"
-                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute bottom-0 left-0 w-full p-8 z-20 translate-y-0 opacity-100 transition-all duration-500 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
-                    <p className="text-white font-serif text-3xl italic drop-shadow-md">
-                      {["The Bridal Edit", "Diamond Purity"][i]}
-                    </p>
-                  </div>
-                </div>
-              </Reveal>
+              <ParallaxImage key={i} src={img} index={i} />
             ))}
           </div>
         </div>

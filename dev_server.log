@@ -8,3 +8,7 @@
   ➜  Local:   http://localhost:8080/
   ➜  Network: http://192.168.0.2:8080/
 [baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+10:26:55 PM [vite] (client) hmr update /src/pages/home.tsx, /src/index.css
+10:27:20 PM [vite] (client) hmr update /src/index.css
+10:27:33 PM [vite] (client) hmr update /src/components/product/product-card.tsx, /src/index.css
+10:28:09 PM [vite] (client) hmr update /src/pages/home.tsx, /src/index.css
