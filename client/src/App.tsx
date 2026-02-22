@@ -16,6 +16,7 @@ import TryOnPage from "@/pages/try-on";
 
 import BespokePage from "@/pages/bespoke";
 import CatalogPage from "@/pages/catalog";
+import WishlistPage from "@/pages/wishlist";
 import { useAnalytics } from "@/hooks/use-analytics";
 
 function Router() {
@@ -30,6 +31,7 @@ function Router() {
       <Route path="/auth" component={AuthPage} />
       <Route path="/admin" component={AdminPage} />
       <Route path="/privacy-policy" component={PrivacyPolicy} />
+      <Route path="/wishlist" component={WishlistPage} />
       <Route component={NotFound} />
     </Switch>
   );

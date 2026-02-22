@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Menu, X, Phone, User, LogOut, Settings, Moon, Sun } from 'lucide-react';
+import { Search, Menu, X, Phone, User, LogOut, Settings, Moon, Sun, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link, useLocation } from 'wouter';
 import { useAuth } from '@/hooks/use-auth';
 import { useTheme } from '@/hooks/use-theme';
 import { AuthModal } from '@/components/auth/AuthModal';
 import { VaultUnlock } from '@/components/admin/VaultUnlock';
+import { useLiveGoldRate, formatCurrency } from '@/lib/gold-price';
 // ... other imports ...
 import {
   DropdownMenu,
@@ -19,6 +20,36 @@ import {
 
 // Assets
 import logoImg from '@assets/impero_logo_transparent.png';
+
+function GoldRateTicker() {
+  const { rates } = useLiveGoldRate();
+
+  return (
+    <div className="bg-black/95 text-gold py-2 overflow-hidden border-b border-white/10 relative z-50">
+      <div className="container mx-auto flex items-center px-4">
+        <span className="text-xs font-bold tracking-widest uppercase text-primary mr-4 shrink-0 hidden md:block">Live Rates</span>
+        <div className="flex-1 overflow-hidden relative mask-gradient-x">
+             <motion.div
+               className="flex gap-12 whitespace-nowrap"
+               animate={{ x: ["0%", "-50%"] }}
+               transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+             >
+                {[...Array(4)].map((_, i) => (
+                    <div key={i} className="flex gap-8">
+                        {Object.entries(rates).map(([key, value]) => (
+                            <span key={key} className="text-xs tracking-wide">
+                                <span className="text-gray-400 mr-1">{key}</span>
+                                <span className="font-medium text-white">{formatCurrency(value)}</span>
+                            </span>
+                        ))}
+                    </div>
+                ))}
+             </motion.div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -88,6 +119,7 @@ export function Header() {
 
   return (
     <>
+      <GoldRateTicker />
       {/* Swipe Hint Overlay */}
       <AnimatePresence>
         {showSwipeHint && (
@@ -212,6 +244,12 @@ export function Header() {
               <button className="p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary">
                 <Search className="w-5 h-5" />
               </button>
+
+              <Link href="/wishlist">
+                <button className="p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-500">
+                  <Heart className="w-5 h-5" />
+                </button>
+              </Link>
 
               {user ? (
                 <DropdownMenu>

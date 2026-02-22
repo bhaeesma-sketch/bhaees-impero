@@ -6,6 +6,7 @@ const FALLBACK_RATES = {
   '21K': 479.95,
   '18K': 411.40,
   'Silver': 3.80,
+  'Platinum': 115.50,
 };
 
 export type MetalType = keyof typeof FALLBACK_RATES;
@@ -52,6 +53,7 @@ export const useLiveGoldRate = () => {
           '21K': data['21K'],
           '18K': data['18K'],
           'Silver': data['Silver'] || FALLBACK_RATES['Silver'],
+          'Platinum': data['Platinum'] || FALLBACK_RATES['Platinum'],
         });
       } catch (error) {
         console.error('Gold price fetch error:', error);
