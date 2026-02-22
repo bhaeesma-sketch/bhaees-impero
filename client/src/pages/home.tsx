@@ -1,4 +1,3 @@
-import { LiveTicker } from '@/components/ui/live-ticker';
 import { Header } from '@/components/layout/header';
 import { ProductCard } from '@/components/product/product-card';
 import { GoldRatesTable } from '@/components/ui/gold-rates-table';
@@ -70,7 +69,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/20 overflow-x-hidden">
-      <LiveTicker />
       <Header />
       {/* Hero Section - Redesigned for Impact */}
       <section className="relative min-h-screen flex items-center overflow-hidden pt-20">

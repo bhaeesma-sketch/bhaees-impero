@@ -2,8 +2,8 @@ import 'dotenv/config';
 import express from 'express';
 import session from 'express-session';
 import { db } from './_lib/db';
-import { products, users, activityLogs } from '../shared/schema';
-import { eq, desc, count, sql } from 'drizzle-orm';
+import { products, users, activityLogs, wishlist } from '../shared/schema';
+import { eq, desc, count, sql, and } from 'drizzle-orm';
 import crypto from 'crypto';
 
 const app = express();
@@ -213,6 +213,96 @@ app.get('/api/gold-rates', async (req, res) => {
         res.json(rates);
     } catch (error) {
         console.error('Gold rates error:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+// Wishlist API
+app.get('/api/wishlist', async (req, res) => {
+    try {
+        if (!db) {
+            return res.status(503).json({ message: 'Database unavailable' });
+        }
+        const userId = (req.session as any).userId;
+        if (!userId) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
+        const wishlistItems = await db
+            .select({
+                product: products,
+                addedAt: wishlist.timestamp
+            })
+            .from(wishlist)
+            .innerJoin(products, eq(wishlist.productId, products.id))
+            .where(eq(wishlist.userId, userId))
+            .orderBy(desc(wishlist.timestamp));
+
+        // Return just the products array to keep it simple for frontend, or keeping structure?
+        // Let's return the products directly for simplicity in usage
+        res.json(wishlistItems.map(item => item.product));
+    } catch (error) {
+        console.error('Wishlist fetch error:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+app.post('/api/wishlist', async (req, res) => {
+    try {
+        if (!db) {
+            return res.status(503).json({ message: 'Database unavailable' });
+        }
+        const userId = (req.session as any).userId;
+        if (!userId) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
+        const { productId } = req.body;
+        if (!productId) {
+            return res.status(400).json({ message: 'Product ID is required' });
+        }
+
+        // Check if already in wishlist
+        const existing = await db
+            .select()
+            .from(wishlist)
+            .where(and(eq(wishlist.userId, userId), eq(wishlist.productId, productId)));
+
+        if (existing.length > 0) {
+            return res.status(200).json({ message: 'Already in wishlist' });
+        }
+
+        await db.insert(wishlist).values({
+            userId,
+            productId,
+        });
+
+        res.status(201).json({ message: 'Added to wishlist' });
+    } catch (error) {
+        console.error('Wishlist add error:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+app.delete('/api/wishlist/:productId', async (req, res) => {
+    try {
+        if (!db) {
+            return res.status(503).json({ message: 'Database unavailable' });
+        }
+        const userId = (req.session as any).userId;
+        if (!userId) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
+        const { productId } = req.params;
+
+        await db
+            .delete(wishlist)
+            .where(and(eq(wishlist.userId, userId), eq(wishlist.productId, productId)));
+
+        res.json({ message: 'Removed from wishlist' });
+    } catch (error) {
+        console.error('Wishlist remove error:', error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
 });

@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { MetalType } from '@/lib/gold-price';
+import { Heart } from 'lucide-react';
+import { useWishlist } from '@/hooks/use-wishlist';
+import { useAuth } from '@/hooks/use-auth';
+import { useToast } from '@/hooks/use-toast';
 
 interface ProductCardProps {
   id: string;
@@ -19,6 +23,30 @@ interface ProductCardProps {
 export function ProductCard({ id, name, image, purity, baseWeight, displayWeight, customWeights, makingCharge, type }: ProductCardProps) {
   const [weight, setWeight] = useState(baseWeight);
   const [isHovered, setIsHovered] = useState(false);
+
+  const { isWishlisted, addToWishlist, removeFromWishlist } = useWishlist();
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const [, setLocation] = useLocation();
+
+  const isInWishlist = isWishlisted(id);
+
+  const toggleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!user) {
+      toast({ title: "Please log in", description: "You need to be logged in to manage your wishlist." });
+      setLocation('/auth');
+      return;
+    }
+
+    if (isInWishlist) {
+      removeFromWishlist.mutate(id);
+    } else {
+      addToWishlist.mutate(id);
+    }
+  };
 
   // Available weight options for bullion
   const weights = customWeights || (type === 'bullion' ? [1, 5, 10, 20, 50, 100] : [baseWeight]);
@@ -39,6 +67,16 @@ export function ProductCard({ id, name, image, purity, baseWeight, displayWeight
 
         {/* Image Container */}
         <div className="relative aspect-[4/5] p-6 flex items-center justify-center overflow-hidden bg-white rounded-xl group-hover:bg-transparent transition-colors duration-300">
+          {/* Wishlist Button */}
+          <button
+            onClick={toggleWishlist}
+            className={`absolute top-3 right-3 p-2 rounded-full bg-white/90 shadow-sm transition-all duration-300 z-20 hover:scale-110 ${
+                isInWishlist ? 'text-red-500' : 'text-gray-400 hover:text-red-500'
+            }`}
+          >
+            <Heart className={`w-5 h-5 ${isInWishlist ? 'fill-current' : ''}`} />
+          </button>
+
           <motion.img
             src={image}
             alt={name}

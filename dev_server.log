@@ -1,0 +1,10 @@
+
+> impero-di@1.0.0 dev
+> vite
+
+
+  VITE v7.1.12  ready in 510 ms
+
+  ➜  Local:   http://localhost:8080/
+  ➜  Network: http://192.168.0.2:8080/
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`

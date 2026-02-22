@@ -64,12 +64,24 @@ export const activityLogs = pgTable("activity_logs", {
   timestamp: timestamp("timestamp").defaultNow().notNull(),
 });
 
+export const wishlist = pgTable("wishlist", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull(), // References users.id (assuming string UUID)
+  productId: varchar("product_id").notNull(), // References products.id
+  timestamp: timestamp("timestamp").defaultNow().notNull(),
+});
+
 export const insertGoldPriceHistorySchema = createInsertSchema(goldPriceHistory).omit({
   id: true,
   timestamp: true,
 });
 
 export const insertActivityLogSchema = createInsertSchema(activityLogs).omit({
+  id: true,
+  timestamp: true,
+});
+
+export const insertWishlistSchema = createInsertSchema(wishlist).omit({
   id: true,
   timestamp: true,
 });
@@ -82,3 +94,5 @@ export type InsertGoldPriceHistory = z.infer<typeof insertGoldPriceHistorySchema
 export type GoldPriceHistory = typeof goldPriceHistory.$inferSelect;
 export type InsertActivityLog = z.infer<typeof insertActivityLogSchema>;
 export type ActivityLog = typeof activityLogs.$inferSelect;
+export type InsertWishlist = z.infer<typeof insertWishlistSchema>;
+export type Wishlist = typeof wishlist.$inferSelect;
