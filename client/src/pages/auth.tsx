@@ -7,14 +7,21 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { ShieldCheck, Lock } from "lucide-react";
+import { ShieldCheck, Lock, Loader2 } from "lucide-react";
 import marbleBg from '@assets/generated_images/white_marble_luxury_texture_background.png';
 
 export default function AuthPage() {
   const { login, register, user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+
+  // Login State
+  const [loginUsername, setLoginUsername] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+
+  // Register State
+  const [registerUsername, setRegisterUsername] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
+
   const [, setLocation] = useLocation();
 
   // Redirect if already logged in
@@ -25,18 +32,30 @@ export default function AuthPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!username || !password) return;
+    if (!loginUsername || !loginPassword) return;
+
     setIsLoading(true);
-    await login(username, password);
-    setIsLoading(false);
+    try {
+      await login(loginUsername, loginPassword);
+    } catch (error) {
+      // Error is handled by useAuth toast
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!username || !password) return;
+    if (!registerUsername || !registerPassword) return;
+
     setIsLoading(true);
-    await register(username, password);
-    setIsLoading(false);
+    try {
+      await register(registerUsername, registerPassword);
+    } catch (error) {
+      // Error is handled by useAuth toast
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -84,9 +103,10 @@ export default function AuthPage() {
                     <Label htmlFor="username">Username / Email</Label>
                     <Input 
                       id="username" 
+                      required
                       placeholder="Enter your username" 
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      value={loginUsername}
+                      onChange={(e) => setLoginUsername(e.target.value)}
                       className="bg-white border-gray-200 focus:border-primary/50"
                     />
                   </div>
@@ -95,9 +115,10 @@ export default function AuthPage() {
                     <Input 
                       id="password" 
                       type="password" 
+                      required
                       placeholder="••••••••" 
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      value={loginPassword}
+                      onChange={(e) => setLoginPassword(e.target.value)}
                       className="bg-white border-gray-200 focus:border-primary/50"
                     />
                   </div>
@@ -108,6 +129,7 @@ export default function AuthPage() {
                     className="w-full bg-primary hover:bg-primary/90 text-white font-medium"
                     disabled={isLoading}
                   >
+                    {isLoading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
                     {isLoading ? "Authenticating..." : "Secure Login"}
                   </Button>
                   <div className="flex items-center justify-center gap-2 text-xs text-gray-400">
@@ -131,9 +153,10 @@ export default function AuthPage() {
                     <Label htmlFor="reg-username">Username</Label>
                     <Input 
                       id="reg-username" 
+                      required
                       placeholder="Choose a username" 
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      value={registerUsername}
+                      onChange={(e) => setRegisterUsername(e.target.value)}
                       className="bg-white border-gray-200 focus:border-primary/50"
                     />
                   </div>
@@ -142,9 +165,10 @@ export default function AuthPage() {
                     <Input 
                       id="reg-password" 
                       type="password" 
+                      required
                       placeholder="Choose a strong password" 
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      value={registerPassword}
+                      onChange={(e) => setRegisterPassword(e.target.value)}
                       className="bg-white border-gray-200 focus:border-primary/50"
                     />
                   </div>
@@ -161,6 +185,7 @@ export default function AuthPage() {
                     className="w-full bg-gray-900 hover:bg-black text-white font-medium"
                     disabled={isLoading}
                   >
+                    {isLoading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
                     {isLoading ? "Creating Account..." : "Create Account"}
                   </Button>
                 </CardFooter>
