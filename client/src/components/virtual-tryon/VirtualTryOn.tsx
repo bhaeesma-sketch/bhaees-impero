@@ -187,6 +187,7 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
                             variant="outline"
                             className="bg-black/30 backdrop-blur-md border-white/20 text-white hover:bg-black/50"
                             onClick={handleToggleCamera}
+                            aria-label="Switch camera"
                         >
                             <RefreshCcw className="w-4 h-4" />
                         </Button>
@@ -334,6 +335,7 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
                                 size="icon"
                                 onClick={prevProduct}
                                 className="text-white hover:bg-white/20"
+                                aria-label="Previous product"
                             >
                                 <ChevronLeft className="w-6 h-6" />
                             </Button>
@@ -348,6 +350,7 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
                                 size="icon"
                                 onClick={nextProduct}
                                 className="text-white hover:bg-white/20"
+                                aria-label="Next product"
                             >
                                 <ChevronRight className="w-6 h-6" />
                             </Button>
