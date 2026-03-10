@@ -138,6 +138,7 @@ export function Header() {
           <div className="flex items-center justify-between h-20 md:h-28">
             {/* Mobile Menu Button */}
             <button
+              aria-label="Open menu"
               className="md:hidden p-2 hover:bg-gray-50 rounded-full transition-colors z-50"
               onClick={() => setIsMobileMenuOpen(true)}
             >
@@ -209,14 +210,14 @@ export function Header() {
 
               {/* Theme Toggle Button Removed (Moved to Floating Button) */}
 
-              <button className="p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary">
+              <button aria-label="Search" className="p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary">
                 <Search className="w-5 h-5" />
               </button>
 
               {user ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="p-2 hover:bg-gray-50 rounded-full transition-colors text-gray-600 hover:text-primary relative group">
+                    <button aria-label="User account" className="p-2 hover:bg-gray-50 rounded-full transition-colors text-gray-600 hover:text-primary relative group">
                       <User className="w-5 h-5" />
                       {/* <span className="absolute top-1 right-1 w-2 h-2 bg-green-500 rounded-full ring-2 ring-white"></span> */}
                     </button>
@@ -287,7 +288,7 @@ export function Header() {
               >
                 <div className="p-6 flex items-center justify-between border-b border-gray-100">
                   <span className="font-serif text-xl font-bold">Menu</span>
-                  <button onClick={() => setIsMobileMenuOpen(false)}>
+                  <button aria-label="Close menu" onClick={() => setIsMobileMenuOpen(false)}>
                     <X className="w-6 h-6 text-gray-500" />
                   </button>
                 </div>
@@ -351,6 +352,7 @@ export function Header() {
       {/* Separate Fixed Theme Toggle */}
       <div className="fixed bottom-6 right-6 z-50">
         <button
+          aria-label={theme === 'dark' ? "Switch to light mode" : "Switch to dark mode"}
           onClick={toggleTheme}
           className="flex items-center gap-2 px-4 py-3 bg-white/90 dark:bg-black/90 backdrop-blur-md rounded-full border border-gray-200 dark:border-white/10 shadow-2xl hover:scale-105 transition-all duration-300 group"
         >
