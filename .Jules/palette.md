@@ -1,0 +1,1 @@
+## 2024-03-13 - Added ARIA labels to Header icon buttons\n**Learning:** Header icon-only buttons lacked proper ARIA labels for screen readers.\n**Action:** Ensure all icon-only interactive elements receive descriptive `aria-label` attributes.
