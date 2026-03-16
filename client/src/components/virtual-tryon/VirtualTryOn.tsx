@@ -330,6 +330,7 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 z-40">
                         <div className="flex items-center justify-between max-w-4xl mx-auto">
                             <Button
+                                aria-label="Previous Product"
                                 variant="ghost"
                                 size="icon"
                                 onClick={prevProduct}
@@ -344,6 +345,7 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
                             </div>
 
                             <Button
+                                aria-label="Next Product"
                                 variant="ghost"
                                 size="icon"
                                 onClick={nextProduct}

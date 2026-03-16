@@ -1,0 +1,1 @@
+## 2024-03-24 - Initial setup\n**Learning:** This repo is an e-commerce platform called Impero Di Gold & Diamonds. Found several instances of icon-only buttons without ARIA labels.\n**Action:** Will implement missing ARIA labels on these interactive elements to improve accessibility.

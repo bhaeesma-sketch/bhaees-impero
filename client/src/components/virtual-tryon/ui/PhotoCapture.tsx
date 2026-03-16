@@ -102,6 +102,7 @@ export function PhotoCapture({
                         </div>
 
                         <Button
+                            aria-label="Close"
                             onClick={onClose}
                             variant="ghost"
                             size="icon"
