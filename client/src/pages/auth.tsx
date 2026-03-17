@@ -87,6 +87,7 @@ export default function AuthPage() {
                       placeholder="Enter your username" 
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
+                      autoComplete="username"
                       className="bg-white border-gray-200 focus:border-primary/50"
                     />
                   </div>
@@ -98,6 +99,7 @@ export default function AuthPage() {
                       placeholder="••••••••" 
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      autoComplete="current-password"
                       className="bg-white border-gray-200 focus:border-primary/50"
                     />
                   </div>
@@ -134,6 +136,7 @@ export default function AuthPage() {
                       placeholder="Choose a username" 
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
+                      autoComplete="username"
                       className="bg-white border-gray-200 focus:border-primary/50"
                     />
                   </div>
@@ -145,6 +148,7 @@ export default function AuthPage() {
                       placeholder="Choose a strong password" 
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      autoComplete="new-password"
                       className="bg-white border-gray-200 focus:border-primary/50"
                     />
                   </div>
