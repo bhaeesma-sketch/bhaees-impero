@@ -1,0 +1,3 @@
+## 2024-05-24 - Added ARIA labels to Header buttons
+**Learning:** Found several icon-only buttons in the core Header component that were inaccessible to screen readers. Standard pattern is to use Lucide React icons within buttons, which inherently lack context without explicit labels.
+**Action:** Always verify icon-only interactive elements contain descriptive `aria-label` attributes to ensure keyboard and screen reader accessibility.
