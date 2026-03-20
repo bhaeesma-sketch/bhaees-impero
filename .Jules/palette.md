@@ -1,0 +1,3 @@
+## 2024-05-18 - Fix Radix UI Tabs Shared State Bleed
+**Learning:** When using Radix UI `<Tabs>` for forms with shared state (e.g., Login/Register sharing `username`/`password` in a single component), state bleed occurs on tab switch. If a user types in the Login tab and switches to the Register tab, the same typed text carries over, creating a confusing experience and potential security/validation issues if they submit.
+**Action:** Add an `onValueChange` handler to the `<Tabs>` component to explicitly clear any shared state variables (`setUsername("")`, `setPassword("")`) when the user switches tabs, ensuring a clean slate.
