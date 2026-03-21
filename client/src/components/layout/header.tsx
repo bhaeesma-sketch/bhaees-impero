@@ -140,6 +140,7 @@ export function Header() {
             <button
               className="md:hidden p-2 hover:bg-gray-50 rounded-full transition-colors z-50"
               onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Open mobile menu"
             >
               <Menu className="w-6 h-6 text-gray-700" />
             </button>
@@ -209,14 +210,20 @@ export function Header() {
 
               {/* Theme Toggle Button Removed (Moved to Floating Button) */}
 
-              <button className="p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary">
+              <button
+                className="p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary"
+                aria-label="Search"
+              >
                 <Search className="w-5 h-5" />
               </button>
 
               {user ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="p-2 hover:bg-gray-50 rounded-full transition-colors text-gray-600 hover:text-primary relative group">
+                    <button
+                      className="p-2 hover:bg-gray-50 rounded-full transition-colors text-gray-600 hover:text-primary relative group"
+                      aria-label="My Account"
+                    >
                       <User className="w-5 h-5" />
                       {/* <span className="absolute top-1 right-1 w-2 h-2 bg-green-500 rounded-full ring-2 ring-white"></span> */}
                     </button>
@@ -287,7 +294,7 @@ export function Header() {
               >
                 <div className="p-6 flex items-center justify-between border-b border-gray-100">
                   <span className="font-serif text-xl font-bold">Menu</span>
-                  <button onClick={() => setIsMobileMenuOpen(false)}>
+                  <button onClick={() => setIsMobileMenuOpen(false)} aria-label="Close mobile menu">
                     <X className="w-6 h-6 text-gray-500" />
                   </button>
                 </div>
