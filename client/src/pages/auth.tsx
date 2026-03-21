@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { ShieldCheck, Lock } from "lucide-react";
+import { ShieldCheck, Lock, Loader2 } from "lucide-react";
 import marbleBg from '@assets/generated_images/white_marble_luxury_texture_background.png';
 
 export default function AuthPage() {
@@ -27,16 +27,22 @@ export default function AuthPage() {
     e.preventDefault();
     if (!username || !password) return;
     setIsLoading(true);
-    await login(username, password);
-    setIsLoading(false);
+    try {
+      await login(username, password);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!username || !password) return;
     setIsLoading(true);
-    await register(username, password);
-    setIsLoading(false);
+    try {
+      await register(username, password);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -65,7 +71,7 @@ export default function AuthPage() {
         </div>
 
         <Card className="border-none shadow-2xl bg-white/80 backdrop-blur-md">
-          <Tabs defaultValue="login" className="w-full">
+          <Tabs defaultValue="login" className="w-full" onValueChange={() => { setUsername(""); setPassword(""); }}>
             <TabsList className="grid w-full grid-cols-2 mb-4 bg-gray-100/50 p-1">
               <TabsTrigger value="login" className="font-serif">Login</TabsTrigger>
               <TabsTrigger value="register" className="font-serif">Register</TabsTrigger>
@@ -86,6 +92,7 @@ export default function AuthPage() {
                       id="username" 
                       placeholder="Enter your username" 
                       value={username}
+                      autoComplete="username"
                       onChange={(e) => setUsername(e.target.value)}
                       className="bg-white border-gray-200 focus:border-primary/50"
                     />
@@ -97,6 +104,7 @@ export default function AuthPage() {
                       type="password" 
                       placeholder="••••••••" 
                       value={password}
+                      autoComplete="current-password"
                       onChange={(e) => setPassword(e.target.value)}
                       className="bg-white border-gray-200 focus:border-primary/50"
                     />
@@ -108,7 +116,14 @@ export default function AuthPage() {
                     className="w-full bg-primary hover:bg-primary/90 text-white font-medium"
                     disabled={isLoading}
                   >
-                    {isLoading ? "Authenticating..." : "Secure Login"}
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Authenticating...
+                      </>
+                    ) : (
+                      "Secure Login"
+                    )}
                   </Button>
                   <div className="flex items-center justify-center gap-2 text-xs text-gray-400">
                     <Lock className="w-3 h-3" />
@@ -133,6 +148,7 @@ export default function AuthPage() {
                       id="reg-username" 
                       placeholder="Choose a username" 
                       value={username}
+                      autoComplete="username"
                       onChange={(e) => setUsername(e.target.value)}
                       className="bg-white border-gray-200 focus:border-primary/50"
                     />
@@ -144,6 +160,7 @@ export default function AuthPage() {
                       type="password" 
                       placeholder="Choose a strong password" 
                       value={password}
+                      autoComplete="new-password"
                       onChange={(e) => setPassword(e.target.value)}
                       className="bg-white border-gray-200 focus:border-primary/50"
                     />
@@ -161,7 +178,14 @@ export default function AuthPage() {
                     className="w-full bg-gray-900 hover:bg-black text-white font-medium"
                     disabled={isLoading}
                   >
-                    {isLoading ? "Creating Account..." : "Create Account"}
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Creating Account...
+                      </>
+                    ) : (
+                      "Create Account"
+                    )}
                   </Button>
                 </CardFooter>
               </form>
