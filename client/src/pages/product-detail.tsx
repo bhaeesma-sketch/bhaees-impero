@@ -100,6 +100,7 @@ export default function ProductDetail() {
                       onClick={() => setActiveImageIndex(idx)}
                       className={`relative w-20 aspect-square rounded-sm overflow-hidden border-2 transition-all ${activeImageIndex === idx ? "border-primary" : "border-transparent opacity-60 hover:opacity-100"
                         }`}
+                      aria-label={`View product image ${idx + 1}`}
                     >
                       <img src={img} alt={`View ${idx + 1}`} className="w-full h-full object-cover object-center" />
                     </button>
