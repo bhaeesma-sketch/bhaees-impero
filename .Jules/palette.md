@@ -1,0 +1,3 @@
+## 2024-03-27 - Header Icon Accessibility
+**Learning:** Icon-only buttons in the main navigation (Menu, Search, User profile, and Close mobile menu) often lack ARIA labels, making them invisible or confusing to screen reader users. Additionally, relying solely on hover states for these buttons hides their focus state for keyboard navigation.
+**Action:** When adding or updating icon-only buttons, always include descriptive `aria-label` attributes. Furthermore, add consistent `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2` utility classes to ensure accessible keyboard navigation.
