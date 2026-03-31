@@ -65,7 +65,7 @@ export default function AuthPage() {
         </div>
 
         <Card className="border-none shadow-2xl bg-white/80 backdrop-blur-md">
-          <Tabs defaultValue="login" className="w-full">
+          <Tabs defaultValue="login" className="w-full" onValueChange={() => { setUsername(""); setPassword(""); }}>
             <TabsList className="grid w-full grid-cols-2 mb-4 bg-gray-100/50 p-1">
               <TabsTrigger value="login" className="font-serif">Login</TabsTrigger>
               <TabsTrigger value="register" className="font-serif">Register</TabsTrigger>
@@ -81,17 +81,19 @@ export default function AuthPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="username">Username / Email</Label>
+                    <Label htmlFor="username">Username / Email <span className="text-red-500">*</span></Label>
                     <Input 
                       id="username" 
                       placeholder="Enter your username" 
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                       className="bg-white border-gray-200 focus:border-primary/50"
+                      required
+                      autoComplete="username"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password">Password <span className="text-red-500">*</span></Label>
                     <Input 
                       id="password" 
                       type="password" 
@@ -99,6 +101,8 @@ export default function AuthPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="bg-white border-gray-200 focus:border-primary/50"
+                      required
+                      autoComplete="current-password"
                     />
                   </div>
                 </CardContent>
@@ -128,17 +132,19 @@ export default function AuthPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="reg-username">Username</Label>
+                    <Label htmlFor="reg-username">Username <span className="text-red-500">*</span></Label>
                     <Input 
                       id="reg-username" 
                       placeholder="Choose a username" 
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                       className="bg-white border-gray-200 focus:border-primary/50"
+                      required
+                      autoComplete="username"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="reg-password">Password</Label>
+                    <Label htmlFor="reg-password">Password <span className="text-red-500">*</span></Label>
                     <Input 
                       id="reg-password" 
                       type="password" 
@@ -146,6 +152,8 @@ export default function AuthPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="bg-white border-gray-200 focus:border-primary/50"
+                      required
+                      autoComplete="new-password"
                     />
                   </div>
                   <div className="flex items-start gap-2 pt-2">
