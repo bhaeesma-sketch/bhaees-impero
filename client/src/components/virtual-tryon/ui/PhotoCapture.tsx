@@ -102,6 +102,7 @@ export function PhotoCapture({
                         </div>
 
                         <Button
+                            aria-label="Close capture"
                             onClick={onClose}
                             variant="ghost"
                             size="icon"
@@ -114,6 +115,7 @@ export function PhotoCapture({
             ) : (
                 <div className="absolute bottom-28 left-0 right-0 flex justify-center z-40">
                     <Button
+                        aria-label="Capture photo"
                         onClick={onCapture}
                         disabled={isCapturing}
                         className="w-20 h-20 rounded-full border-4 border-white/30 bg-white/20 hover:bg-white/40 backdrop-blur-sm transition-all transform hover:scale-110 flex items-center justify-center shadow-lg"
