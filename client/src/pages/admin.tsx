@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -244,7 +245,7 @@ export default function AdminPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Delete this product?")) return;
+
     try {
       const res = await fetch(`/api/admin/products/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Failed to delete");
@@ -425,12 +426,29 @@ export default function AdminPage() {
                   className="group relative bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300"
                 >
                   <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
-                    <Button size="icon" variant="secondary" className="h-8 w-8 bg-black/80 text-white hover:bg-primary hover:text-black" onClick={() => openEditDialog(product)}>
+                    <Button aria-label="Edit product" size="icon" variant="secondary" className="h-8 w-8 bg-black/80 text-white hover:bg-primary hover:text-black" onClick={() => openEditDialog(product)}>
                       <Pencil className="w-4 h-4" />
                     </Button>
-                    <Button size="icon" variant="secondary" className="h-8 w-8 bg-black/80 text-red-400 hover:bg-red-500 hover:text-white" onClick={() => handleDelete(product.id)}>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button aria-label="Delete product" size="icon" variant="secondary" className="h-8 w-8 bg-black/80 text-red-400 hover:bg-red-500 hover:text-white">
+
                       <Trash2 className="w-4 h-4" />
                     </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently delete the product from the catalog.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction onClick={() => handleDelete(product.id)}>Delete</AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </div>
 
                   <div className="aspect-square bg-white/5 p-4 flex items-center justify-center relative">

@@ -105,6 +105,7 @@ export function PhotoCapture({
                             onClick={onClose}
                             variant="ghost"
                             size="icon"
+                            aria-label="Close"
                             className="absolute top-2 right-2 text-white hover:bg-black/20 rounded-full z-20"
                         >
                             <X className="w-6 h-6" />
