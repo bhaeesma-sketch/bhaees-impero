@@ -332,6 +332,7 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
                             <Button
                                 variant="ghost"
                                 size="icon"
+                                aria-label="Previous product"
                                 onClick={prevProduct}
                                 className="text-white hover:bg-white/20"
                             >
@@ -346,6 +347,7 @@ export function VirtualTryOn({ products, initialProductIndex = 0, onClose }: Vir
                             <Button
                                 variant="ghost"
                                 size="icon"
+                                aria-label="Next product"
                                 onClick={nextProduct}
                                 className="text-white hover:bg-white/20"
                             >
