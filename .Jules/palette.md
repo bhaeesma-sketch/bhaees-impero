@@ -1,0 +1,3 @@
+## 2024-05-24 - Shared State Bleed in Tabbed Forms
+**Learning:** When using Radix UI `<Tabs>` for forms with shared state (like Login/Register sharing `username`/`password` in `client/src/pages/auth.tsx`), state bleed occurs on tab switch. If a user starts typing a username for login, then switches to register, the username remains populated in the new form context, which can be confusing.
+**Action:** Add an `onValueChange` handler to the `<Tabs>` component to explicitly clear the shared state when the user switches tabs. Apply this pattern to any custom toggle switches (like the one in `client/src/components/auth/AuthModal.tsx`) as well.
