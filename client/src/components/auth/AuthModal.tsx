@@ -88,7 +88,11 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                         <Button
                             variant="link"
                             className="p-0 h-auto font-semibold text-primary"
-                            onClick={() => setIsLogin(!isLogin)}
+                            onClick={() => {
+                                setIsLogin(!isLogin);
+                                setUsername("");
+                                setPassword("");
+                            }}
                         >
                             {isLogin ? 'Sign Up' : 'Sign In'}
                         </Button>
