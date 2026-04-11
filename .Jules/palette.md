@@ -1,0 +1,3 @@
+## 2024-04-11 - State Bleed in Tabbed Authentication Forms
+**Learning:** When using Radix UI Tabs or custom toggle buttons to switch between Login and Register views that share the same state variables (`username`, `password`), the input values "bleed" over when switching tabs. This creates a confusing UX if a user types their credentials in one view and switches to the other.
+**Action:** Always add an `onValueChange` handler to the `<Tabs>` component (or the `onClick` of the custom toggle) to explicitly reset the shared state variables. Also, ensure appropriate `autoComplete` attributes (`username`, `current-password`, `new-password`) are dynamically applied for proper accessibility and browser support.
