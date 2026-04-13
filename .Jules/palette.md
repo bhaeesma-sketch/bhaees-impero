@@ -1,0 +1,3 @@
+## 2024-04-13 - Auth State Bleed Across Toggles
+**Learning:** When using Radix UI `<Tabs>` or custom toggles for forms with shared state (like Login/Register sharing `username`/`password`), state bleed occurs on tab/view switch. This can lead to submitting unintended data or confusing the user.
+**Action:** Add an `onValueChange` handler to the `<Tabs>` component or the toggle button's `onClick` handler to explicitly clear the shared state (e.g., `setUsername("")`, `setPassword("")`). Also, explicitly add `required` for native validation and appropriate `autoComplete` attributes (e.g., `username`, `current-password`, `new-password`) to authentication input fields.
