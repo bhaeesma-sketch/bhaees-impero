@@ -241,6 +241,7 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
                                             <motion.button
                                                 key={num}
                                                 onClick={() => handlePinInput(num.toString())}
+                                                aria-label={`Digit ${num}`}
                                                 whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.08)" }}
                                                 whileTap={{ scale: 0.9 }}
                                                 className="h-20 rounded-3xl bg-white/5 border border-white/5 backdrop-blur-sm text-3xl font-light text-white transition-all shadow-inner hover:border-primary/40 hover:shadow-[0_0_15px_rgba(197,160,89,0.2)]"
@@ -254,6 +255,7 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
 
                                         <motion.button
                                             onClick={() => handlePinInput('0')}
+                                            aria-label="Digit 0"
                                             whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.08)" }}
                                             whileTap={{ scale: 0.9 }}
                                             className="h-20 rounded-3xl bg-white/5 border border-white/5 backdrop-blur-sm text-3xl font-light text-white transition-all shadow-inner hover:border-primary/40 hover:shadow-[0_0_15px_rgba(197,160,89,0.2)]"
@@ -263,6 +265,7 @@ export function VaultUnlock({ isOpen, onClose, onUnlock }: VaultUnlockProps) {
 
                                         <motion.button
                                             onClick={handleDelete}
+                                            aria-label="Delete last digit"
                                             whileHover={{ scale: 1.05, backgroundColor: "rgba(239,68,68,0.1)" }}
                                             whileTap={{ scale: 0.9 }}
                                             className="h-20 rounded-3xl flex items-center justify-center text-gray-400 transition-colors hover:text-red-400"
