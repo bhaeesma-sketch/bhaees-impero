@@ -53,6 +53,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                             <Input
                                 id="username"
                                 type="text"
+                                autoComplete="username"
                                 placeholder="Enter your username"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
@@ -65,6 +66,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                             <Input
                                 id="password"
                                 type="password"
+                                autoComplete={isLogin ? "current-password" : "new-password"}
                                 placeholder="••••••••"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -88,7 +90,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                         <Button
                             variant="link"
                             className="p-0 h-auto font-semibold text-primary"
-                            onClick={() => setIsLogin(!isLogin)}
+                            onClick={() => { setIsLogin(!isLogin); setUsername(''); setPassword(''); }}
                         >
                             {isLogin ? 'Sign Up' : 'Sign In'}
                         </Button>

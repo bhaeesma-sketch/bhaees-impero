@@ -65,7 +65,7 @@ export default function AuthPage() {
         </div>
 
         <Card className="border-none shadow-2xl bg-white/80 backdrop-blur-md">
-          <Tabs defaultValue="login" className="w-full">
+          <Tabs defaultValue="login" className="w-full" onValueChange={() => { setUsername(""); setPassword(""); }}>
             <TabsList className="grid w-full grid-cols-2 mb-4 bg-gray-100/50 p-1">
               <TabsTrigger value="login" className="font-serif">Login</TabsTrigger>
               <TabsTrigger value="register" className="font-serif">Register</TabsTrigger>
@@ -84,6 +84,8 @@ export default function AuthPage() {
                     <Label htmlFor="username">Username / Email</Label>
                     <Input 
                       id="username" 
+                      autoComplete="username"
+                      required
                       placeholder="Enter your username" 
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
@@ -95,6 +97,8 @@ export default function AuthPage() {
                     <Input 
                       id="password" 
                       type="password" 
+                      autoComplete="current-password"
+                      required
                       placeholder="••••••••" 
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -131,6 +135,8 @@ export default function AuthPage() {
                     <Label htmlFor="reg-username">Username</Label>
                     <Input 
                       id="reg-username" 
+                      autoComplete="username"
+                      required
                       placeholder="Choose a username" 
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
@@ -142,6 +148,8 @@ export default function AuthPage() {
                     <Input 
                       id="reg-password" 
                       type="password" 
+                      autoComplete="new-password"
+                      required
                       placeholder="Choose a strong password" 
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
