@@ -1,0 +1,3 @@
+## 2024-04-15 - Shared Auth Form State Bleed
+**Learning:** When using shared UI components (like Radix UI `<Tabs>` or toggle buttons) to switch between related forms that share React state variables (like `username` and `password` for Login/Register), the input values persist across the views ("state bleed"). This leads to a confusing UX where a user typing their login details suddenly sees them pre-filled in the registration form if they switch tabs.
+**Action:** Always attach an `onValueChange` handler (for Tabs) or an `onClick` handler (for toggle buttons) that explicitly clears the shared state variables when the user switches contexts.
