@@ -57,6 +57,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 required
+                                autoComplete="username"
                                 className="bg-white border-gray-200 focus:border-primary/50"
                             />
                         </div>
@@ -69,6 +70,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
+                                autoComplete={isLogin ? "current-password" : "new-password"}
                                 className="bg-white border-gray-200 focus:border-primary/50"
                             />
                         </div>
@@ -88,7 +90,11 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                         <Button
                             variant="link"
                             className="p-0 h-auto font-semibold text-primary"
-                            onClick={() => setIsLogin(!isLogin)}
+                            onClick={() => {
+                                setIsLogin(!isLogin);
+                                setUsername('');
+                                setPassword('');
+                            }}
                         >
                             {isLogin ? 'Sign Up' : 'Sign In'}
                         </Button>
