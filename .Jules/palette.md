@@ -1,0 +1,1 @@
+## 2024-04-18 - Missing ARIA Labels on Icon Buttons\n**Learning:** The app's header uses several icon-only buttons (Menu, Search, User, Close Menu) that lack ARIA labels, making them invisible or unclear to screen readers.\n**Action:** Add descriptive `aria-label` attributes to all icon-only buttons to improve accessibility.
