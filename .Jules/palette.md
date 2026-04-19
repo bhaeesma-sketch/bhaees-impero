@@ -1,0 +1,3 @@
+## 2024-04-19 - Screen Reader Accessibility for Unit Abbreviations
+**Learning:** Screen readers often read abbreviated units like "{w}g" directly as "one hundred g" or might be confusing without context. Custom weight selection toggles lack proper screen reader context when not built with native radio buttons or explicit ARIA attributes.
+**Action:** When creating custom toggle button groups for selections (like weights), always wrap them in a `role="group"` with an `aria-label`, and use `aria-pressed` to indicate state. Additionally, use `aria-label` on individual buttons to provide the full, unabbreviated context (e.g., "100 grams" instead of "100g") while keeping the visual label compact.
