@@ -1,0 +1,3 @@
+## 2024-05-24 - Accessible Button Groups for Selectors
+**Learning:** For sets of buttons that act like a radio selection (e.g., weight options), simply showing the options textually (e.g., "1g", "5g") lacks context for screen readers. They need to know what the group represents and which option is currently active.
+**Action:** Always wrap selection button groups in a `role="group"` with a descriptive `aria-label` (e.g., "Select weight"), add `aria-pressed={isActive}` to each button to indicate its state, and ensure the button itself has an `aria-label` providing full context (e.g., "1 grams") instead of just abbreviations.

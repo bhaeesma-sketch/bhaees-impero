@@ -72,10 +72,12 @@ export function ProductCard({ id, name, image, purity, baseWeight, displayWeight
 
           {/* Weight Selector (Bullion Only) */}
           {type === 'bullion' && weights.length > 1 && (
-            <div className="flex flex-wrap gap-2 pt-2">
+            <div className="flex flex-wrap gap-2 pt-2" role="group" aria-label="Select weight">
               {weights.slice(0, 4).map((w) => (
                 <button
                   key={w}
+                  aria-pressed={weight === w}
+                  aria-label={`${w} grams`}
                   onClick={(e) => {
                     e.preventDefault();
                     setWeight(w);
