@@ -1,0 +1,3 @@
+## 2024-05-18 - Improve icon button and group selection accessibility
+**Learning:** Icon-only buttons (like theme toggles and search) often lack explicit screen-reader contexts and visible keyboard focus states. Radix or custom UI grouped selection buttons (like weight selectors) require explicit `role="group"` along with `aria-pressed` states on the buttons to be fully accessible.
+**Action:** Always ensure icon-only buttons have an `aria-label` and `focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none` class. Apply `role="group"` to the wrapper of custom toggle buttons and set `aria-pressed` on the buttons themselves.
