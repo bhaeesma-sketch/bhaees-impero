@@ -65,7 +65,7 @@ export default function AuthPage() {
         </div>
 
         <Card className="border-none shadow-2xl bg-white/80 backdrop-blur-md">
-          <Tabs defaultValue="login" className="w-full">
+          <Tabs defaultValue="login" className="w-full" onValueChange={() => { setUsername(""); setPassword(""); }}>
             <TabsList className="grid w-full grid-cols-2 mb-4 bg-gray-100/50 p-1">
               <TabsTrigger value="login" className="font-serif">Login</TabsTrigger>
               <TabsTrigger value="register" className="font-serif">Register</TabsTrigger>
@@ -83,6 +83,8 @@ export default function AuthPage() {
                   <div className="space-y-2">
                     <Label htmlFor="username">Username / Email</Label>
                     <Input 
+                      required
+                      autoComplete="username"
                       id="username" 
                       placeholder="Enter your username" 
                       value={username}
@@ -93,6 +95,8 @@ export default function AuthPage() {
                   <div className="space-y-2">
                     <Label htmlFor="password">Password</Label>
                     <Input 
+                      required
+                      autoComplete="current-password"
                       id="password" 
                       type="password" 
                       placeholder="••••••••" 
@@ -130,6 +134,8 @@ export default function AuthPage() {
                   <div className="space-y-2">
                     <Label htmlFor="reg-username">Username</Label>
                     <Input 
+                      required
+                      autoComplete="username"
                       id="reg-username" 
                       placeholder="Choose a username" 
                       value={username}
@@ -140,6 +146,8 @@ export default function AuthPage() {
                   <div className="space-y-2">
                     <Label htmlFor="reg-password">Password</Label>
                     <Input 
+                      required
+                      autoComplete="new-password"
                       id="reg-password" 
                       type="password" 
                       placeholder="Choose a strong password" 
