@@ -51,6 +51,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                         <div className="space-y-2">
                             <Label htmlFor="username">Username</Label>
                             <Input
+                                autoComplete="username"
                                 id="username"
                                 type="text"
                                 placeholder="Enter your username"
@@ -63,6 +64,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                         <div className="space-y-2">
                             <Label htmlFor="password">Password</Label>
                             <Input
+                                autoComplete={isLogin ? "current-password" : "new-password"}
                                 id="password"
                                 type="password"
                                 placeholder="••••••••"
@@ -88,7 +90,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                         <Button
                             variant="link"
                             className="p-0 h-auto font-semibold text-primary"
-                            onClick={() => setIsLogin(!isLogin)}
+                            onClick={() => { setIsLogin(!isLogin); setUsername(''); setPassword(''); }}
                         >
                             {isLogin ? 'Sign Up' : 'Sign In'}
                         </Button>
