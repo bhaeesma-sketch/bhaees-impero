@@ -72,7 +72,7 @@ export function ProductCard({ id, name, image, purity, baseWeight, displayWeight
 
           {/* Weight Selector (Bullion Only) */}
           {type === 'bullion' && weights.length > 1 && (
-            <div className="flex flex-wrap gap-2 pt-2">
+            <div className="flex flex-wrap gap-2 pt-2" role="group" aria-label="Select weight">
               {weights.slice(0, 4).map((w) => (
                 <button
                   key={w}
@@ -80,7 +80,9 @@ export function ProductCard({ id, name, image, purity, baseWeight, displayWeight
                     e.preventDefault();
                     setWeight(w);
                   }}
-                  className={`text-xs px-2 py-1 rounded border transition-colors ${weight === w
+                  aria-pressed={weight === w}
+                  aria-label={`${w} grams`}
+                  className={`text-xs px-2 py-1 rounded border transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none ${weight === w
                       ? 'bg-gray-900 text-white border-gray-900'
                       : 'bg-white text-gray-600 border-gray-200 hover:border-primary'
                     }`}
