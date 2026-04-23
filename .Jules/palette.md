@@ -1,0 +1,3 @@
+## 2024-03-01 - Accessible Icon-Only Buttons
+**Learning:** Icon-only buttons (like menu toggles, search, and theme switchers) lack visual text and accessible names for screen readers, meaning users who rely on assistive technologies cannot perceive their purpose. Furthermore, relying only on pointer events ignores users who use keyboards.
+**Action:** Applied `aria-label` to provide accessible names, `aria-expanded` (where applicable) for state indication, and `focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none` class utilities for proper keyboard focus indicators across header components without needing custom CSS.
