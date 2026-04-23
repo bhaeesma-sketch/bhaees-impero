@@ -1,0 +1,3 @@
+## 2024-05-24 - Authentication Form State Bleed and Accessibility
+**Learning:** When using Radix UI `<Tabs>` for forms with shared state (like Login/Register toggles sharing `username`/`password` states), state bleed occurs on tab switch. Additionally, proper form accessibility and UX requires explicit `required` attributes for native validation and `autoComplete` attributes (`username`, `current-password`, `new-password`) so password managers and browsers can assist the user appropriately.
+**Action:** Applied `onValueChange` handlers to explicitly clear shared state during view toggles in both `<Tabs>` and custom toggle buttons. Enforced strict inclusion of `required` and context-specific `autoComplete` attributes on all authentication input fields.
