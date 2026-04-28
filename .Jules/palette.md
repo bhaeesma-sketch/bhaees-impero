@@ -1,0 +1,3 @@
+## 2024-05-18 - Missing ARIA Labels on Icon Buttons in Header
+**Learning:** Found multiple icon-only buttons (mobile menu, search, user menu, close menu) in `client/src/components/layout/header.tsx` lacking `aria-label`s. Also, the mobile menu and user dropdown buttons lack explicit `focus-visible` styling, hindering keyboard accessibility. This is a common pattern across the application where interactive icons aren't explicitly announced to screen readers.
+**Action:** Always add descriptive `aria-label` attributes to icon-only buttons and ensure clear focus states (e.g., `focus-visible:ring-2`) to support keyboard users.
