@@ -1,0 +1,3 @@
+## 2024-05-14 - Accessible Radio Button Groups
+**Learning:** When building custom radio-like button groups (e.g., product weight selection), screen readers require contextual grouping and state indicators that native radio buttons provide automatically. Abbreviations (like "g" for grams) can also be confusing or mispronounced by screen readers when used in isolated interactive elements.
+**Action:** Always wrap radio-like custom button groups in a `role="group"` with a descriptive `aria-label`. Use `aria-pressed` to indicate the currently selected button. Expand abbreviated units in the `aria-label` (e.g., `${w} grams` instead of `${w}g`) while keeping the visual label compact.
