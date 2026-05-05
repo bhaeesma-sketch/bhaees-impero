@@ -1,0 +1,4 @@
+
+## 2024-05-18 - Missing Accessibility on Custom Icon Buttons
+**Learning:** Custom native `<button>` elements used for icon-only interactions (e.g., search, user account, mobile menu triggers) frequently lack inherited accessibility styles and descriptive labels from the design system. Since they don't contain text, screen readers fail to communicate their purpose, and keyboard users cannot easily determine when they have focus.
+**Action:** When implementing or modifying custom icon-only buttons, always manually apply descriptive `aria-label` attributes to convey their function. Furthermore, ensure clear keyboard accessibility by adding explicit focus-visible classes such as `focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none` to guarantee clear visual indicators upon focus.
