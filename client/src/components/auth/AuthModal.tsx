@@ -17,6 +17,11 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const { login, register } = useAuth();
+    const handleClose = () => {
+        setUsername('');
+        setPassword('');
+        onClose();
+    };
 
     const handleAuth = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -39,7 +44,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     };
 
     return (
-        <Dialog open={isOpen} onOpenChange={onClose}>
+        <Dialog open={isOpen} onOpenChange={(open) => { if (!open) handleClose(); }}>
             <DialogContent className="sm:max-w-md bg-white text-black">
                 <DialogHeader>
                     <DialogTitle className="font-serif text-2xl">
@@ -88,7 +93,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                         <Button
                             variant="link"
                             className="p-0 h-auto font-semibold text-primary"
-                            onClick={() => setIsLogin(!isLogin)}
+                            onClick={() => { setIsLogin(!isLogin); setUsername(''); setPassword(''); }}
                         >
                             {isLogin ? 'Sign Up' : 'Sign In'}
                         </Button>
