@@ -1,0 +1,3 @@
+## 2024-05-24 - Accessibility for Custom Radio Button Groups
+**Learning:** When building selection button groups (e.g., weight options in product cards) that act as radio options, standard `<button>` elements lack the semantic context of a radio group for screen readers. Furthermore, abbreviated labels like "g" are read as single letters rather than their full meaning.
+**Action:** Ensure accessibility by wrapping the group in a `role="group"` with a descriptive `aria-label`. Use `aria-pressed` on the individual buttons to indicate the selected state, alongside descriptive `aria-label` attributes to spell out abbreviated units (e.g., "10g" to "10 grams"). Always explicitly add `focus-visible` classes to ensure keyboard navigation is visibly apparent.
