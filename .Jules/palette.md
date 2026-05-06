@@ -1,0 +1,3 @@
+## 2024-05-14 - Shared State Bleed in Form Toggles
+**Learning:** When using Radix UI Tabs or custom toggles for shared-state forms (like Login/Register views that reuse `username` and `password` variables), state bleed occurs when the user switches views. This leads to confusing UX where a user starts typing a login, decides to register, and their login credentials pre-populate the registration form.
+**Action:** Always implement an `onValueChange` handler on Tabs (or attach to the `onClick` of toggle buttons) to explicitly clear shared state variables when the view context changes. Additionally, ensure form state is cleared when modal components housing these forms are closed.
