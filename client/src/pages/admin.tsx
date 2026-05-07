@@ -424,11 +424,11 @@ export default function AdminPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="group relative bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300"
                 >
-                  <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
-                    <Button size="icon" variant="secondary" className="h-8 w-8 bg-black/80 text-white hover:bg-primary hover:text-black" onClick={() => openEditDialog(product)}>
+                  <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity flex gap-1">
+                    <Button aria-label={`Edit ${product.name}`} size="icon" variant="secondary" className="h-8 w-8 bg-black/80 text-white hover:bg-primary hover:text-black focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none" onClick={() => openEditDialog(product)}>
                       <Pencil className="w-4 h-4" />
                     </Button>
-                    <Button size="icon" variant="secondary" className="h-8 w-8 bg-black/80 text-red-400 hover:bg-red-500 hover:text-white" onClick={() => handleDelete(product.id)}>
+                    <Button aria-label={`Delete ${product.name}`} size="icon" variant="secondary" className="h-8 w-8 bg-black/80 text-red-400 hover:bg-red-500 hover:text-white focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:outline-none" onClick={() => handleDelete(product.id)}>
                       <Trash2 className="w-4 h-4" />
                     </Button>
                   </div>
