@@ -1,0 +1,3 @@
+## 2024-05-09 - Accessible Weight Selector
+**Learning:** Selection button groups (like weight options in product cards) acting as radio options need explicit accessibility attributes since they are custom UI elements and not native radio inputs.
+**Action:** When building or upgrading selection button groups, wrap the group in a `role="group"` with a descriptive `aria-label`, and use `aria-pressed` alongside descriptive `aria-label` attributes on the individual buttons to provide context for screen readers, spelling out abbreviated units (e.g., '10g' to '10 grams'). Add explicit focus-visible classes for keyboard accessibility.
