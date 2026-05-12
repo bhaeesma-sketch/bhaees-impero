@@ -1,0 +1,3 @@
+## 2024-05-19 - Authentication Form State Bleed
+**Learning:** Shared state (e.g., username/password) in tabbed or toggled forms (like Auth login/register views) causes "state bleed" where half-typed credentials from one mode unexpectedly persist when users switch to the other mode. This leads to user confusion and unintended submissions.
+**Action:** Always implement explicit state clearing when switching between form modes. For Radix `<Tabs>`, attach an `onValueChange` handler to the root component. For custom toggle buttons and modal closings, wrap the state update (e.g., `setIsLogin`) and close handlers (e.g., `onOpenChange`) with logic to reset the shared form state strings.
