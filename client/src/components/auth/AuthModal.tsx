@@ -38,8 +38,20 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
         }
     };
 
+    const handleOpenChange = (open: boolean) => {
+        if (!open) {
+            setUsername('');
+            setPassword('');
+            setIsLogin(true);
+            onClose();
+        } else {
+            // Unlikely to be called with open=true since parent controls isOpen
+            // but just in case we need to propagate it
+        }
+    };
+
     return (
-        <Dialog open={isOpen} onOpenChange={onClose}>
+        <Dialog open={isOpen} onOpenChange={handleOpenChange}>
             <DialogContent className="sm:max-w-md bg-white text-black">
                 <DialogHeader>
                     <DialogTitle className="font-serif text-2xl">
@@ -88,7 +100,11 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                         <Button
                             variant="link"
                             className="p-0 h-auto font-semibold text-primary"
-                            onClick={() => setIsLogin(!isLogin)}
+                            onClick={() => {
+                                setIsLogin(!isLogin);
+                                setUsername('');
+                                setPassword('');
+                            }}
                         >
                             {isLogin ? 'Sign Up' : 'Sign In'}
                         </Button>
