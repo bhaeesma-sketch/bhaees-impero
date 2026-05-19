@@ -1,0 +1,3 @@
+## 2024-05-24 - Header Accessibility Improvements
+**Learning:** Found multiple icon-only interactive elements in `client/src/components/layout/header.tsx` (Menu, Search, User Account, Theme Toggle) lacking `aria-label`s and visible focus states, which reduces accessibility for keyboard navigation and screen reader users. The application relies on `focus-visible` classes with explicit Tailwind styling.
+**Action:** Always verify icon-only buttons have descriptive `aria-label`s and `focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none` applied consistently to ensure keyboard navigability. When using Radix UI `asChild`, ensure these are applied to the child button.
