@@ -1,0 +1,30 @@
+
+> impero-di@1.0.0 dev /app
+> vite
+
+Port 8080 is in use, trying another one...
+
+  VITE v7.3.3  ready in 585 ms
+
+  ➜  Local:   http://localhost:8081/
+  ➜  Network: http://192.168.0.2:8081/
+4:38:56 PM [vite] http proxy error: /api/analytics/log
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
+4:38:56 PM [vite] http proxy error: /api/gold-rates
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
+4:38:56 PM [vite] http proxy error: /api/products
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
+4:38:56 PM [vite] http proxy error: /api/auth/me
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
+4:38:56 PM [vite] http proxy error: /api/gold-rates
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)

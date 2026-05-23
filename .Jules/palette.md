@@ -1,0 +1,3 @@
+## 2024-05-23 - Focus Visible on Header Buttons
+**Learning:** Found multiple instances of icon-only buttons in the main navigation header (menu, search, account, theme toggle) lacking proper `focus-visible` styles and `aria-label`s, which makes keyboard navigation inaccessible. Adding explicit `focus-visible` classes rather than relying on default browser outlines integrates better with the custom styling of this application.
+**Action:** When creating or modifying icon-only buttons, especially in global layouts like headers, always ensure an `aria-label` is present and explicit `focus-visible:ring-2` (and typically `focus-visible:ring-primary` and `focus-visible:outline-none`) are included to support keyboard users.
