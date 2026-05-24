@@ -1,0 +1,3 @@
+## 2024-03-24 - Interactive Component Accessibility
+**Learning:** Icon-only buttons (like menu toggles, search, and theme switchers) in complex layouts often lack clear context for screen readers and visible focus indicators for keyboard navigation, making them difficult to use for accessibility. The project requires strict `focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none` classes to ensure visible focus boundaries are consistent.
+**Action:** When adding or modifying custom interactive components and icon-only buttons, systematically provide `aria-label`s describing the action (e.g., "Open menu", "Switch to dark mode") and enforce explicit `focus-visible` styles rather than relying on default browser outlines or solely hover states.
