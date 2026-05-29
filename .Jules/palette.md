@@ -1,0 +1,3 @@
+## 2024-05-29 - Missing ARIA Labels on Icon-only Buttons
+**Learning:** Found several icon-only buttons in the main navigation header (menu, search, user profile, close menu, theme toggle) lacking `aria-label` attributes and clear `focus-visible` states, making them inaccessible to screen readers and difficult to navigate via keyboard.
+**Action:** Always ensure custom icon buttons have explicitly defined `aria-label`s and visible focus states (`focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none`). For state-toggling buttons like theme switchers, use dynamic `aria-label`s (e.g., `theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'`) to clearly communicate the resulting action.
