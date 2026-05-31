@@ -1,0 +1,3 @@
+## 2024-05-31 - [Initial Review]
+**Learning:** The application extensively uses `lucide-react` icons in buttons without corresponding text labels, especially in the global header and navigation areas (e.g., Search, User, Menu). While some interactive elements use `<Button>` components from `shadcn/ui`, raw `<button>` elements are often used for interactive icons without `aria-label` or focus-visible styling.
+**Action:** Added `aria-label` and `focus-visible` classes to `client/src/components/layout/header.tsx` to improve keyboard navigation and screen reader support for critical global actions. This pattern should be consistently applied across all custom icon-only buttons.
