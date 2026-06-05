@@ -1,0 +1,3 @@
+## 2024-05-24 - Header Accessibility Improvements
+**Learning:** Icon-only buttons are prevalent in the header layout (e.g., search, menu, user account, theme toggle) but previously lacked both screen reader visibility (`aria-label`) and explicit keyboard focus indicators, making the primary navigation less accessible. Radix/Tailwind custom buttons require explicit `focus-visible` styling when default browser outlines are suppressed.
+**Action:** Always ensure icon-only elements have descriptive `aria-label`s. Apply `focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none` explicitly to custom buttons to guarantee clear keyboard navigation paths.
