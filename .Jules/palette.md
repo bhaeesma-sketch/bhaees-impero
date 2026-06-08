@@ -1,0 +1,3 @@
+## 2024-06-08 - Accessible Header Actions
+**Learning:** Icon-only buttons in the main navigation (mobile menu, user, search, and theme toggle) lacked both accessible labels (aria-label) and keyboard focus indicators (focus-visible). These are crucial navigation elements that must be easily discoverable and usable via keyboard and screen readers.
+**Action:** Always ensure icon-only buttons have descriptive `aria-label`s and clear `focus-visible` styles (`focus-visible:ring-2`, `focus-visible:ring-primary`, `focus-visible:outline-none`). For stateful toggles (like theme or mobile menu), dynamically update the `aria-label` or use `aria-expanded` to communicate current state.
