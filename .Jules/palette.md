@@ -1,0 +1,4 @@
+## 2024-06-12 - Explicit Keyboard Navigation Styling for Header Interactions
+**Learning:** This application's global design lacks explicit focus indicators for standard header icon buttons. When using `<button>` elements containing only icons (like Mobile Menu, Search, Account), or custom toggle elements, relying on browser default focus rings leads to poor visibility. Dynamic elements like theme togglers and navigation drawers require both precise aria-labels matching their toggled state, and strong visual feedback for keyboard-only users.
+
+**Action:** Standardized standard icon-only buttons across the header using `aria-label` along with explicit Tailwind focus classes: `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary`. Always ensure `aria-label` dynamically maps to the target state for toggles (e.g., `theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'`).
