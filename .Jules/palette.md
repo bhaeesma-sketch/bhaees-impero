@@ -1,0 +1,3 @@
+## 2024-06-13 - Dynamic ARIA Labels for State Toggles
+**Learning:** For state-toggling UI elements like theme buttons, static `aria-label` attributes are often insufficient. Using dynamic `aria-label`s that clearly describe the resulting action based on the current state (e.g., `theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'`) significantly improves screen reader clarity and overall accessibility.
+**Action:** Consistently apply dynamic `aria-label`s to any toggle button or element that changes state, ensuring the label reflects the action the user will take, not just the current state.
