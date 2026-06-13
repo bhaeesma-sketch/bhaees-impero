@@ -1,12 +1,22 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Menu, X, Phone, User, LogOut, Settings, Moon, Sun } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link, useLocation } from 'wouter';
-import { useAuth } from '@/hooks/use-auth';
-import { useTheme } from '@/hooks/use-theme';
-import { AuthModal } from '@/components/auth/AuthModal';
-import { VaultUnlock } from '@/components/admin/VaultUnlock';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Search,
+  Menu,
+  X,
+  Phone,
+  User,
+  LogOut,
+  Settings,
+  Moon,
+  Sun,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link, useLocation } from "wouter";
+import { useAuth } from "@/hooks/use-auth";
+import { useTheme } from "@/hooks/use-theme";
+import { AuthModal } from "@/components/auth/AuthModal";
+import { VaultUnlock } from "@/components/admin/VaultUnlock";
 // ... other imports ...
 import {
   DropdownMenu,
@@ -18,7 +28,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 // Assets
-import logoImg from '@assets/impero_logo_transparent.png';
+import logoImg from "@assets/impero_logo_transparent.png";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -54,7 +64,8 @@ export function Header() {
       const swipeEndX = e.changedTouches[0].clientX;
       const swipeDistance = swipeEndX - swipeStartX;
 
-      if (swipeDistance > 80) { // Swipe right threshold
+      if (swipeDistance > 80) {
+        // Swipe right threshold
         setShowSwipeHint(false);
         setIsVaultOpen(true);
       }
@@ -82,8 +93,8 @@ export function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -107,7 +118,7 @@ export function Header() {
               transition={{
                 repeat: Infinity,
                 duration: 1.5,
-                repeatType: "loop"
+                repeatType: "loop",
               }}
               className="flex flex-col items-center gap-4"
             >
@@ -123,22 +134,28 @@ export function Header() {
                   className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[12px] border-l-white/50 border-b-[6px] border-b-transparent"
                 />
               </div>
-              <p className="text-white text-2xl font-serif tracking-widest uppercase">Swipe Right</p>
-              <p className="text-white/50 text-xs tracking-[0.5em] uppercase">Security Access</p>
+              <p className="text-white text-2xl font-serif tracking-widest uppercase">
+                Swipe Right
+              </p>
+              <p className="text-white/50 text-xs tracking-[0.5em] uppercase">
+                Security Access
+              </p>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
       <header
-        className={`w-full transition-all duration-300 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100 ${isScrolled ? 'py-4 shadow-md' : 'py-8'
-          }`}
+        className={`w-full transition-all duration-300 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100 ${
+          isScrolled ? "py-4 shadow-md" : "py-8"
+        }`}
       >
         <div className="container mx-auto px-4 relative">
           <div className="flex items-center justify-between h-20 md:h-28">
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden p-2 hover:bg-gray-50 rounded-full transition-colors z-50"
+              aria-label="Open mobile menu"
+              className="md:hidden p-2 hover:bg-gray-50 rounded-full transition-colors z-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               onClick={() => setIsMobileMenuOpen(true)}
             >
               <Menu className="w-6 h-6 text-gray-700" />
@@ -147,10 +164,10 @@ export function Header() {
             {/* Desktop Navigation - LEFT SIDE - ADDDED PADDING */}
             <nav className="hidden lg:flex items-center gap-6 text-sm font-medium tracking-wide flex-1 justify-start pr-40">
               {[
-                { name: 'Catalog', href: '/catalog' },
-                { name: 'Bespoke', href: '/bespoke' },
-                { name: 'Bullion', href: '/catalog?category=bullion' },
-                { name: 'Compare', href: '/compare' },
+                { name: "Catalog", href: "/catalog" },
+                { name: "Bespoke", href: "/bespoke" },
+                { name: "Bullion", href: "/catalog?category=bullion" },
+                { name: "Compare", href: "/compare" },
               ].map((item) => (
                 <Link
                   key={item.name}
@@ -166,7 +183,7 @@ export function Header() {
             {/* Logo - ABSOLUTE CENTER & MASSIVE & BLING */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none">
               <div
-                onClick={() => setTapCount(prev => prev + 1)}
+                onClick={() => setTapCount((prev) => prev + 1)}
                 className="block group pointer-events-auto cursor-pointer"
               >
                 <div className="h-24 md:h-40 w-auto relative flex items-center justify-center transition-all duration-500 hover:scale-105">
@@ -185,7 +202,7 @@ export function Header() {
               onClose={() => setIsVaultOpen(false)}
               onUnlock={() => {
                 setIsVaultOpen(false);
-                setLocation('/admin');
+                setLocation("/admin");
               }}
             />
 
@@ -193,8 +210,8 @@ export function Header() {
             <div className="flex items-center gap-4 flex-1 justify-end">
               <nav className="hidden lg:flex items-center gap-6 text-sm font-medium tracking-wide mr-6 pl-40">
                 {[
-                  { name: 'Live Rates', href: '/#rates' },
-                  { name: 'About Us', href: '/#about' },
+                  { name: "Live Rates", href: "/#rates" },
+                  { name: "About Us", href: "/#about" },
                 ].map((item) => (
                   <Link
                     key={item.name}
@@ -209,26 +226,38 @@ export function Header() {
 
               {/* Theme Toggle Button Removed (Moved to Floating Button) */}
 
-              <button className="p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary">
+              <button
+                aria-label="Search"
+                className="p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
                 <Search className="w-5 h-5" />
               </button>
 
               {user ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="p-2 hover:bg-gray-50 rounded-full transition-colors text-gray-600 hover:text-primary relative group">
+                    <button
+                      aria-label="User menu"
+                      className="p-2 hover:bg-gray-50 rounded-full transition-colors text-gray-600 hover:text-primary relative group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    >
                       <User className="w-5 h-5" />
                       {/* <span className="absolute top-1 right-1 w-2 h-2 bg-green-500 rounded-full ring-2 ring-white"></span> */}
                     </button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56 bg-white z-[60]">
+                  <DropdownMenuContent
+                    align="end"
+                    className="w-56 bg-white z-[60]"
+                  >
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>
                       <User className="mr-2 h-4 w-4" />
-                      <span>{user.username || 'User'}</span>
+                      <span>{user.username || "User"}</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => logout()} className="text-red-600 focus:text-red-600">
+                    <DropdownMenuItem
+                      onClick={() => logout()}
+                      className="text-red-600 focus:text-red-600"
+                    >
                       <LogOut className="mr-2 h-4 w-4" />
                       <span>Log out</span>
                     </DropdownMenuItem>
@@ -268,101 +297,122 @@ export function Header() {
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
-        {
-          isMobileMenuOpen && (
-            <>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 md:hidden"
-              />
-              <motion.div
-                initial={{ x: '-100%' }}
-                animate={{ x: 0 }}
-                exit={{ x: '-100%' }}
-                transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                className="fixed top-0 left-0 bottom-0 w-[80%] max-w-sm bg-white z-50 md:hidden shadow-2xl flex flex-col"
-              >
-                <div className="p-6 flex items-center justify-between border-b border-gray-100">
-                  <span className="font-serif text-xl font-bold">Menu</span>
-                  <button onClick={() => setIsMobileMenuOpen(false)}>
-                    <X className="w-6 h-6 text-gray-500" />
-                  </button>
-                </div>
-                <div className="flex-1 overflow-y-auto py-4">
-                  <nav className="flex flex-col">
-                    {user && (
-                      <div className="px-6 py-4 bg-gray-50 mb-4 mx-4 rounded-lg">
-                        <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Welcome back</p>
-                        <p className="font-bold text-gray-900">{user.username}</p>
-                      </div>
-                    )}
+        {isMobileMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 md:hidden"
+            />
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed top-0 left-0 bottom-0 w-[80%] max-w-sm bg-white z-50 md:hidden shadow-2xl flex flex-col"
+            >
+              <div className="p-6 flex items-center justify-between border-b border-gray-100">
+                <span className="font-serif text-xl font-bold">Menu</span>
+                <button
+                  aria-label="Close mobile menu"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-1 rounded-full hover:bg-gray-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                >
+                  <X className="w-6 h-6 text-gray-500" />
+                </button>
+              </div>
+              <div className="flex-1 overflow-y-auto py-4">
+                <nav className="flex flex-col">
+                  {user && (
+                    <div className="px-6 py-4 bg-gray-50 mb-4 mx-4 rounded-lg">
+                      <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
+                        Welcome back
+                      </p>
+                      <p className="font-bold text-gray-900">{user.username}</p>
+                    </div>
+                  )}
 
-                    {[
-                      { name: 'Catalog', href: '/catalog' },
-                      { name: 'Bespoke', href: '/bespoke' },
-                      { name: 'Gold Bullion', href: '/catalog?category=bullion' },
-                      { name: 'Diamond Jewelry', href: '/catalog?category=jewelry' },
-                      { name: 'Compare Prices', href: '/compare' },
-                      { name: 'Live Rates', href: '/#rates' },
-                      { name: 'About Us', href: '/#about' },
-                    ].map((item) => (
-                      <Link
-                        key={item.name}
-                        href={item.href}
-                        className="px-6 py-4 text-lg font-medium text-gray-800 border-b border-gray-50 hover:bg-gray-50 hover:text-primary transition-colors"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
+                  {[
+                    { name: "Catalog", href: "/catalog" },
+                    { name: "Bespoke", href: "/bespoke" },
+                    { name: "Gold Bullion", href: "/catalog?category=bullion" },
+                    {
+                      name: "Diamond Jewelry",
+                      href: "/catalog?category=jewelry",
+                    },
+                    { name: "Compare Prices", href: "/compare" },
+                    { name: "Live Rates", href: "/#rates" },
+                    { name: "About Us", href: "/#about" },
+                  ].map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className="px-6 py-4 text-lg font-medium text-gray-800 border-b border-gray-50 hover:bg-gray-50 hover:text-primary transition-colors"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
 
-                    {!user ? (
-                      <a
-                        href="#"
-                        onClick={(e) => { e.preventDefault(); setLocation('/auth'); setIsMobileMenuOpen(false); }}
-                        className="px-6 py-4 text-lg font-medium text-primary border-b border-gray-50 hover:bg-gray-50 transition-colors"
-                      >
-                        Login / Register
-                      </a>
-                    ) : (
-                      <button
-                        onClick={() => { logout(); setIsMobileMenuOpen(false); }}
-                        className="px-6 py-4 text-lg font-medium text-red-600 text-left hover:bg-gray-50 transition-colors"
-                      >
-                        Sign Out
-                      </button>
-                    )}
-                  </nav>
-                </div>
-                <div className="p-6 bg-gray-50">
-                  <Button className="w-full bg-primary hover:bg-primary/90 text-white font-serif gap-2">
-                    <Phone className="w-4 h-4" />
-                    Request Callback
-                  </Button>
-                </div>
-              </motion.div>
-            </>
-          )
-        }
-      </AnimatePresence >
+                  {!user ? (
+                    <a
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setLocation("/auth");
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="px-6 py-4 text-lg font-medium text-primary border-b border-gray-50 hover:bg-gray-50 transition-colors"
+                    >
+                      Login / Register
+                    </a>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        logout();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="px-6 py-4 text-lg font-medium text-red-600 text-left hover:bg-gray-50 transition-colors"
+                    >
+                      Sign Out
+                    </button>
+                  )}
+                </nav>
+              </div>
+              <div className="p-6 bg-gray-50">
+                <Button className="w-full bg-primary hover:bg-primary/90 text-white font-serif gap-2">
+                  <Phone className="w-4 h-4" />
+                  Request Callback
+                </Button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
       {/* Separate Fixed Theme Toggle */}
       <div className="fixed bottom-6 right-6 z-50">
         <button
+          aria-label={
+            theme === "dark" ? "Switch to light theme" : "Switch to dark theme"
+          }
           onClick={toggleTheme}
-          className="flex items-center gap-2 px-4 py-3 bg-white/90 dark:bg-black/90 backdrop-blur-md rounded-full border border-gray-200 dark:border-white/10 shadow-2xl hover:scale-105 transition-all duration-300 group"
+          className="flex items-center gap-2 px-4 py-3 bg-white/90 dark:bg-black/90 backdrop-blur-md rounded-full border border-gray-200 dark:border-white/10 shadow-2xl hover:scale-105 transition-all duration-300 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         >
-          {theme === 'dark' ? (
+          {theme === "dark" ? (
             <>
               <Sun className="w-5 h-5 text-primary transition-transform group-hover:rotate-45" />
-              <span className="text-sm font-medium text-gray-800 dark:text-white">Light Mode</span>
+              <span className="text-sm font-medium text-gray-800 dark:text-white">
+                Light Mode
+              </span>
             </>
           ) : (
             <>
               <Moon className="w-5 h-5 text-gray-700 dark:text-gray-300 transition-transform group-hover:-rotate-12" />
-              <span className="text-sm font-medium text-gray-900 dark:text-white">Dark Mode</span>
+              <span className="text-sm font-medium text-gray-900 dark:text-white">
+                Dark Mode
+              </span>
             </>
           )}
         </button>
