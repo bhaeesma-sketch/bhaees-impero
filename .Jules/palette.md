@@ -1,0 +1,3 @@
+## 2024-06-14 - Header Icon Button Accessibility
+**Learning:** Icon-only interactive elements in the Header component (such as the mobile menu, search, user dropdown, and theme toggles) lacked discernible names for screen readers and explicit focus states for keyboard navigation. While native focus outlines exist, they are often subtle and inconsistent across browsers.
+**Action:** Always add descriptive `aria-label` attributes to icon-only buttons. Furthermore, use the combination of `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary` utility classes to ensure high-visibility focus indicators that align with the design system's primary colors, enhancing usability for keyboard navigators without affecting mouse users.
