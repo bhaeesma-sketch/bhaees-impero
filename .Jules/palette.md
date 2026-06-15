@@ -1,0 +1,3 @@
+## 2024-06-15 - Interactive Elements Require Clear Focus and ARIA Labels
+**Learning:** Several interactive buttons in the application's header (like the mobile menu, search, user dropdown, and theme toggle) lacked ARIA labels and explicit focus states, reducing accessibility for screen reader and keyboard-only users. Dynamic state buttons (like theme toggle) require dynamic ARIA labels.
+**Action:** Always ensure icon-only buttons have descriptive `aria-label` attributes (or dynamic ones for toggles like `theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'`) and add explicit keyboard focus indicators using existing design system utilities like `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary`.
