@@ -1,0 +1,3 @@
+## 2024-06-16 - Header Buttons Accessibility
+**Learning:** Icon-only buttons in the main navigation (e.g., Mobile Menu, Search, Account, Close Mobile Menu, Theme Toggle) lack ARIA labels, making them invisible or incomprehensible to screen reader users. The Radix UI DropdownMenuTrigger (when using `asChild`) delegates attributes to its child, so the accessibility properties must be placed on the inner `<button>`.
+**Action:** Always add descriptive `aria-label`s to icon-only buttons. Add explicit keyboard focus states (`focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary`) to ensure interactive elements in headers are visibly distinguishable when navigated via keyboard.
