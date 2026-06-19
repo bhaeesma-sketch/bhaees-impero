@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { ShieldCheck, Lock } from "lucide-react";
+import { ShieldCheck, Lock, Loader2 } from "lucide-react";
 import marbleBg from '@assets/generated_images/white_marble_luxury_texture_background.png';
 
 export default function AuthPage() {
@@ -108,7 +108,7 @@ export default function AuthPage() {
                     className="w-full bg-primary hover:bg-primary/90 text-white font-medium"
                     disabled={isLoading}
                   >
-                    {isLoading ? "Authenticating..." : "Secure Login"}
+                    {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Authenticating...</> : "Secure Login"}
                   </Button>
                   <div className="flex items-center justify-center gap-2 text-xs text-gray-400">
                     <Lock className="w-3 h-3" />
@@ -161,7 +161,7 @@ export default function AuthPage() {
                     className="w-full bg-gray-900 hover:bg-black text-white font-medium"
                     disabled={isLoading}
                   >
-                    {isLoading ? "Creating Account..." : "Create Account"}
+                    {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating Account...</> : "Create Account"}
                   </Button>
                 </CardFooter>
               </form>
