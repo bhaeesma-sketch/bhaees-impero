@@ -95,10 +95,11 @@ export default function CatalogPage() {
                                 <button
                                     key={cat.id}
                                     onClick={() => setActiveCategory(cat.id)}
-                                    className={`px-6 py-2 rounded-full text-sm font-medium tracking-wide transition-all duration-300 ${activeCategory === cat.id
+                                    className={`px-6 py-2 rounded-full text-sm font-medium tracking-wide transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${activeCategory === cat.id
                                         ? 'bg-primary text-white shadow-lg transform -translate-y-1'
                                         : 'bg-white text-gray-500 hover:bg-gray-100 border border-gray-200'
                                         }`}
+                                    aria-pressed={activeCategory === cat.id}
                                 >
                                     {cat.label}
                                 </button>
