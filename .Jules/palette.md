@@ -1,0 +1,3 @@
+## 2024-06-25 - ARIA Labels and Focus States for Icon Buttons and Toggles
+**Learning:** Icon-only buttons (like menu, search, user account, theme toggle) often lack `aria-label`s and proper focus indicators, making them inaccessible to screen readers and keyboard users. Additionally, state-toggling elements like category filters and image gallery thumbnails lack `aria-pressed` indicators and focus outlines.
+**Action:** Always add `aria-label` to icon-only buttons. Add `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary` for keyboard accessibility. For elements that toggle state (like category buttons or image thumbnails), add `aria-pressed={isActive}` to correctly report the state to screen readers.
