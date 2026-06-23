@@ -1,0 +1,4 @@
+## 2024-05-24 - Navigation Header A11y
+
+**Learning:** When using Radix UI components like `DropdownMenuTrigger` with the `asChild` prop, the ARIA attributes and focus styles must be applied directly to the nested custom button element rather than relying on the wrapper to inject them cleanly, especially when custom Tailwind transition classes are involved. Additionally, state-dependent theme togglers need dynamic `aria-label`s to accurately reflect the action that will happen when clicked, as static labels (like "Theme toggle") can be confusing to screen readers when the visual state changes.
+**Action:** Always verify `asChild` implementations manually, ensuring the direct child DOM node receives both `aria-label` and `focus-visible:ring-2` styling. For theme togglers, implement a ternary operator for the `aria-label` based on the current theme state.

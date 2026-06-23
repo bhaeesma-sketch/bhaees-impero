@@ -1,0 +1,65 @@
+
+> impero-di@1.0.0 dev /app
+> vite
+
+
+  VITE v7.3.5  ready in 541 ms
+
+  ➜  Local:   http://localhost:8080/
+  ➜  Network: http://192.168.0.2:8080/
+4:26:32 PM [vite] http proxy error: /api/analytics/log
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
+4:26:32 PM [vite] http proxy error: /api/gold-rates
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
+4:26:32 PM [vite] http proxy error: /api/products
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
+4:26:32 PM [vite] http proxy error: /api/auth/me
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
+4:26:32 PM [vite] http proxy error: /api/gold-rates
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
+4:27:52 PM [vite] http proxy error: /api/gold-rates
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
+4:27:52 PM [vite] http proxy error: /api/analytics/log
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
+4:27:52 PM [vite] http proxy error: /api/gold-rates
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
+4:27:52 PM [vite] http proxy error: /api/products
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
+4:29:00 PM [vite] http proxy error: /api/analytics/log
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
+4:29:00 PM [vite] http proxy error: /api/gold-rates
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
+4:29:00 PM [vite] http proxy error: /api/gold-rates
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
+4:29:00 PM [vite] http proxy error: /api/products
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
+4:29:00 PM [vite] http proxy error: /api/auth/me
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
