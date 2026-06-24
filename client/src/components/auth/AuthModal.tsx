@@ -87,7 +87,8 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                         </span>
                         <Button
                             variant="link"
-                            className="p-0 h-auto font-semibold text-primary"
+                            aria-label={isLogin ? "Switch to sign up" : "Switch to sign in"}
+                            className="p-0 h-auto font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm"
                             onClick={() => setIsLogin(!isLogin)}
                         >
                             {isLogin ? 'Sign Up' : 'Sign In'}
