@@ -76,11 +76,13 @@ export function ProductCard({ id, name, image, purity, baseWeight, displayWeight
               {weights.slice(0, 4).map((w) => (
                 <button
                   key={w}
+                  aria-pressed={weight === w}
+                  aria-label={`Select ${w} gram weight`}
                   onClick={(e) => {
                     e.preventDefault();
                     setWeight(w);
                   }}
-                  className={`text-xs px-2 py-1 rounded border transition-colors ${weight === w
+                  className={`text-xs px-2 py-1 rounded border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${weight === w
                       ? 'bg-gray-900 text-white border-gray-900'
                       : 'bg-white text-gray-600 border-gray-200 hover:border-primary'
                     }`}
