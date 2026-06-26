@@ -1,0 +1,3 @@
+## 2026-06-26 - Add proper ARIA labels and focus states to header navigation buttons
+**Learning:** Found multiple instances where critical navigation interactive elements (Mobile menu toggle, Theme toggler, User Dropdown, Search button) were icon-only without proper screen-reader textual alternatives (aria-label). Moreover, focus states were reliant on mouse `:hover` styles, which negatively affects keyboard users navigating the site.
+**Action:** When auditing or implementing interactive controls containing only icons, ensure they always have appropriate semantic labels (`aria-label`) and explicit keyboard focus indicators (`focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none`) to comply with accessibility standards.
