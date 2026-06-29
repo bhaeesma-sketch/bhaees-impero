@@ -1,0 +1,3 @@
+## 2024-11-20 - [Header A11y & Focus]
+**Learning:** Found an accessibility issue pattern specific to this app's components, where icon-only buttons in the main navigation (e.g., search, user menu, mobile menu toggle, theme toggle) lacked both `aria-label`s for screen readers and visible focus indicators (`focus-visible:ring-2`, `focus-visible:ring-primary`, `focus-visible:outline-none`) for keyboard navigation.
+**Action:** Applied ARIA labels and consistent Tailwind focus-visible styles to these buttons to ensure they are accessible to screen readers and visible when navigated via keyboard. Ensure all future icon-only interactive elements follow this pattern.
