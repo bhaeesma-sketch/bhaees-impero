@@ -1,0 +1,3 @@
+## 2024-07-02 - Floating Theme Toggle Accessibility Enhancement
+**Learning:** Found an accessibility pattern where the floating theme toggle button was missing an ARIA label, making it difficult for screen readers to understand its function, especially since the icon changes dynamically. It's a common pattern to forget `aria-label`s on icon-only buttons that live outside the main navigation structure.
+**Action:** Always ensure floating action buttons (FABs) and theme toggles have dynamic `aria-label`s that reflect their current state/action (e.g., 'Switch to light theme' vs 'Switch to dark theme'), and include `focus-visible` styles for keyboard navigation.
