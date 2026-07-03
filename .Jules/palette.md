@@ -1,0 +1,3 @@
+## 2024-07-03 - Header Icon Button Accessibility
+**Learning:** Icon-only buttons (like Menu, Search, User dropdown, and Theme toggle) lack proper ARIA labels and distinct keyboard focus outlines, negatively impacting screen reader and keyboard-only user experience. The application uses Tailwind, which makes it easy to add `focus-visible` classes to rectify outline issues without writing custom CSS.
+**Action:** Add `aria-label` attributes to explicitly describe actions for icon-only buttons. Add `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary` for accessible, consistent keyboard focus indicators to match the rest of the application. Ensure dynamic aria labels correctly describe the state for toggle buttons (e.g., Theme button).
