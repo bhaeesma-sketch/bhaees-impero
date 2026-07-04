@@ -1,0 +1,4 @@
+# Palette's Journal
+## 2024-05-19 - Interactive Elements Accessibility Pattern
+**Learning:** Found multiple instances of icon-only buttons (like Search, Menu, and floating Theme Toggle) missing proper `aria-label`s and clear visual focus indicators. The theme toggle specifically requires a dynamic `aria-label` reflecting its new state rather than its current state. Also noticed product thumbnails act as state-toggling elements.
+**Action:** Always add `aria-label` to icon-only buttons. For state-dependent toggles (like dark mode), the `aria-label` should describe the action that will occur. For selection thumbnails, use `aria-pressed={isActive}` to correctly report the toggled state to screen readers. Add `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary` for keyboard navigation visibility.
