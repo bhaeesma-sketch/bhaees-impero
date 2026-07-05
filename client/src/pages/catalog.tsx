@@ -95,7 +95,8 @@ export default function CatalogPage() {
                                 <button
                                     key={cat.id}
                                     onClick={() => setActiveCategory(cat.id)}
-                                    className={`px-6 py-2 rounded-full text-sm font-medium tracking-wide transition-all duration-300 ${activeCategory === cat.id
+                                    aria-pressed={activeCategory === cat.id}
+                                    className={`px-6 py-2 rounded-full text-sm font-medium tracking-wide transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${activeCategory === cat.id
                                         ? 'bg-primary text-white shadow-lg transform -translate-y-1'
                                         : 'bg-white text-gray-500 hover:bg-gray-100 border border-gray-200'
                                         }`}
@@ -115,11 +116,13 @@ export default function CatalogPage() {
 
                         <div className="flex items-center gap-4">
                             <div className="flex items-center gap-2">
-                                <ArrowUpDown className="w-4 h-4 text-gray-400" />
+                                <ArrowUpDown className="w-4 h-4 text-gray-400" aria-hidden="true" />
+                                <label htmlFor="sort-select" className="sr-only">Sort products</label>
                                 <select
+                                    id="sort-select"
                                     value={sortBy}
                                     onChange={(e) => setSortBy(e.target.value as SortOption)}
-                                    className="text-sm text-gray-700 bg-white border border-gray-200 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer"
+                                    className="text-sm text-gray-700 bg-white border border-gray-200 rounded-md px-4 py-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 cursor-pointer"
                                 >
                                     {sortOptions.map(option => (
                                         <option key={option.value} value={option.value}>
