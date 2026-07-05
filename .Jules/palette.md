@@ -1,0 +1,4 @@
+# Palette's UX Journal
+## 2024-05-14 - Header Keyboard Accessibility & Screen Reader Support
+**Learning:** Found multiple icon-only buttons (Search, Theme Toggle, Mobile Menu, User Profile) in `client/src/components/layout/header.tsx` lacking `aria-label`s and clear visual focus states (`focus-visible`). This makes the primary navigation difficult for keyboard users and completely opaque to screen readers. For the theme toggle, using a dynamic `aria-label` based on state (e.g., "Switch to light theme") is essential since the visual icon changes contextually.
+**Action:** Always pair `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary` on interactive elements to ensure keyboard accessibility. Ensure all icon-only buttons receive descriptive `aria-label`s, utilizing dynamic ternary expressions for state-toggling buttons.
