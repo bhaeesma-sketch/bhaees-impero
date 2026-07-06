@@ -1,0 +1,3 @@
+## 2024-05-15 - ARIA Labels & Focus Rings for Icon Buttons
+**Learning:** Found multiple icon-only buttons (mobile menu, search, user menu, close menu, theme toggle) lacking ARIA labels and explicit focus states for keyboard navigation in `client/src/components/layout/header.tsx`.
+**Action:** Always verify icon-only buttons have descriptive `aria-label` attributes (dynamic ones for state-toggling buttons) and standard `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary` utility classes to ensure both screen reader compatibility and visible keyboard focus indicator without disrupting the default design.
