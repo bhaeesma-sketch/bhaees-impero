@@ -1,0 +1,7 @@
+💡 What: Added descriptive `aria-label` attributes and keyboard focus indicators (`focus-visible` Tailwind classes) to the icon-only buttons in the application header.
+🎯 Why: Icon-only buttons lack context for screen readers and were missing clear visual indicators when navigated via keyboard. This addresses core WCAG navigation requirements, making the header significantly more intuitive for assistive technology users.
+📸 Before/After: Visual focus states were added using `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary`, invisible to mouse users but distinctly visible to keyboard users.
+♿ Accessibility:
+- Added explicit ARIA labels for "Open menu", "Search", "User account", and "Close menu".
+- Added dynamic, state-aware ARIA label for the theme toggle ("Switch to light theme" / "Switch to dark theme").
+- Provided keyboard focus outlines via Tailwind classes.
